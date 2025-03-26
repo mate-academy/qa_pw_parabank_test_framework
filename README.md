@@ -11,10 +11,10 @@ This repository contains a test automation framework for testing a bank app for 
 3. Install playwright by typing `npx playwright install` in the project root:
 4. Install the Allure command line tool by typing `npm install -g allure-commandline`. Remember that Allure requires Java 8 or higher.
 
-## Task
+## Runing test tests
 
-// TODO
+// TODO: Add instructions about how to run the tests. 
 
 ## How to Generate a Report
 
-// TODO
+// TODO: Add instructions about how to generate report.  
