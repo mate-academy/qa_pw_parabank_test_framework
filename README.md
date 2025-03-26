@@ -1,10 +1,10 @@
-# Parabank Test Framework
+# Parabank test framework
 
 To see the description of the task assignment, [follow this link](https://github.com/mate-academy/qa_pw_parabank_test_framework/blob/main/TaskDescription.md). 
 
 This repository contains a test automation framework for testing a bank app for [Parabank](https://parabank.parasoft.com/parabank/index.htm).
 
-## Preparing the Project
+## Project setup
 
 1. Install Node.js
 2. Run the installation command `npm ci` in the project root.
@@ -15,6 +15,6 @@ This repository contains a test automation framework for testing a bank app for 
 
 // TODO: Add instructions about how to run the tests. 
 
-## How to Generate a Report
+## How to generate a report
 
 // TODO: Add instructions about how to generate report.  
