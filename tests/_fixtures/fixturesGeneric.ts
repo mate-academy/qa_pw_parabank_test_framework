@@ -3,11 +3,15 @@ import { Logger } from '../../src/common/logger/Logger';
 import * as allure from 'allure-js-commons';
 import { parseTestTreeHierarchy } from '../../src/common/helpers/allureHelpers';
 
-export const test = base.extend<{
-  logger;
-  infoTestLog;
-  addAllureTestHierarchy;
-}>({
+export const test = base.extend<
+  {
+    infoTestLog;
+    addAllureTestHierarchy;
+  },
+  {
+    logger;
+  }
+>({
   logger: [
     async ({}, use) => {
       const logger = new Logger('error');
