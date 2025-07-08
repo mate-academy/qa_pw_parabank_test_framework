@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 
-export function generateNewUserData(logger = null) {
+export function generateNewUserData() {
   const firstName = faker.person.firstName();
   const lastName = faker.person.lastName();
 
@@ -18,8 +18,5 @@ export function generateNewUserData(logger = null) {
     ssn: faker.helpers.replaceSymbols('###-##-####'),
   };
 
-  if (logger) {
-    logger.debug(`Generated new user data: ${logger}`);
-  }
   return user;
 }

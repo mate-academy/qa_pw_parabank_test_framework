@@ -1,8 +1,7 @@
 import { expect, testStep } from '../../../common/helpers/pwHelpers';
 export class SignUpPage {
-  constructor(page, userId = 0) {
+  constructor(page) {
     this.page = page;
-    this.userId = userId;
     this.firstNameField = page.locator('[id="customer\\.firstName"]');
     this.lastNameField = page.locator('[id="customer\\.lastName"]');
     this.addressField = page.locator('[id="customer\\.address\\.street"]');
@@ -15,10 +14,14 @@ export class SignUpPage {
     this.passwordField = page.locator('[id="customer\\.password"]');
     this.repeatedPasswordField = page.locator('#repeatedPassword');
     this.registerBtn = page.getByRole('button', { name: 'Register' });
+    this.passwordErrorMessage = page.getByText('Password is required.');
+    this.confirmPasswordErrorMessage = page.getByText(
+      'Password confirmation is',
+    );
   }
 
   async step(title, stepToRun) {
-    return await testStep(title, stepToRun, this.userId);
+    return await testStep(title, stepToRun);
   }
 
   async open() {
@@ -105,17 +108,17 @@ export class SignUpPage {
     ).toBeVisible();
   }
 
-  async fillAllFields(user) {
-    await this.fillFirstNameField(user.firstName);
-    await this.fillLastNameField(user.lastName);
-    await this.fillAddressField(user.address);
-    await this.fillCityField(user.city);
-    await this.fillStateField(user.state);
-    await this.fillZipCodeField(user.zipCode);
-    await this.fillPhoneField(user.phone);
-    await this.fillSsnField(user.ssn);
-    await this.fillUsernameField(user.username);
-    await this.fillPasswordField(user.password);
-    await this.confirmPasswordField(user.password);
+  async confirmErrorMessageIsDisplayed(errorMessage) {
+    await this.step(`Check confirm password error message`, async () => {
+      await expect(this.confirmPasswordErrorMessage).toHaveText(errorMessage);
+    });
+  }
+
+  async checkUserExists(errorMessage) {
+    await this.step(`Check error message that user ist exist`, async () => {
+      await expect(
+        this.page.getByText('This username already exists.'),
+      ).toHaveText(errorMessage);
+    });
   }
 }
