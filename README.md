@@ -28,8 +28,8 @@ npm install -g allure-commandline
 
 ## How to run the tests
 
-// TODO
+// TODO - It's part of your task to add the appropriate instructions here. 
 
 ## How to generate report
 
-// TODO
+// TODO - // It's part of your task to add the appropriate instructions here. 
