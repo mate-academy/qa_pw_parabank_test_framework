@@ -26,8 +26,3 @@ npx playwright install
 npm install -g allure-commandline
 ```
 
-## How to run the tests
-
-
-
-## How to generate report
