@@ -28,8 +28,8 @@ npm install -g allure-commandline
 
 ## How to run the tests
 
-npx playwright test
+// TODO - It's part of your task to add the appropriate instructions here.
 
 ## How to generate report
 
-allure serve allure-results
+// TODO - It's part of your task to add the appropriate instructions here.
