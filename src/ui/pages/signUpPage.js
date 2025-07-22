@@ -132,4 +132,16 @@ export class SignUpPage {
       await expect(this.errorMessage).toContainText(messageText);
     });
   }
+
+  async assertErrorBySelector(errorSelector, expectedError) {
+    await this.step(`Assert the '${expectedError}' by selector '${errorSelector}' is shown`, async () => {
+      await expect(this.page.locator(errorSelector)).toContainText(expectedError);
+    });
+  }
+
+  async assertErrorByText(expectedError) {
+    await this.step(`Assert the '${expectedError}' by text is shown`, async () => {
+      await expect(this.page.getByText(expectedError)).toBeVisible();
+    });
+  }
 }

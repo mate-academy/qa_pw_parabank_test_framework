@@ -71,7 +71,6 @@ export const test = base.extend<
       await allure.epic(parentSuite);
       await allure.feature(suite);
       await allure.story(subSuite || 'Default story');
-      await allure.severity(Severity.NORMAL);
 
       await use('addAllureTestHierarhy');
     },

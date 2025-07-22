@@ -1,6 +1,7 @@
 import { test } from "../../_fixtures/fixtures";
 import { signUpUser } from '../../../src/common/helpers/signUpUser'
 import { LOGIN_LOCATED_INFO } from "../../../src/common/test data/constants";
+import * as allure from "allure-js-commons";
 
 test.beforeEach(async ({ page, user }) => {
   await signUpUser(page, user);
@@ -10,6 +11,8 @@ test('Successful `Customer lookup` flow test', async ({
   user,
   customerLookupPage
 }) => {
+  await allure.severity(`normal`);
+
   await customerLookupPage.open()
   await customerLookupPage.fillFirstNameField(user.firstname);
   await customerLookupPage.fillLastNameField(user.lastname);

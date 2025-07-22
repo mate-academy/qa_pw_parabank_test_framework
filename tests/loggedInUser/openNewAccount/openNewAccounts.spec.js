@@ -1,6 +1,7 @@
 import { test } from "../../_fixtures/fixtures";
 import { signUpUser } from "../../../src/common/helpers/signUpUser";
 import { OPENED_ACCOUNT_MESSAGE } from "../../../src/common/test data/constants";
+import * as allure from "allure-js-commons";
 
 const accountTypes = [
   { name: 'Checking', value: '0' },
@@ -16,6 +17,8 @@ test('user can open new checking and savings account types', async ({
 
   for (const { name, value } of accountTypes) {
     await test.step(`Open a ${name} account`, async () => {
+      await allure.severity(`critical`);
+
       await openNewAccountPage.clickOpenAccountLink();
       await openNewAccountPage.selectOptionFromAccountTypeDropdown(value);
       await openNewAccountPage.selectOptionFromExistingAccounts(accountNumber);

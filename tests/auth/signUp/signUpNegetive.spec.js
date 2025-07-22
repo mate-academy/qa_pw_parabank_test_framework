@@ -1,6 +1,6 @@
 import { test } from '../../_fixtures/fixtures';
-import { expect } from 'allure-playwright';
 import { testParameters } from '../../../src/common/test data/auth/negativeSignUpData';
+import * as allure from "allure-js-commons";
 
 testParameters.forEach(({
   firstname,
@@ -19,6 +19,8 @@ testParameters.forEach(({
   title}) => {
     test.describe('Sign up negative tests', () => {
       test(`Negative test: ${title}`, async ({ signUpPage }) => {
+        await allure.severity(`critical`);
+
         await signUpPage.open();
         await signUpPage.fillFirstNameField(firstname);
         await signUpPage.fillLastNameField(lastname);
@@ -36,9 +38,9 @@ testParameters.forEach(({
         await signUpPage.assertErrorMessageContainsText(expectedError, errorSelector);
 
         if (errorSelector) {
-          await expect(signUpPage.page.locator(errorSelector)).toContainText(expectedError);
+          await signUpPage.assertErrorBySelector(errorSelector, expectedError);
         } else {
-          await expect(signUpPage.page.getByText(expectedError)).toBeVisible();
+          await signUpPage.assertErrorByText(expectedError);
         }
       });
     });

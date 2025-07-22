@@ -4,6 +4,7 @@ import {
   getToday_MM_DD_YYYY,
   getYesterday_MM_DD_YYYY
 } from "../../../src/common/helpers/formatDate";
+import * as allure from "allure-js-commons";
 
 test.describe('Find Transactions activities', () => {
   test('user is able to find transactions by id', async ({
@@ -13,6 +14,8 @@ test.describe('Find Transactions activities', () => {
     accountOverviewPage,
   }) => {
     const transactionId = await getTransactionId(page, user);
+
+    await allure.severity(`critical`);
 
     await findTransactionsPage.goToFindTransactionPage();
     await findTransactionsPage.findTransactionById(transactionId);
@@ -27,6 +30,8 @@ test.describe('Find Transactions activities', () => {
     accountOverviewPage
   }) => {
     const today = getToday_MM_DD_YYYY();
+
+    await allure.severity(`critical`);
 
     await getTransactionId(page, user);
     await findTransactionsPage.goToFindTransactionPage();
@@ -44,6 +49,8 @@ test.describe('Find Transactions activities', () => {
     const today = getToday_MM_DD_YYYY();
     const yesterday = getYesterday_MM_DD_YYYY();
 
+    await allure.severity(`critical`);
+
     await getTransactionId(page, user);
     await findTransactionsPage.goToFindTransactionPage();
     await findTransactionsPage.findTransactionByDateRange(yesterday, today);
@@ -57,6 +64,8 @@ test.describe('Find Transactions activities', () => {
     findTransactionsPage,
     accountOverviewPage
   }) => {
+    await allure.severity(`critical`);
+
     await getTransactionId(page, user);
     await findTransactionsPage.goToFindTransactionPage();
     await findTransactionsPage.findTransactionByAmount('100');

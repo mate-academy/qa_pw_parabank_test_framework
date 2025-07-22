@@ -1,11 +1,14 @@
 import { test } from '../../_fixtures/fixtures'
 import { WELCOME_TEXT } from '../../../src/common/test data/constants';
+import * as allure from "allure-js-commons";
 
 test('Successful `Sign up` flow test', async ({
   signUpPage,
   user,
   homePage
 }) => {
+  await allure.severity(`critical`);
+
   await signUpPage.open();
   await signUpPage.fillFirstNameField(user.firstname);
   await signUpPage.fillLastNameField(user.lastname);

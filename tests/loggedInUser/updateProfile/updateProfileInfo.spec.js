@@ -2,6 +2,7 @@ import { test } from "../../_fixtures/fixtures";
 import { signUpUser } from "../../../src/common/helpers/signUpUser";
 import { faker } from "@faker-js/faker";
 import { PROFILE_UPDATED_MESSAGE } from "../../../src/common/test data/constants";
+import * as allure from "allure-js-commons";
 
 test.beforeEach(async ({ page, user }) => {
   await signUpUser(page, user);
@@ -18,6 +19,8 @@ test('user is able to update profile info', async ({
   const newState = faker.location.state();
   const newZipCode = faker.location.zipCode();
   const newPhone = faker.phone.number();
+
+  await allure.severity(`normal`);
 
   await homePage.goToUpdateContactInfoPage();
   await signUpPage.fillFirstNameField(newFirstName);

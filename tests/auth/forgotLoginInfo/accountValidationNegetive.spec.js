@@ -1,5 +1,6 @@
 import { test } from '../../_fixtures/fixtures';
 import { testParameters } from '../../../src/common/test data/auth/negativeLookupData';
+import * as allure from "allure-js-commons";
 
 testParameters.forEach(({
   firstname,
@@ -13,6 +14,8 @@ testParameters.forEach(({
   title}) => {
     test.describe('Sign up negative tests', () => {
       test(`Negative test: ${title}`, async ({ signUpPage, customerLookupPage }) => {
+        await allure.severity(`normal`);
+
         await customerLookupPage.open();
         await customerLookupPage.fillFirstNameField(firstname);
         await customerLookupPage.fillLastNameField(lastname);
