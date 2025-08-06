@@ -7,9 +7,10 @@ export function parseTestTreeHierarchy(fileName, logger) {
     .substring(fileName.indexOf(testFolder) + testFolder.length)
     .split('/');
 
-  let attributes = attributesCamelCase.map(attribute =>
-    capitalize(camelCaseToPhrase(attribute)),
-  );
+  let attributes = attributesCamelCase.map(attribute => {
+    const cleanAttribute = attribute.replace(/^\d+-/, '');
+    return capitalize(camelCaseToPhrase(cleanAttribute));
+  });
 
   if (attributes[2].includes('.spec.js')) {
     attributes = attributes.slice(0, 2);
