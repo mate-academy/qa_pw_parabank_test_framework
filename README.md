@@ -1,35 +1,24 @@
-# Task Description
+# Parabank Test Automation Framework
 
-To see the description of the task assignment [follow the link](https://github.com/mate-academy/qa_pw_parabank_test_framework/blob/main/TaskDescription.md). 
+This repository contains a **Playwright-based test automation framework** for the [Parabank](https://parabank.parasoft.com/parabank/index.htm) application.  
+The framework includes:
 
-# Repository Overview
+- **Page Object Model** (POM) with actions and page classes  
+- **Fixtures** for Auth, Account, and User Management tests  
+- **Allure reporting** with proper parentSuite → suite → subSuite hierarchy  
+- **Parameterized tests** and reusable helpers  
+- Logging with a custom **Logger** class
 
-This repository contains a test automation framework for the [Parabank](https://parabank.parasoft.com/parabank/index.htm) bank application testing. 
+---
 
-# How to use this project
+## 🛠 Prerequisites
 
-## Installation steps
+- Node.js >= 18  
+- npm >= 9  
+- Git  
 
-To install the project follow the next steps:
+Clone the repository:
 
-1. Install Node.js.
-2. Run the installation command in the project root.:
 ```bash
-npm ci
-```
-3. Run the browsers installation in the project root.
-```bash
-npx playwright install
-```
-4. Install Allure commandline tool (Allure requires Java 8 or higher).
-```bash
-npm install -g allure-commandline
-```
-
-## How to run the tests
-
-// TODO - It's part of your task to add the appropriate instructions here. 
-
-## How to generate report
-
-// TODO - It's part of your task to add the appropriate instructions here. 
+git clone <your-repo-url>
+cd qa_pw_parabank_test_framework
