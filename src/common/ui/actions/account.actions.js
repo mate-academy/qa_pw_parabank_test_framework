@@ -1,46 +1,45 @@
+// src/common/ui/actions/account.actions.js
 import { testStep } from '../../helpers/pwHelpers';
 import { AccountOverviewPage } from '../pages/accountOverviewPage';
-import { TransferFundsPage } from '../pages/transferFundsPage';
-import { BillPayPage } from '../pages/billPayPage';
+import { NewAccountPage } from '../pages/newAccountPage';
+import { AccountActivityPage } from '../pages/accountActivityPage';
 
 export class AccountActions {
-  constructor(page, userId = 0) {
+  constructor(page, logger, userId = 0) {
     this.page = page;
+    this.logger = logger;
     this.userId = userId;
     this.accountOverviewPage = new AccountOverviewPage(page, userId);
-    this.transferFundsPage = new TransferFundsPage(page, userId);
-    this.billPayPage = new BillPayPage(page, userId);
+    this.newAccountPage = new NewAccountPage(page, userId);
+    this.accountActivityPage = new AccountActivityPage(page, userId);
   }
 
-  async viewAccountOverview() {
-    await testStep(`View account overview`, async () => {
-      await this.accountOverviewPage.open();
-      await this.accountOverviewPage.assertOverviewVisible();
+  async openNewAccount(type, fromAccount) {
+    await testStep(`Open new account: type=${type}`, async () => {
+      await this.newAccountPage.open();
+      await this.newAccountPage.selectAccountType(type);
+      await this.newAccountPage.selectFromAccount(fromAccount);
+      await this.newAccountPage.submit();
+      await this.newAccountPage.assertSuccess();
     }, this.userId);
   }
 
-  async viewAccountDetails(accountId) {
-    await testStep(`View account details for ${accountId}`, async () => {
-      await this.accountOverviewPage.openAccountDetails(accountId);
-      await this.accountOverviewPage.assertAccountDetailsVisible();
+  async openAccountActivity(accountId) {
+    await testStep(`Open account activity for account ${accountId}`, async () => {
+      await this.accountOverviewPage.openAccountActivity(accountId);
     }, this.userId);
   }
 
-  async transferFunds(fromAccount, toAccount, amount) {
-    await testStep(`Transfer ${amount} from ${fromAccount} to ${toAccount}`, async () => {
-      await this.transferFundsPage.open();
-      await this.transferFundsPage.fillTransferForm(fromAccount, toAccount, amount);
-      await this.transferFundsPage.submitTransfer();
-      await this.transferFundsPage.verifyTransferSuccess(amount);
+  async filterTransactions(filterOptions) {
+    await testStep(`Filter transactions`, async () => {
+      await this.accountActivityPage.applyFilters(filterOptions);
+      await this.accountActivityPage.verifyFilteredResults();
     }, this.userId);
   }
 
-  async payBill(billData) {
-    await testStep(`Pay bill to ${billData.payeeName}`, async () => {
-      await this.billPayPage.open();
-      await this.billPayPage.fillBillForm(billData);
-      await this.billPayPage.submitPayment();
-      await this.billPayPage.verifyPaymentSuccess();
+  async searchTransactionsByAmount(amount) {
+    await testStep(`Search transactions by amount: ${amount}`, async () => {
+      await this.accountActivityPage.searchByAmount(amount);
     }, this.userId);
   }
 }

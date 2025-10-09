@@ -1,18 +1,16 @@
-import { test as base } from './fixtures';
+// tests/fixtures/fixturesUser.ts
+import { mergeTests } from '@playwright/test';
+import { test as base } from './fixturesGeneric';
 import { UserActions } from '../../src/common/ui/actions/user.actions';
-import { testData } from '../../src/config/testData';
+import testData from '../../src/config/testData';
 
-export const test = base.extend({
-  userActions: async ({ page }, use) => {
-    const actions = new UserActions(page);
+export const test = mergeTests(base).extend({
+  userActions: async ({ page, logger }, use) => {
+    const actions = new UserActions(page, logger);
     await use(actions);
   },
 
-  contactUpdateData: async ({}, use) => {
-    await use(testData.contactUpdates);
-  },
-
-  loanData: async ({}, use) => {
-    await use(testData.loans);
+  userTestData: async ({}, use) => {
+    await use(testData.users); // FIX: expose validUser / test users for specs
   },
 });
