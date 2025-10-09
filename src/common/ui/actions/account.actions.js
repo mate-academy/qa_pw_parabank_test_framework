@@ -3,6 +3,8 @@ import { testStep } from '../../helpers/pwHelpers';
 import { AccountOverviewPage } from '../pages/accountOverviewPage';
 import { NewAccountPage } from '../pages/newAccountPage';
 import { AccountActivityPage } from '../pages/accountActivityPage';
+import { TransferFundsPage } from '../pages/transferFundsPage';
+import { BillPayPage } from '../pages/billPayPage';
 
 export class AccountActions {
   constructor(page, logger, userId = 0) {
@@ -12,10 +14,42 @@ export class AccountActions {
     this.accountOverviewPage = new AccountOverviewPage(page, userId);
     this.newAccountPage = new NewAccountPage(page, userId);
     this.accountActivityPage = new AccountActivityPage(page, userId);
+    this.transferFundsPage = new TransferFundsPage(page, userId);
+    this.billPayPage = new BillPayPage(page, userId);
+  }
+
+  async viewAccountOverview() {
+    await testStep('View Account Overview', async () => {
+      await this.accountOverviewPage.open();
+    }, this.userId);
+  }
+
+  async viewAccountDetails(accountId) {
+    await testStep(`View account details for ${accountId}`, async () => {
+      await this.accountOverviewPage.openAccountDetails(accountId);
+    }, this.userId);
+  }
+
+  async transferFunds(amount, fromAccount, toAccount) {
+    await testStep(`Transfer ${amount} from ${fromAccount} to ${toAccount}`, async () => {
+      await this.transferFundsPage.open();
+      await this.transferFundsPage.fillTransferForm({ amount, fromAccount, toAccount });
+      await this.transferFundsPage.submit();
+      await this.transferFundsPage.verifyTransferSuccess();
+    }, this.userId);
+  }
+
+  async payBill(payee, amount, fromAccount) {
+    await testStep(`Pay bill to ${payee}`, async () => {
+      await this.billPayPage.open();
+      await this.billPayPage.fillBillPayForm({ payee, amount, fromAccount });
+      await this.billPayPage.submit();
+      await this.billPayPage.verifyPaymentSuccess();
+    }, this.userId);
   }
 
   async openNewAccount(type, fromAccount) {
-    await testStep(`Open new account: type=${type}`, async () => {
+    await testStep(`Open new account type ${type}`, async () => {
       await this.newAccountPage.open();
       await this.newAccountPage.selectAccountType(type);
       await this.newAccountPage.selectFromAccount(fromAccount);
@@ -25,21 +59,8 @@ export class AccountActions {
   }
 
   async openAccountActivity(accountId) {
-    await testStep(`Open account activity for account ${accountId}`, async () => {
-      await this.accountOverviewPage.openAccountActivity(accountId);
-    }, this.userId);
-  }
-
-  async filterTransactions(filterOptions) {
-    await testStep(`Filter transactions`, async () => {
-      await this.accountActivityPage.applyFilters(filterOptions);
-      await this.accountActivityPage.verifyFilteredResults();
-    }, this.userId);
-  }
-
-  async searchTransactionsByAmount(amount) {
-    await testStep(`Search transactions by amount: ${amount}`, async () => {
-      await this.accountActivityPage.searchByAmount(amount);
+    await testStep(`Open account activity for ${accountId}`, async () => {
+      await this.accountActivityPage.openAccountDetails(accountId); // aligned method name
     }, this.userId);
   }
 }

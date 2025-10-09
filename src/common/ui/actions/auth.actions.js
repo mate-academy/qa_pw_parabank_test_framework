@@ -15,13 +15,22 @@ export class AuthActions {
   async login(username, password) {
     await testStep('Login user', async () => {
       await this.loginPage.open();
-      await this.loginPage.fillLoginForm(username, password);
+      await this.loginPage.fillCredentials(username, password); // renamed method
       await this.loginPage.submit();
     }, this.userId);
   }
 
-  async register(userData) {
-    await testStep('Register new user', async () => {
+  async loginNegative(username, password) {
+    await testStep('Login with invalid credentials', async () => {
+      await this.loginPage.open();
+      await this.loginPage.fillCredentials(username, password);
+      await this.loginPage.submit();
+      await this.loginPage.verifyLoginError(); // renamed method
+    }, this.userId);
+  }
+
+  async registerUser(userData) { // alias for tests
+    await testStep('Register user', async () => {
       await this.registerPage.open();
       await this.registerPage.fillRegistrationForm(userData);
       await this.registerPage.submit();
@@ -30,22 +39,10 @@ export class AuthActions {
 
   async forgotLogin(firstName, lastName, ssn) {
     await testStep('Recover login info', async () => {
-      await this.loginPage.open();              // FIX: open login page first
+      await this.loginPage.open();
       await this.loginPage.openForgotLogin();
       await this.loginPage.fillForgotLoginForm(firstName, lastName, ssn);
       await this.loginPage.submitForgotLogin();
-    }, this.userId);
-  }
-
-  async assertLoginFailed() {
-    await testStep('Assert login failed', async () => {
-      await this.loginPage.assertLoginError();
-    }, this.userId);
-  }
-
-  async assertRegistrationFailed() {
-    await testStep('Assert registration failed', async () => {
-      await this.registerPage.assertRegistrationError();
     }, this.userId);
   }
 }

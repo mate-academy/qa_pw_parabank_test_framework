@@ -16,17 +16,17 @@ export class UserActions {
 
   async updateContactInfo(newData) {
     await testStep('Update contact info', async () => {
-      await this.updateContactPage.navigate();
-      await this.updateContactPage.fillForm(newData);
+      await this.updateContactPage.open();
+      await this.updateContactPage.fillContactForm(newData);
       await this.updateContactPage.submit();
-      await this.updateContactPage.assertSuccess();
+      await this.updateContactPage.verifyContactUpdateSuccess();
     }, this.userId);
   }
 
   async requestLoan(amount, downPayment, fromAccount) {
-    await testStep(`Request loan: amount=${amount}`, async () => {
+    await testStep(`Request loan: ${amount}`, async () => {
       const loanData = { amount, downPayment, fromAccount };
-      await this.requestLoanPage.navigate();
+      await this.requestLoanPage.open();
       await this.requestLoanPage.fillLoanForm(loanData);
       await this.requestLoanPage.submit();
       await this.requestLoanPage.assertLoanResult();
@@ -34,8 +34,9 @@ export class UserActions {
   }
 
   async logout() {
-    await testStep('Log out user', async () => {
+    await testStep('Logout user', async () => {
       await this.homePage.logout();
+      await this.homePage.verifyLogoutSuccess();
     }, this.userId);
   }
 }
