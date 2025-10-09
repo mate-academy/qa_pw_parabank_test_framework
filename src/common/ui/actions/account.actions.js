@@ -26,20 +26,20 @@ export class AccountActions {
 
   async viewAccountDetails(accountId) {
     await testStep(`View account details for ${accountId}`, async () => {
-      await this.accountOverviewPage.openAccountDetails(accountId);
+      await this.accountOverviewPage.openAccountDetails(accountId); // corrected method
     }, this.userId);
   }
 
-  async transferFunds(amount, fromAccount, toAccount) {
+  async transferFunds(fromAccount, toAccount, amount) {
     await testStep(`Transfer ${amount} from ${fromAccount} to ${toAccount}`, async () => {
       await this.transferFundsPage.open();
-      await this.transferFundsPage.fillTransferForm({ amount, fromAccount, toAccount });
+      await this.transferFundsPage.fillTransferForm({ fromAccount, toAccount, amount });
       await this.transferFundsPage.submit();
       await this.transferFundsPage.verifyTransferSuccess();
     }, this.userId);
   }
 
-  async payBill(payee, amount, fromAccount) {
+  async payBill({ payee, amount, fromAccount }) {
     await testStep(`Pay bill to ${payee}`, async () => {
       await this.billPayPage.open();
       await this.billPayPage.fillBillPayForm({ payee, amount, fromAccount });
@@ -60,7 +60,7 @@ export class AccountActions {
 
   async openAccountActivity(accountId) {
     await testStep(`Open account activity for ${accountId}`, async () => {
-      await this.accountActivityPage.openAccountDetails(accountId); // aligned method name
+      await this.accountActivityPage.openAccountDetails(accountId); // align method
     }, this.userId);
   }
 }
