@@ -3,53 +3,62 @@ import { Logger } from '../../src/common/logger/Logger';
 import * as allure from 'allure-js-commons';
 import { parseTestTreeHierarchy } from '../../src/common/helpers/allureHelpers';
 
-export const test = base.extend<
-  {
-    infoTestLog;
-    addAllureTestHierarchy;
-  },
-  {
-    logger;
-  }
->({
+type TestFixtures = {
+  infoTestLog: string;
+  addAllureTestHierarchy: string;
+};
+type WorkerFixtures = {
+  logger: Logger;
+};
+
+export const test = base.extend<TestFixtures, WorkerFixtures>({
   logger: [
     async ({}, use) => {
       const logger = new Logger('error');
-
       await use(logger);
     },
     { scope: 'worker' },
   ],
+
   infoTestLog: [
     async ({ logger }, use, testInfo) => {
-      const indexOfTestSubfolderStart = testInfo.file.indexOf('/tests') + 7;
-      const fileName = testInfo.file.substring(indexOfTestSubfolderStart);
-
+      const fileName = testInfo.file.replace(/\\+/g, '/');
       logger.info(`Test started: ${fileName}`);
-
       await use('infoTestLog');
-
       logger.info(`Test completed: ${fileName}`);
     },
     { scope: 'test', auto: true },
   ],
+
   addAllureTestHierarchy: [
     async ({ logger }, use, testInfo) => {
-      const fileName = testInfo.file;
+      const fileName = testInfo.file.replace(/\\+/g, '/');
 
-      const [parentSuite, suite, subSuite] = parseTestTreeHierarchy(
-        fileName,
-        logger,
-      );
-
-      await allure.parentSuite(parentSuite);
-      await allure.suite(suite);
-      if (subSuite) {
-        await allure.subSuite(subSuite);
+      let parts: string[] = [];
+      try {
+        parts = parseTestTreeHierarchy(fileName) ?? [];
+      } catch (e) {
+        logger?.error?.(
+          `parseTestTreeHierarchy failed for "${fileName}": ${String(e)}`
+        );
+        parts = [];
       }
 
-      await use('addAllureTestHierarhy');
+      const [parentSuite, suite, subSuite] = [
+        parts[0] ?? undefined,
+        parts[1] ?? undefined,
+        parts[2] ?? undefined,
+      ];
+
+      if (parentSuite) await allure.parentSuite(parentSuite);
+      if (suite)       await allure.suite(suite);
+      if (subSuite)    await allure.subSuite(subSuite);
+
+      await use('addAllureTestHierarchy');
     },
     { scope: 'test', auto: true },
   ],
 });
+
+export const expect = test.expect;
+export default test;

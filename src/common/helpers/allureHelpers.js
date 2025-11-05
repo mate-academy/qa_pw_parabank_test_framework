@@ -1,21 +1,23 @@
-import { camelCaseToPhrase, capitalize } from './stringHelpers';
+import { camelCaseToPhrase, capitalize } from "./stringHelpers";
 
-export function parseTestTreeHierarchy(fileName, logger) {
-  const testFolder = 'tests/';
+const TEST_FILE_REGEX = /\.(spec|test)\.(t|j)sx?$/i;
 
-  const attributesCamelCase = fileName
-    .substring(fileName.indexOf(testFolder) + testFolder.length)
-    .split('/');
+export function parseTestTreeHierarchy(file) {
+  const parts = (file || "")
+    .replace(/\\+/g, "/")
+    .replace(/^.*?(?:^|\/)(?:tests|__tests__)(?:\/|$)/i, "")
+    .split("/")
+    .filter(Boolean);
 
-  let attributes = attributesCamelCase.map(attribute =>
-    capitalize(camelCaseToPhrase(attribute)),
-  );
+  const lastPart = parts.at(-1) || "";
 
-  if (attributes[2].includes('.spec.js')) {
-    attributes = attributes.slice(0, 2);
+  if (TEST_FILE_REGEX.test(lastPart)) {
+    parts.pop();
   }
 
-  logger.debug(`Parsed test hierarchy: ${JSON.stringify(attributes)}`);
-
-  return attributes;
+  return parts.map(s =>
+    capitalize(
+      camelCaseToPhrase(s.replace(/[_-]+/g, " ")).trim()
+    )
+  );
 }

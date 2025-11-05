@@ -1,13 +1,9 @@
-import { test } from '@playwright/test';
+import { test, expect } from "@playwright/test";
 
-export async function testStep(title, stepToRun, userId = 0) {
-  let stepTitle = title;
+/** Wrap a function in a Playwright step with optional user tag. */
+export const testStep = (title, fn, userId = 0) => {
+  const stepTitle = userId > 0 ? `User${userId}: ${title}` : title;
+  return test.step(stepTitle, fn);
+};
 
-  if (userId > 0) {
-    stepTitle = `User${userId}: ${title}`;
-  }
-
-  return await test.step(stepTitle, stepToRun);
-}
-
-export { expect } from '@playwright/test';
+export { expect };
