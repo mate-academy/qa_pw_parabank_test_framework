@@ -28,7 +28,45 @@ npm install -g allure-commandline
 
 ## How to run the tests
 
+<<<<<<< HEAD
 // TODO - It's part of your task to add the appropriate instructions here. 
+=======
+Run all tests from the project root:
+npm run test
+
+Run a specific test file:
+npm run test:single -- tests/auth/login.spec.ts
+
+Run tests in a specific folder:
+npm run test:single -- tests/accounts/
+
+Run tests in debug mode (opens Playwright Inspector):
+npm run test:single -- --debug
+
+## How to generate Allure report
+
+Run tests with Allure reporter:
+npm run test:allure
+
+Generate the Allure report:
+npm run allure:generate
+
+Open the report in your browser:
+npm run allure:open
+
+## Task Reporting
+
+Add and commit all your updates:
+git add .
+git commit -m "Task solution with full test instructions and Allure report setup"
+
+Push the code to your forked repo:
+git push origin task_solution
+
+Create a Pull Request for your changes and address all suggestions from the code review until the PR is approved.
+
+
+>>>>>>> 020f19e (Update README with test and Allure instructions)
 
 ## How to generate report
 
