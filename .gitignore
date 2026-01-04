@@ -1,6 +1,16 @@
+# dependencies
 node_modules/
-/test-results/
-/playwright-report/
-/blob-report/
-/playwright/.cache/
-./vscodeallure-report/
+
+# Playwright
+test-results/
+playwright-report/
+blob-report/
+.playwright/
+
+# Allure
+allure-results/
+allure-report/
+
+# IDE
+.vscode/
+
