@@ -1,0 +1,15 @@
+export const PAGE_TITLES = {
+  ACCOUNTS_OVERVIEW: 'Accounts Overview',
+  OPEN_NEW_ACCOUNT: 'Open New Account',
+  OPEN_NEW_ACCOUNT_SUCCESS: 'Account Opened',
+  TRANSFER_FUNDS: 'Transfer Funds',
+  TRANSFER_FUNDS_SUCCESS: 'Transfer Complete',
+  BILL_PAY: 'Bill Payment Service',
+  BILL_PAY_SUCCESS: 'Bill Payment Complete',
+  FIND_TRANSACTIONS: 'Find Transactions',
+  FIND_TRANSACTIONS_SUCCESS: 'Transaction Results',
+  UPDATE_CONTACT_INFO: 'Update Profile',
+  REQUEST_LOAN: 'Apply for a Loan',
+  REQUEST_LOAN_SUCCESS: 'Loan Request Processed',
+  CONTACT_US: 'Customer Care',
+};

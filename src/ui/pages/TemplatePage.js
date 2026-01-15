@@ -12,7 +12,6 @@ export class HomePage {
 
   async clickSomething() {
     await this.step(`Click something`, async () => {
-      // example method
     });
   }
 

@@ -1,0 +1,35 @@
+export const REGISTER_ERROR_MESSAGES = {
+  FIRST_NAME: 'First name is required.',
+  LAST_NAME: 'Last name is required.',
+  ADDRESS: 'Address is required.',
+  'ADDRESS.STREET': 'Address is required.',
+  CITY: 'City is required.',
+  'ADDRESS.CITY': 'City is required.',
+  STATE: 'State is required.',
+  'ADDRESS.STATE': 'State is required.',
+  ZIP_CODE: 'Zip Code is required.',
+  'ADDRESS.ZIP_CODE': 'Zip Code is required.',
+  PHONE_NUMBER: 'Phone number is required.',
+  SSN: 'Social Security Number is required.',
+  USERNAME: 'Username is required.',
+  PASSWORD: 'Password is required.',
+  CONFIRM_PASSWORD: 'Password confirmation is required.',
+  REPEATED_PASSWORD: 'Password confirmation is required.',
+  PASSWORD_MISMATCH: 'Passwords did not match.',
+  EXISTED_USERNAME: 'This username already exists.',
+  
+  firstName: 'First name is required.',
+  lastName: 'Last name is required.',
+  'address.street': 'Address is required.',
+  'address.city': 'City is required.',
+  'address.state': 'State is required.',
+  'address.zipCode': 'Zip Code is required.',
+  ssn: 'Social Security Number is required.',
+  username: 'Username is required.',
+  password: 'Password is required.',
+  repeatedPassword: 'Password confirmation is required.',
+};
+
+export const REGISTER_SUCCESS_MESSAGES = {
+  REGISTRATION_SUCCESS: 'Your account was created successfully. You are now logged in.',
+};
