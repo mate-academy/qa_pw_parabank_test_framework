@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Site Bugs",
+    "messageRegex": ".*BUG*",
+    "matchedStatuses": ["failed", "broken"]
+  },
+  {
+    "name": "Internal Server Errors",
+    "messageRegex": ".*INTERNAL SERVER ERROR.*",
+    "matchedStatuses": ["failed", "broken"]
+  },
+  {
+    "name": "Validation Errors",
+    "messageRegex": ".*validation.*",
+    "matchedStatuses": ["failed"]
+  },
+  {
+    "name": "Timeout Errors",
+    "messageRegex": ".*Timeout exceeded.*",
+    "matchedStatuses": ["broken"]
+  },
+  {
+    "name": "Product Defects",
+    "matchedStatuses": ["failed"]
+  },
+  {
+    "name": "Test Defects",
+    "matchedStatuses": ["broken"]
+  },
+  {
+    "name": "Passed Tests",
+    "matchedStatuses": ["passed"]
+  }
+]
