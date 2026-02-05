@@ -8,19 +8,26 @@
     "playwright-core": "^1"
   },
   "devDependencies": {
-    "@eslint/js": "^9.19.0",
+    "@eslint/js": "^9.39.2",
     "@playwright/test": "^1",
+    "@types/node": "^25.2.0",
+    "@typescript-eslint/eslint-plugin": "^8.54.0",
+    "@typescript-eslint/parser": "^8.54.0",
     "allure-playwright": "^3.2.0",
-    "eslint": "^9.19.0",
+    "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-playwright": "^2.2.0",
     "globals": "^15.14.0",
     "husky": "^9.1.7",
     "lint-staged": "^15.4.3",
-    "prettier": "^3.4.2"
+    "prettier": "^3.4.2",
+    "typescript": "^5.9.3"
   },
   "scripts": {
-    "prepare": "husky"
+    "prepare": "husky",
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "report": "allure generate allure-results --clean -o allure-report && allure open allure-report"
   },
   "husky": {
     "hooks": {
@@ -28,7 +35,7 @@
     }
   },
   "lint-staged": {
-    "*.{js,md}": [
+    "*.{js,ts,md}": [
       "prettier --write",
       "eslint --fix"
     ]
