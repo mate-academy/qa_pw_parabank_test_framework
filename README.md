@@ -28,8 +28,24 @@ npm install -g allure-commandline
 
 ## How to run the tests
 
-// TODO - It's part of your task to add the appropriate instructions here. 
+Run all tests from the project root:
+
+```bash
+npx playwright test
+```
 
 ## How to generate report
 
-// TODO - It's part of your task to add the appropriate instructions here. 
+This project uses Allure to generate test reports. 
+
+1.Run the tests (this will generate the allure-results folder):
+```bash
+npx playwright test
+```
+
+2.To generate and open the report:
+```bash
+allure serve allure-results
+```
+
+3.View the report in the browser. Tests are grouped in the Suites tab

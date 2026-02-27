@@ -22,6 +22,7 @@ export default defineConfig({
   reporter: [['allure-playwright'], ['list', { printSteps: false }]],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
+    baseURL: 'https://parabank.parasoft.com/parabank/',
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: https://example.com
   },
