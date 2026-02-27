@@ -97,7 +97,11 @@ export class UpdateContactInfoPage {
   }
 
 
-
+  async assertUpdateContactInfoFormIsVisible() {
+    await this.step(`Assert the 'Update Contact Info' form is visible`, async () => {
+      await expect(this.firstNameField).toBeVisible({ timeout: 15000 });
+    });
+  }
  
 
   async assertFirstNameFieldValue(firstName) {
