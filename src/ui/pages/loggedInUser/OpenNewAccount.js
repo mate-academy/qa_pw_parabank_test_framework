@@ -41,7 +41,7 @@ export class OpenNewAccountPage{
   }
 
   async assertAccountOpenedMessage() {
-    await this.step(`Assert the 'Welcome User Head' is visible`, async () => {
+    await this.step(`Assert the 'Account Opened!' is visible`, async () => {
       await expect(this.accountOpenedMessage).toBeVisible();
     });
   }

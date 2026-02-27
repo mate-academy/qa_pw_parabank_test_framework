@@ -26,7 +26,7 @@ test('Successful `Transfer Funds` flow test', async ({
   await accountOverviewPage.clickTransferFundsLink();
   await transferFundsPage.fillRandomAmount();
   await transferFundsPage.selectFromAccountIdOption(accountMainData.accountNumber);
-  await transferFundsPage.selecttoAccountIdOption(accountSecondData.secondAccountNumber);
+  await transferFundsPage.selectToAccountIdOption(accountSecondData.secondAccountNumber);
 
   await transferFundsPage.clickTransferFundsButton();
   await transferFundsPage.assertTransferCompleteIsVisible();

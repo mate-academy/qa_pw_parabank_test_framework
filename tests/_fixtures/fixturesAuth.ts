@@ -5,9 +5,9 @@ import { ForgotLoginInfo } from '../../src/ui/pages/auth/ForgotLoginInfo';
 
 
 export const test = base.extend<{
-  signUpPage;
-  signInPage;
-  forgotLoginInfo;
+  signUpPage: SignUpPage;
+  signInPage: SignInPage;
+  forgotLoginInfo: ForgotLoginInfo;
  
 }>({
   signUpPage: async ({ page }, use) => {

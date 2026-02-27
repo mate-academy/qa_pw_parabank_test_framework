@@ -43,8 +43,8 @@ export class TransferFundsPage{
     });
   }
 
-  async selecttoAccountIdOption(secondAccountNumber) {
-    await this.step(`Select 'From Account Id' option`, async() => {
+  async selectToAccountIdOption(secondAccountNumber) {
+    await this.step(`Select 'To Account Id' option`, async() => {
       await this.toAccountId.selectOption({ value: String(secondAccountNumber) });
     });
   }

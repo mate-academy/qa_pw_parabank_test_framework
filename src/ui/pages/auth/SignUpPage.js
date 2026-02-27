@@ -130,7 +130,7 @@ export class SignUpPage {
       await this.fillSsnField(user.ssn);
       await this.fillUsernameField(user.username);
       await this.fillPasswordField(user.password);
-      await this.fillRepeatedPasswordField(user.password);
+      await this.fillRepeatedPasswordField(user.repeatedPassword ?? user.password);
       
     });
   }

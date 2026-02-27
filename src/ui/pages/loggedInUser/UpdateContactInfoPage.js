@@ -17,7 +17,7 @@ export class UpdateContactInfoPage {
     this.profileUpdatedHeader = page.getByRole('heading', { name: 'Profile Updated' });
     this.accountsOverviewLink = page.getByRole('link', { name: 'Accounts Overview' });
     this.updateContactInfo = page.getByRole('link', { name: 'Update Contact Info' });
-    this.rightPanel = page.locator('#rightPanel');
+    
   }
 
   async step(title, stepToRun) {
@@ -50,25 +50,25 @@ export class UpdateContactInfoPage {
     });
   }
  
-  async fillAddressCityFieldField(addressCity) {
+  async fillAddressCityField(addressCity) {
     await this.step(`Fill the 'Address City' field`, async () => {
       await this.addressCityField.fill(addressCity);
     });
   }
 
-  async fillAddressStateFieldField(addressState) {
+  async fillAddressStateField(addressState) {
     await this.step(`Fill the 'Address State' field`, async () => {
       await this.addressStateField.fill(addressState);
     });
   }
 
-  async fillAddressZipCodeFieldField(addressZipCode) {
+  async fillAddressZipCodeField(addressZipCode) {
     await this.step(`Fill the 'Address Zip Code' field`, async () => {
       await this.addressZipCodeField.fill(addressZipCode);
     });
   }
 
-  async fillPhoneNumberFieldField(phoneNumber) {
+  async fillPhoneNumberField(phoneNumber) {
     await this.step(`Fill the 'Phone Number' field`, async () => {
       await this.phoneNumberField.fill(phoneNumber);
     });
@@ -76,11 +76,10 @@ export class UpdateContactInfoPage {
 
   
   async clickUpdateProfile() {
-    await this.step(`Click the 'Update Profile' button`, async () => {
-      await this.updateProfile.click();
-      await expect(this.profileUpdatedHeader).toBeVisible({ timeout: 15000 });
-    });
-  }
+  await this.step(`Click the 'Update Profile' button`, async () => {
+    await this.updateProfile.click();
+  });
+}
 
   async assertProfileUpdatedHeaderIsVisible() {
     await this.step(`Assert the 'Update Profile' header is visible`, async () => {
@@ -91,7 +90,7 @@ export class UpdateContactInfoPage {
 
  
 
-  async clickAccountsOverviewLinkLink() {
+  async clickAccountsOverviewLink() {
     await this.step(`Click the 'Update Contact Info' link`, async () => {
       await this.accountsOverviewLink.click();
     });
@@ -108,7 +107,7 @@ export class UpdateContactInfoPage {
   }
 
   async assertLastNameFieldValue(lastName) {
-    await this.step(`Assert the 'First Name' field value is "${lastName}"`, async () => {
+    await this.step(`Assert the 'Last Name' field value is "${lastName}"`, async () => {
       await expect(this.lastNameField).toHaveValue(lastName);
     });
   }

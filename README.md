@@ -39,7 +39,7 @@ npx playwright test
 This project uses Allure to generate test reports. After running the tests, Playwright will create an allure-results folder. 
 To run Allure reposrt follow the nex steps: 
 
-1.Run the tests in the project root:
+1.Run the tests in the project root (this will generate fresh allure-results):
 ```bash
 npx playwright test
 ```
@@ -49,4 +49,4 @@ npx playwright test
 allure serve allure-results
 ```
 
-3.Read the report. Note that new tests are automatically placed correctly within the hierarchy in the **Suites** tab
+3.View the report in the browser. Tests are grouped in the Suites tab

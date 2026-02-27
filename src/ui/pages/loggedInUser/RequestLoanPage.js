@@ -21,7 +21,7 @@ export class RequestLoanPage{
     });
   }
 
-  async filldownPaymentField(amount) {
+  async fillDownPaymentField(amount) {
     await this.step(`Fill the 'Down Payment' field`, async () => {
       await this.downPaymentField.fill(String(amount));
     });
@@ -33,7 +33,7 @@ export class RequestLoanPage{
     });
   }
 
-  async clickapplyNowButton() {
+  async clickApplyNowButton() {
     await this.step(`Click the 'Apply Now' button`, async () => {
       await this.applyNowButton.click();
     });

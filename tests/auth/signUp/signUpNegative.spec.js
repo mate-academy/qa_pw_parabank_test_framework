@@ -14,191 +14,49 @@ import {
 import { generateNewUserData } from '../../../src/common/testData/generateNewUserData';
 
 const user = generateNewUserData();
+
+
+const baseUser = {
+  firstName: user.firstName,
+  lastName: user.lastName,
+  street: user.street,
+  city: user.city,
+  state: user.state,
+  zipCode: user.zipCode,
+  phone: user.phone,
+  ssn: user.ssn,
+  username: user.username,
+  password: user.password,
+  repeatedPassword: user.password,
+};
+
+
 const testParameters = [
+  { title: `empty 'First Name'`, overrides: { firstName: '' }, message: FIRST_NAME_REQUIRED },
+  { title: `empty 'Last Name'`, overrides: { lastName: '' }, message: LAST_NAME_REQUIRED },
+  { title: `empty 'Address Street'`, overrides: { street: '' }, message: ADDRESS_REQUIRED },
+  { title: `empty 'City'`, overrides: { city: '' }, message: CITY_REQUIRED },
+  { title: `empty 'State'`, overrides: { state: '' }, message: STATE_REQUIRED },
+  { title: `empty 'Zip Code'`, overrides: { zipCode: '' }, message: ZIP_CODE_REQUIRED },
+  { title: `empty 'SSN'`, overrides: { ssn: '' }, message: SSN_REQUIRED },
+  { title: `empty 'Username'`, overrides: { username: '' }, message: USERNAME_REQUIRED },
+  { title: `empty 'Password'`, overrides: { password: '' }, message: PASSWORD_REQUIRED },
   {
-    firstNameField: '',
-    lastNameField: user.lastName,
-    addressStreetField: user.street,
-    addressCityField: user.city,
-    addressStateField: user.state,
-    addressZipCodeField: user.zipCode,
-    phoneNumberField: user.phone,
-    ssnField: user.ssn,
-    usernameField: user.username,
-    passwordField: user.password,
-    repeatedPasswordField: user.password,
-    title: `empty 'First Name'`,
-    message: FIRST_NAME_REQUIRED,
-  },
-  {
-    firstNameField: user.firstName,
-    lastNameField: '',
-    addressStreetField: user.street,
-    addressCityField: user.city,
-    addressStateField: user.state,
-    addressZipCodeField: user.zipCode,
-    phoneNumberField: user.phone,
-    ssnField: user.ssn,
-    usernameField: user.username,
-    passwordField: user.password,
-    repeatedPasswordField: user.password,
-    title: `empty 'Last Name'`,
-    message: LAST_NAME_REQUIRED,
-  },
-  {
-    firstNameField: user.firstName,
-    lastNameField: user.lastName,
-    addressStreetField: '',
-    addressCityField: user.city,
-    addressStateField: user.state,
-    addressZipCodeField: user.zipCode,
-    phoneNumberField: user.phone,
-    ssnField: user.ssn,
-    usernameField: user.username,
-    passwordField: user.password,
-    repeatedPasswordField: user.password,
-    title: `empty 'Address Street'`,
-    message: ADDRESS_REQUIRED,
-  },
-  {
-    firstNameField: user.firstName,
-    lastNameField: user.lastName,
-    addressStreetField: user.street,
-    addressCityField: '',
-    addressStateField: user.state,
-    addressZipCodeField: user.zipCode,
-    phoneNumberField: user.phone,
-    ssnField: user.ssn,
-    usernameField: user.username,
-    passwordField: user.password,
-    repeatedPasswordField: user.password,
-    title: `empty 'City'`,
-    message: CITY_REQUIRED,
-  },
-  {
-    firstNameField: user.firstName,
-    lastNameField: user.lastName,
-    addressStreetField: user.street,
-    addressCityField: user.city,
-    addressStateField: '',
-    addressZipCodeField: user.zipCode,
-    phoneNumberField: user.phone,
-    ssnField: user.ssn,
-    usernameField: user.username,
-    passwordField: user.password,
-    repeatedPasswordField: user.password,
-    title: `empty 'State'`,
-    message: STATE_REQUIRED,
-  },
-  {
-    firstNameField: user.firstName,
-    lastNameField: user.lastName,
-    addressStreetField: user.street,
-    addressCityField: user.city,
-    addressStateField: user.state,
-    addressZipCodeField: '',
-    phoneNumberField: user.phone,
-    ssnField: user.ssn,
-    usernameField: user.username,
-    passwordField: user.password,
-    repeatedPasswordField: user.password,
-    title: `empty 'Zip Code'`,
-    message: ZIP_CODE_REQUIRED,
-  },
-  {
-    firstNameField: user.firstName,
-    lastNameField: user.lastName,
-    addressStreetField: user.street,
-    addressCityField: user.city,
-    addressStateField: user.state,
-    addressZipCodeField: user.zipCode,
-    phoneNumberField: user.phone,
-    ssnField: '',
-    usernameField: user.username,
-    passwordField: user.password,
-    repeatedPasswordField: user.password,
-    title: `empty 'SSN'`,
-    message: SSN_REQUIRED,
-  },
-  {
-    firstNameField: user.firstName,
-    lastNameField: user.lastName,
-    addressStreetField: user.street,
-    addressCityField: user.city,
-    addressStateField: user.state,
-    addressZipCodeField: user.zipCode,
-    phoneNumberField: user.phone,
-    ssnField: user.ssn,
-    usernameField: '',
-    passwordField: user.password,
-    repeatedPasswordField: user.password,
-    title: `empty 'Username'`,
-    message: USERNAME_REQUIRED,
-  },
-  {
-    firstNameField: user.firstName,
-    lastNameField: user.lastName,
-    addressStreetField: user.street,
-    addressCityField: user.city,
-    addressStateField: user.state,
-    addressZipCodeField: user.zipCode,
-    phoneNumberField: user.phone,
-    ssnField: user.ssn,
-    usernameField: user.username,
-    passwordField: '',
-    repeatedPasswordField: user.password,
-    title: `empty 'Password'`,
-    message: PASSWORD_REQUIRED,
-  },
-  {
-    firstNameField: user.firstName,
-    lastNameField: user.lastName,
-    addressStreetField: user.street,
-    addressCityField: user.city,
-    addressStateField: user.state,
-    addressZipCodeField: user.zipCode,
-    phoneNumberField: user.phone,
-    ssnField: user.ssn,
-    usernameField: user.username,
-    passwordField: user.password,
-    repeatedPasswordField: '',
     title: `empty 'Password Confirmation'`,
+    overrides: { repeatedPassword: '' },
     message: PASSWORD_CONFIRMATION_REQUIRED,
   },
 ];
 
 test.describe('Sign up negative tests', () => {
-  testParameters.forEach(({
-    firstNameField,
-    lastNameField,
-    addressStreetField,
-    addressCityField,
-    addressStateField,
-    addressZipCodeField,
-    phoneNumberField,
-    ssnField,
-    usernameField,
-    passwordField,
-    repeatedPasswordField,
-    title,
-    message,
-  }) => {
+  testParameters.forEach(({ title, overrides, message }) => {
     test(`Sign up with ${title}`, async ({ signUpPage }) => {
+      const invalidUser = { ...baseUser, ...overrides };
+
       await signUpPage.open();
-
-      await signUpPage.fillFirstNameField(firstNameField);
-      await signUpPage.fillLastNameField(lastNameField);
-      await signUpPage.fillAddressStreetField(addressStreetField);
-      await signUpPage.fillAddressCityField(addressCityField);
-      await signUpPage.fillAddressStateField(addressStateField);
-      await signUpPage.fillAddressZipCodeField(addressZipCodeField);
-      await signUpPage.fillPhoneNumberField(phoneNumberField);
-      await signUpPage.fillSsnField(ssnField);
-      await signUpPage.fillUsernameField(usernameField);
-      await signUpPage.fillPasswordField(passwordField);
-      await signUpPage.fillRepeatedPasswordField(repeatedPasswordField);
-
+      await signUpPage.submitSignUpForm(invalidUser);
       await signUpPage.clickRegisterButton();
+
       await signUpPage.assertErrorMessageIsVisible(message);
     });
   });

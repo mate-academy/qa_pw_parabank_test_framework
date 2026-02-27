@@ -21,14 +21,6 @@ export class AccountsActivityFilteringAndDetailsPage{
     this.debitHeader = this.firstRow.getByRole('cell').nth(2);       // Debit (-)
     this.creditHeader = this.firstRow.getByRole('cell').nth(3);      // Credit (+)
 
-    
-    this.dateCell = this.secondRow.getByRole('cell').nth(0);
-    this.transactionCell = this.secondRow.getByRole('cell').nth(1);
-    this.debitCell = this.secondRow.getByRole('cell').nth(2);
-    this.creditCell = this.secondRow.getByRole('cell').nth(3);
-
-    
-    this.transactionLink = this.transactionCell.getByRole('link');
   }
 
   async step(title, stepToRun) {
@@ -57,7 +49,7 @@ export class AccountsActivityFilteringAndDetailsPage{
   }
 
   async assertAccountAvailableBalance(mainAccountBalanceAvailableAmount) {
-    await this.step(`Assert avaible account balance is correct`, async () => {
+    await this.step(`Assert available account balance is correct`, async () => {
       await expect(this.availableBalance).toHaveText(String(mainAccountBalanceAvailableAmount));
     });
   }

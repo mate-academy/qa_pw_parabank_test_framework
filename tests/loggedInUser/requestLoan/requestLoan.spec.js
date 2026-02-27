@@ -26,9 +26,9 @@ test('Successful `Request Loan` flow test', async ({
 
   await accountOverviewPage.clickRequestLoanLink();
   await requestLoanPage.fillLoanAmountField(randomLoanAmount);
-  await requestLoanPage.filldownPaymentField(randomDownPayment);
+  await requestLoanPage.fillDownPaymentField(randomDownPayment);
   await requestLoanPage.selectFromAccount(accountMainData.accountNumber);
-  await requestLoanPage.clickapplyNowButton();
+  await requestLoanPage.clickApplyNowButton();
 
   await requestLoanPage.assertLoanApproved();
 

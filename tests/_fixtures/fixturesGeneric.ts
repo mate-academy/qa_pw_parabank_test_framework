@@ -1,4 +1,5 @@
 import { test as base } from '@playwright/test';
+import { Page } from '@playwright/test';
 import { Logger } from '../../src/common/logger/Logger';
 import * as allure from 'allure-js-commons';
 import { parseTestTreeHierarchy } from '../../src/common/helpers/allureHelpers';
@@ -8,9 +9,9 @@ export const test = base.extend<
   {
     infoTestLog;
     addAllureTestHierarchy;
-    user;
-    users;
-    pages;
+    user: ReturnType<typeof generateNewUserData>;
+    users: ReturnType<typeof generateNewUserData>[];
+    pages: Page[];
   },
   {
     logger;

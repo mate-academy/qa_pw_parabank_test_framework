@@ -107,4 +107,20 @@ export class BillPayPage{
       await expect(this.billPaymentCompleteHeader).toBeVisible();
     });
   }
+
+  async submitBillPaymentForm(payeeInfo, paymentDetails) {
+    await this.step(`Fill the 'Bill Payment' form`, async () => {
+      await this.fillPayeeNameField(`${payeeInfo.firstName} ${payeeInfo.lastName}`);
+      await this.fillPayeeAddressStreetField(payeeInfo.street);
+      await this.fillPayeeAddressCityField(payeeInfo.city);
+      await this.fillPayeeAddressStateField(payeeInfo.state);
+      await this.fillPayeeAddressZipCodeField(payeeInfo.zipCode);
+      await this.fillPayeePhoneNumberField(payeeInfo.phone);
+
+      await this.fillPayeeAccountNumberField(paymentDetails.accountNumber);
+      await this.fillVerifyAccountField(paymentDetails.accountNumber);
+      await this.fillAmountField(paymentDetails.amount);
+      await this.selectFromAccount(paymentDetails.fromAccountNumber);
+    });
+  }
 }

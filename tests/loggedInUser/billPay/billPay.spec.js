@@ -26,16 +26,11 @@ test('Successful `Bill Pay` flow test', async ({
 
   await accountOverviewPage.clickBillPayLink();
 
-  await billPayPage.fillPayeeNameField(`${payeeInformation.firstName} ${payeeInformation.lastName}`);
-  await billPayPage.fillPayeeAddressStreetField(payeeInformation.street);
-  await billPayPage.fillPayeeAddressCityField(payeeInformation.city);
-  await billPayPage.fillPayeeAddressStateField(payeeInformation.state);
-  await billPayPage.fillPayeeAddressZipCodeField(payeeInformation.zipCode);
-  await billPayPage.fillPayeePhoneNumberField(payeeInformation.phone);
-  await billPayPage.fillPayeeAccountNumberField(randomAccount);
-  await billPayPage.fillVerifyAccountField(randomAccount);
-  await billPayPage.fillAmountField(randomAmount);
-  await billPayPage.selectFromAccount(accountMainData.accountNumber);
+  await billPayPage.submitBillPaymentForm(payeeInformation, {
+    accountNumber: randomAccount,
+    amount: randomAmount,
+    fromAccountNumber: accountMainData.accountNumber,
+  });
   await billPayPage.clickSendPaymentButton();
 
   await billPayPage.assertBillPaymentCompleteHeaderIsVisible();

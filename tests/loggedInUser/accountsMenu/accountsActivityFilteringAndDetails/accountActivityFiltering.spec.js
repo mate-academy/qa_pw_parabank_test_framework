@@ -14,7 +14,7 @@ test.beforeEach(async ({ page, user }) => {
 
 });
 
-test('Assert Account activity filtering has corect headers test', async ({ 
+test('Assert Account activity filtering has correct headers test', async ({ 
   accountsActivityFilteringAndDetailsPage,
   accountOverviewPage,
 }) => {

@@ -13,7 +13,7 @@ test.beforeEach(async ({ page, user }) => {
 });
 
 test('Successful `Update Contact Info` flow test', async ({ 
-  page,
+  
   accountOverviewPage,
   updateContactInfoPage,
 }) => {
@@ -24,19 +24,19 @@ test('Successful `Update Contact Info` flow test', async ({
 
 
   await accountOverviewPage.clickUpdateContactInfo();
-  await page.waitForTimeout(3000);
+  await updateContactInfoPage.assertUpdateContactInfoFormIsVisible();
 
 
   await updateContactInfoPage.fillFirstNameField(newUserInfo.firstName);
   await updateContactInfoPage.fillLastNameField(newUserInfo.lastName);
   await updateContactInfoPage.fillAddressStreetField(newUserInfo.street);
-  await updateContactInfoPage.fillAddressCityFieldField(newUserInfo.city);
-  await updateContactInfoPage.fillAddressStateFieldField(newUserInfo.state);
-  await updateContactInfoPage.fillAddressZipCodeFieldField(newUserInfo.zipCode);
-  await updateContactInfoPage.fillPhoneNumberFieldField(newUserInfo.phone);
+  await updateContactInfoPage.fillAddressCityField(newUserInfo.city);
+  await updateContactInfoPage.fillAddressStateField(newUserInfo.state);
+  await updateContactInfoPage.fillAddressZipCodeField(newUserInfo.zipCode);
+  await updateContactInfoPage.fillPhoneNumberField(newUserInfo.phone);
 
   await updateContactInfoPage.clickUpdateProfile();
-
+  await updateContactInfoPage.assertProfileUpdatedHeaderIsVisible();
   
  
   

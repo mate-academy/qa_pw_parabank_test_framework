@@ -73,17 +73,7 @@ async fillFirstNameField(name) {
     });
   }
 
-   welcomeUserHeading(username) {
-    return this.page.getByRole('heading', {
-      name: `Welcome ${username}`,
-    });
-  }
-
-  async assertWelcomeUserHeadingIsVisible(username) {
-    await this.step(`Assert the 'Welcome User Head' is visible`, async () => {
-      await expect(this.welcomeUserHeading(username)).toBeVisible();
-    });
-  }
+   
 
   async assertLoginWasLocatedIsVisible() {
     await this.step(`Assert the 'Your login information was located successfully.' is visible`, async () => {

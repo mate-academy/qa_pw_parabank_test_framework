@@ -39,11 +39,7 @@ export class SignInPage{
     });
   }
 
-  async assertErrorMessageContainsText(messageText) {
-    await this.step(`Assert the '${messageText}' error is shown`, async () => {
-      await expect(this.errorMessage).toContainText(messageText);
-    });
-  }
+  
 
   async assertAccountsOverviewIsVisible() {
     await this.step(`Assert the 'Accounts Overview' is visible`, async () => {

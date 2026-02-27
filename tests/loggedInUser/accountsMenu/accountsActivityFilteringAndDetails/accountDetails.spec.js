@@ -1,7 +1,6 @@
 import { test } from '../../../_fixtures/fixtures';
 
 import { signUpUser } from '../../../../src/ui/actions/auth/signUpUser';
-import { openNewCheckingAccount } from '../../../../src/ui/actions/auth//openNewCheckingAccount';
 
 
 

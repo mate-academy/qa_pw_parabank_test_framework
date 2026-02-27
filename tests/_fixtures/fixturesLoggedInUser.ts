@@ -10,15 +10,15 @@ import { UpdateContactInfoPage } from '../../src/ui/pages/loggedInUser/UpdateCon
 import { AccountsActivityFilteringAndDetailsPage } from '../../src/ui/pages/loggedInUser/AccountsActivityFilteringAndDetailsPage';
 
 export const test = base.extend<{
-  requestLoanPage;
-  logOutPage;
-  accountOverviewPage;
-  openNewAccountPage;
-  transferFundsPage;
-  billPayPage;
-  findTransactionsPage;
-  updateContactInfoPage;
-  accountsActivityFilteringAndDetailsPage;
+  requestLoanPage: RequestLoanPage;
+  logOutPage: LogOutPage;
+  accountOverviewPage: AccountOverviewPage;
+  openNewAccountPage: OpenNewAccountPage;
+  transferFundsPage: TransferFundsPage;
+  billPayPage: BillPayPage;
+  findTransactionsPage: FindTransactionsPage;
+  updateContactInfoPage: UpdateContactInfoPage;
+  accountsActivityFilteringAndDetailsPage: AccountsActivityFilteringAndDetailsPage;
 }>({
   logOutPage: async ({ page }, use) => {
     const logOutPage = new LogOutPage(page);
