@@ -1,5 +1,5 @@
-import { test } from '../_fixtures/fixtures';
-import { registerUser } from '../../src/ui/actions/auth/registerUser';
+import { test } from '../../_fixtures/fixtures';
+import { registerUser } from '../../../src/ui/actions/auth/registerUser';
 
 test('User successful log out test', async ({ user, page, registrationPage, homePage }) => {
   await registerUser(page, user);

@@ -19,7 +19,7 @@ export function generateNewUserData(logger = null) {
     zipCode,
     phone,
     ssn,
-    username: `${firstName}_${lastName}`.replaceAll(`'`).toLowerCase(),
+    username: `${lastName}-${firstName}-VG`.replaceAll(`'`).toLowerCase(),
     password: faker.internet.password(),
   };
 

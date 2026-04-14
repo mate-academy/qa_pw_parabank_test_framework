@@ -5,6 +5,8 @@ export class HomePage {
     this.page = page;
     this.userId = userId;
     this.welcomeTitle = page.getByRole('heading', { level: 1 });
+    this.forgotLoginInfoLink = page.getByRole('link', { name: 'Forgot login info?' });
+    this.registerLink = page.getByRole('link', { name: 'Register' });
   }
 
   async step(title, stepToRun) {
@@ -16,16 +18,21 @@ export class HomePage {
       await expect(this.page).toHaveURL(url);
     });
   }
-
-  async clickSomething() {
-    await this.step(`Click something`, async () => {
-      // example method
+  async open() {
+    await this.step(`Open home page`, async () => {
+      await this.page.goto('/parabank/index.htm');
     });
   }
 
-  async assertSomething() {
-    await this.step(`Assert something`, async () => {
-      expect(true).toBe(true);
+  async clickForgotLoginInfoLink() {
+    await this.step(`Click forgot login info link`, async () => {
+      await this.forgotLoginInfoLink.click();
+    });
+  }
+
+  async assertForgotLoginInfoLinkIsVisible() {
+    await this.step(`Assert forgot login info link is visible`, async () => {
+      await expect(this.forgotLoginInfoLink).toBeVisible();
     });
   }
 }
