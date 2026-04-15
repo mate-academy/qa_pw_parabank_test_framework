@@ -28,8 +28,46 @@ npm install -g allure-commandline
 
 ## How to run the tests
 
-// TODO - It's part of your task to add the appropriate instructions here. 
+You can run the tests using the following commands:
+
+* **Run all tests in headless mode:**
+    ```bash
+    npx playwright test
+    ```
+
+* **Run tests in headed mode (UI):**
+    ```bash
+    npx playwright test --headed
+    ```
+
+* **Run a specific test file:**
+    ```bash
+    npx playwright test tests/openNewAccount.spec.js
+    ```
+
+* **Run tests via npm script (if configured):**
+    ```bash
+    npm test
+    ```
 
 ## How to generate report
 
-// TODO - It's part of your task to add the appropriate instructions here. 
+The project is configured to use **Allure Report** for detailed test execution analysis.
+
+1.  **Generate the report:**
+    After the tests finish, run the following command to process the raw results from `./allure-results` into a human-readable report:
+    ```bash
+    allure generate ./allure-results --clean -o ./allure-report
+    ```
+
+2.  **Open the report:**
+    To view the generated report in your default browser:
+    ```bash
+    allure open ./allure-report
+    ```
+
+3.  **Shortcut (Optional):**
+    If your `package.json` includes an allure script, you can simply run:
+    ```bash
+    npm run allure:report
+    ```

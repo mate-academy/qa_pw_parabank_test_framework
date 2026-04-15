@@ -1,0 +1,12 @@
+export const FIRST_NAME_ERROR_MESSAGE = `First name is required.`;
+export const LAST_NAME_ERROR_MESSAGE = `Last name is required.`;
+export const ADDRESS_ERROR_MESSAGE = `Address is required.`;
+export const CITY_ERROR_MESSAGE = `City is required.`;
+export const STATE_ERROR_MESSAGE = `State is required.`;
+export const ZIP_CODE_ERROR_MESSAGE = `Zip Code is required.`;
+export const SSN_ERROR_MESSAGE = `Social Security Number is required.`;
+export const USERNAME_ERROR_MESSAGE = `Username is required.`;
+export const PASSWORD_ERROR_MESSAGE = `Password is required.`;
+export const CONFIRM_PASSWORD_ERROR_MESSAGE = `Password confirmation is required.`;
+export const PASSWORD_MISMATCH_ERROR_MESSAGE = `Passwords did not match.`;
+export const USERNAME_ALREADY_EXISTS_ERROR_MESSAGE = `This username already exists.`;
