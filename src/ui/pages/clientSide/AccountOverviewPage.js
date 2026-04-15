@@ -47,6 +47,12 @@ export class AccountsOverviewPage {
     const href = await link.getAttribute('href');
     return href.split('id=')[1];
   }
+  async getAccountBalance(accountId) {
+    await this.step(`Get account balance for account '${accountId}'`, async () => {});
+    const row = this.getAccountRow(accountId);
+    const balance = await row.getByRole('cell', { name: '$' }).first().textContent();
+    return balance;
+  }
   async assertAccountTableIsVisible() {
     await this.step(`Assert accounts table is visible`, async () => {
       await expect(this.accountTable).toBeVisible();
@@ -62,7 +68,7 @@ export class AccountsOverviewPage {
   async assertAccountBalance(accountId, expectedBalance) {
     await this.step(`Assert account '${accountId}' balance is '${expectedBalance}'`, async () => {
       const row = this.getAccountRow(accountId);
-      await expect(row.locator('td:nth-child(2)')).toHaveText(expectedBalance);
+      await expect(row.getByRole('cell', { name: '$' }).first()).toHaveText(expectedBalance);
     });
   }
 
