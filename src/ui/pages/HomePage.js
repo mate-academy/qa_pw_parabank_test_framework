@@ -33,7 +33,7 @@ export class HomePage {
   }
 
   async clickForgotLoginInfoButton() {
-    await this.step(`Click the 'Fogot login info?' button`, async () => {
+    await this.step(`Click the 'Forgot login info?' button`, async () => {
       await this.forgotLoginInfoButton.click();
     });
   }
@@ -63,7 +63,7 @@ export class HomePage {
   }
 
   async assertLoginInformationFound(firstName, lastName) {
-    await this.step(`Assert the account was created successfully`, async () => {
+    await this.step(`Assert login information found`, async () => {
       await expect(this.welcomeUser(`${firstName} ${lastName}`)).toBeVisible();
       await expect(this.successCustomerLookUp).toContainText(
         'Your login information was located successfully. You are now logged in.',

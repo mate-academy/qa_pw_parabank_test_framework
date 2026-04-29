@@ -31,12 +31,6 @@ export class SignInPage {
     });
   }
 
-  async clickLogOutButton() {
-    await this.step(`Click the 'Log out' button`, async () => {
-      await this.logOutButton.click();
-    });
-  }
-
   async assertErrorMessageContainsText(messageText) {
     await this.step(`Assert the '${messageText}' error is shown`, async () => {
       await expect(this.page.getByText(messageText)).toBeVisible();

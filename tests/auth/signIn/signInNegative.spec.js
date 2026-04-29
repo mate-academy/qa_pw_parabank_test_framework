@@ -18,7 +18,7 @@ const testParameters = [
     username: '',
     password: user.password,
     message: EMPTY_USERNAME_OR_PASSWORD_MESSAGE,
-    title: 'empty email',
+    title: 'empty username',
   },
   {
     username: user.username,

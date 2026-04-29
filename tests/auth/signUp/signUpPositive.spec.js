@@ -19,5 +19,5 @@ test('Successful `Sign up` flow test', async ({
   await signUpPage.fillConfirmPasswordField(user.password);
   await signUpPage.clickRegisterButton();
 
-  await homePage.assertAccountCreated(user.username);
+  await homePage.assertAccountCreated(user.firstName, user.lastName);
 });

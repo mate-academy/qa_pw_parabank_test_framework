@@ -5,7 +5,7 @@ test.beforeEach(async ({ page, user }) => {
   await signUpUser(page, user);
 });
 
-test('Successful `Sign out` test', async ({
+test('Successful `Forgot login info` test', async ({
   user,
   homePage,
   forgotLoginPage,

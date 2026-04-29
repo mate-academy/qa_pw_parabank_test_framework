@@ -111,7 +111,7 @@ testParameters.forEach(
     message,
     title,
   }) => {
-    test.describe('Sign up negative tests', () => {
+    test.describe('Forgot login negative tests', () => {
       test(`Lookup customer with ${title} negative test flow`, async ({
         signUpPage,
         forgotLoginPage,
