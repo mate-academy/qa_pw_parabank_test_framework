@@ -26,7 +26,7 @@ export const test = base.extend<
       return;
     }
 
-    let pages = Array(contextsNumber);
+    let pages = Array.from({ length: contextsNumber });
     for (let i = 0; i < contextsNumber; i++) {
       const context = await browser.newContext();
       pages[i] = await context.newPage();
@@ -39,7 +39,7 @@ export const test = base.extend<
     await use(user);
   },
   users: async ({ logger, usersNumber }, use) => {
-    const users = Array(usersNumber);
+    const users = Array.from({ length: usersNumber });
 
     for (let i = 0; i < usersNumber; i++) {
       users[i] = generateNewUserData(logger);
@@ -83,7 +83,7 @@ export const test = base.extend<
         await allure.subSuite(subSuite);
       }
 
-      await use('addAllureTestHierarhy');
+      await use('addAllureTestHierarchy');
     },
     { scope: 'test', auto: true },
   ],
