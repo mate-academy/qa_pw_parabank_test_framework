@@ -2,11 +2,13 @@ import { test as base } from '@playwright/test';
 import { Logger } from '../../src/common/logger/Logger';
 import * as allure from 'allure-js-commons';
 import { parseTestTreeHierarchy } from '../../src/common/helpers/allureHelpers';
+import { generateNewUserData } from '../../src/common/testData/generateNewUserData';
 
 export const test = base.extend<
   {
     infoTestLog;
     addAllureTestHierarchy;
+    userData;
   },
   {
     logger;
@@ -52,4 +54,9 @@ export const test = base.extend<
     },
     { scope: 'test', auto: true },
   ],
+  userData: async ({ logger }, use) => {
+    const userData = generateNewUserData(logger);
+
+    await use(userData);
+  },
 });
