@@ -28,8 +28,29 @@ npm install -g allure-commandline
 
 ## How to run the tests
 
-// TODO - It's part of your task to add the appropriate instructions here. 
+To run all tests across all configured browsers:
+```bash
+npx playwright test
+```
+
+To run tests in a specific browser:
+```bash
+npx playwright test --project="Desktop Chrome"
+```
+
+To run a specific test file:
+```bash
+npx playwright test tests/auth/signIn/signInPositive.spec.js
+```
+
+To run tests in headed mode (with browser UI visible):
+```bash
+npx playwright test --headed
+```
 
 ## How to generate report
 
-// TODO - It's part of your task to add the appropriate instructions here. 
+After running the tests, generate and open the Allure report:
+```bash
+allure generate allure-results --clean && allure open
+```
