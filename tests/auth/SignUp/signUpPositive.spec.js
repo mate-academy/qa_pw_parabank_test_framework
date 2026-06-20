@@ -1,5 +1,6 @@
 import { SignInPage } from '../../../src/ui/pages/auth/SignInPage';
 import {test} from '../../_fixtures/fixtures'
+import { label, severity } from 'allure-js-commons';
 
 
 test('Sucsessful `Sign Up` flow test', async ({
@@ -9,6 +10,11 @@ user,
 page,
 homePage,
 })=>{
+ await label('parentSuite', 'Parabank');
+ await label('suite', 'Sign Up');
+ await label('subSuite', 'Sign Up Positive');
+ await severity('critical');
+    
 const password = user.password;
 await signInPage.open();
 await signInPage.clickOnRegisterButton();

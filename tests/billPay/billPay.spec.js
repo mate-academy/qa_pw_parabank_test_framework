@@ -4,6 +4,7 @@ import { generateNewUserData } from '../../src/common/testData/generateNewUserDa
 import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
 import {faker} from '@faker-js/faker';
 import { BillPayPage } from '../../src/ui/pages/transactions/BillPayPage';
+import { label, severity } from 'allure-js-commons';
 
 let createdUser;
 const VALID_AMOUNT = '100.00';
@@ -23,6 +24,12 @@ test('Bill pay for another user account', async ({
   
 }) => {
     const billPayPage = new BillPayPage(pages[1], 2);
+
+  await label('parentSuite', 'Parabank');
+  await label('suite', 'Bill Pay');
+  await label('subSuite', 'Bill Pay Negative');
+  await severity('critical');
+
 await billPayPage.open();
 await billPayPage.inputPayeeNameField(createdUser.username);
 await billPayPage.inputPayeeAdressField(createdUser.address);

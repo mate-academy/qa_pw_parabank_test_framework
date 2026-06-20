@@ -1,4 +1,6 @@
 import {test} from '../../_fixtures/fixtures';
+import { label, severity } from 'allure-js-commons';
+
 import { generateNewUserData } from '../../../src/common/testData/generateNewUserData';
 import{
 PASSWORDS_MISMACH,
@@ -201,7 +203,13 @@ title:'ununique username',
 ];
 testParameters.forEach(({ message, title, firstName, lastName, address, state, city, zipCode, phoneNumber, ssnCode, username, password, confirmation,}) =>{
  test.describe('Sign Up negative tests', () => {
-    test(`Sign in with ${title}`, async ({ signUpPage, page}) => {
+    test(`Sign up with ${title}`, async ({ signUpPage, page}) => {
+      await label('parentSuite', 'Parabank');
+      await label('suite', 'Sign Up');
+      await label('subSuite', 'Sign Up Negative');
+      await severity('normal');
+      
+      
         await signUpPage.open();
         await signUpPage.inputFirstNameField(firstName);
         await signUpPage.inputLastNameField(lastName);

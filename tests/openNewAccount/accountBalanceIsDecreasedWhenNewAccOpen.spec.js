@@ -1,6 +1,7 @@
 import { test  } from '../_fixtures/fixtures';
 import { expect } from '@playwright/test';
 import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
+import { label, severity } from 'allure-js-commons';
 
 
 test.describe('Successful `Account Creation` flow test', () => {
@@ -32,7 +33,10 @@ test.describe('Successful `Account Creation` flow test', () => {
     homePage,
     overviewPage,
   }) => {
-   
+    await label('parentSuite', 'Parabank');
+    await label('suite', 'Open New Account');
+    await label('subSuite', 'Account Balance is Decreased When New Account Open');
+    await severity('critical');
 
 
     await openNewAccountPage.open();

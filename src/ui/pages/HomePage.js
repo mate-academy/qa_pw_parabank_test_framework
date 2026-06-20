@@ -14,7 +14,8 @@ export class HomePage{
     this.updateContactInfoButton = page.getByRole('link', { name: 'Update Contact Info' });
     this.requestLoanButton = page.getByRole('link', { name: 'Request Loan' });
     this.transferFundButton = page.getByRole('link', { name: 'Transfer Funds' });
-
+    this.overviewButton = page.getByRole('link', { name: 'Accounts Overview' });
+   
     }
 
     //user.accountId
@@ -65,6 +66,15 @@ export class HomePage{
         await this.transferFundButton.click();
      });
      }
+
+     async clickOverviewButton(){
+        await this.step('Click `Overview` button',async()=>{
+        await this.overviewButton.click();
+     });
+     }
+
+   
+
     }
     
 

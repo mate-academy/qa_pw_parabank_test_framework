@@ -1,4 +1,6 @@
 import { test } from '../../_fixtures/fixtures';
+import { label, severity } from 'allure-js-commons';
+
 import {
 CUSTOMER_INFO_NOT_FOUND,
 } from '../../../src/ui/constants/authErrorMessages';
@@ -19,6 +21,10 @@ test('Successful `Sign in` flow test', async ({
     page,
     user,
 }) => {
+    await label('parentSuite', 'Parabank');
+    await label('suite', 'Forgot Log In Info');
+    await label('subSuite', 'Forgot Info Negative');
+    await severity('normal');
   
     await homePage.clickLogoutButton();
     await homePage.clickForgotInfoButton();

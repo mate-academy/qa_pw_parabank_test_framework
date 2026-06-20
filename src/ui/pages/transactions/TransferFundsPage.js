@@ -64,7 +64,7 @@ export class TransferFundsPage{
 //     );
 //   }
 
-  async assertSuccsessTransferTextVisible(fromAccountId, toAccountId, amount) {
+  async assertSuccessTransferTextVisible(fromAccountId, toAccountId, amount) {
     await this.step(
       `Assert that transfer result 
       contains correct from account, to account and amount`,

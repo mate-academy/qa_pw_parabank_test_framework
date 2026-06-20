@@ -1,4 +1,6 @@
 import { test } from '../../_fixtures/fixtures';
+import { label, severity } from 'allure-js-commons';
+
 import {
 EMPTY_PASSWORD_OR_USERNAME_SIGN_IN,
 USER_IS_NOT_VERIFFIED,
@@ -32,6 +34,12 @@ title:'non-verified user',
 testParameters.forEach(({ message, title, username, password,}) =>{
  test.describe('Sign In negative tests', () => {
     test(`Sign in with ${title}`, async ({ signInPage, page}) => {
+
+    await label('parentSuite', 'Parabank');
+    await label('suite', 'Sign In');
+    await label('subSuite', 'Sign In Negative');
+    await severity('normal');
+
     await signInPage.open();
     await signInPage.fillUsernameField(username);
     await signInPage.fillPasswordField(password);

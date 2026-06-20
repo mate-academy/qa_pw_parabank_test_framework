@@ -1,4 +1,6 @@
 import { test } from '../_fixtures/fixtures';
+import { label, severity } from 'allure-js-commons';
+
 import { generateNewUserData } from '../../src/common/testData/generateNewUserData';
 import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
 import { HomePage } from '../../src/ui/pages/HomePage';
@@ -13,12 +15,17 @@ newAccountId = await openNewAccount(page, user);
 });
 
 
-test('Transfer Fuund Succsessful flow', async ({
+test('Transfer Funds Successful flow', async ({
   user,
   page,
   transferFundsPage,
   homePage,
 }) => {
+
+    await label('parentSuite', 'Parabank');
+    await label('suite', 'Transfer Funds');
+    await label('subSuite', 'Transfer Funds Successful');
+    await severity('critical');
 
 await homePage.clickTransferFundButton();
 await transferFundsPage.inputAmountField(AVALIBLE_AMOUNT);
@@ -26,7 +33,7 @@ await transferFundsPage.selectToAccountDropdown(newAccountId);
   const fromAccountId = await transferFundsPage.getAccountId();
 
 await transferFundsPage.clickTransferButton();
-await transferFundsPage.assertSuccsessTransferTextVisible(
+await transferFundsPage.assertSuccessTransferTextVisible(
     fromAccountId,
     newAccountId,
     AVALIBLE_AMOUNT,

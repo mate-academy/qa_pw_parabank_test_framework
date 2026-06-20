@@ -1,4 +1,6 @@
 import { test } from '../_fixtures/fixtures';
+import { label, severity } from 'allure-js-commons';
+
 import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
 
 const UPDATED_PROFILE = {
@@ -23,6 +25,11 @@ test('Successful `Update Profile` flow test', async ({
     user,
     page,
 }) => {
+
+    await label('parentSuite', 'Parabank');
+    await label('suite', 'Update Profile');
+    await label('subSuite', 'Update Profile Positive');
+    await severity('minor');
   
     await homePage.clickUpdateContactInfoButton();
     await updateProfilePage.inputFirstNameField(UPDATED_PROFILE.firstName);

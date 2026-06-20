@@ -1,4 +1,6 @@
 import { test } from '../../_fixtures/fixtures';
+import { label, severity } from 'allure-js-commons';
+
 import { generateNewUserData } from '../../../src/common/testData/generateNewUserData';
 import { signUpUser } from '../../../src/ui/actions/auth/signUpUser';
 
@@ -15,6 +17,10 @@ test('Successful `Sign in` flow test', async ({
     lookupPage,
     page
 }) => {
+    await label('parentSuite', 'Parabank');
+    await label('suite', 'Forgot Log In Info');
+    await label('subSuite', 'Forgot Info Positive');
+    await severity('critical');
   
     await homePage.clickLogoutButton();
     await homePage.clickForgotInfoButton();
