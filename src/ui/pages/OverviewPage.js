@@ -1,13 +1,12 @@
 // /parabank/register.htm
 import{expect, testStep} from '../../common/helpers/pwHelpers';
-import { DEFAULT_DEPOSIT_BALANCE, MIN_DEPOSIT} from '../../ui/constants/constDeposit';
 
-
+const BALANCE_SUM = '$415.50';
+const MIN_DEPOSIT = '$100.00';
 
 export class OverviewPage{
-   constructor(page, user, userId = 0){
+   constructor(page){
    this.page = page;
-  this.userId = userId;
    this.accountOverviewPanel = page.locator('#overviewAccountsApp');
    this.overviewPageTab = page.getByRole('heading', { name: 'Accounts Overview' });
     this.accountOverviewPanel = page.locator('#overviewAccountsApp');
@@ -24,7 +23,7 @@ export class OverviewPage{
 
  
     async step(title, stepToRun) {
-    return await testStep(title, stepToRun, this.userId);
+    return await testStep(title, stepToRun);
   }
 
    async open(){
@@ -49,19 +48,19 @@ export class OverviewPage{
 
     async assertAccountIdIsVisible(user){
       await this.step(`Acount id '${user.accountId}' is visible`, async()=>{
-        await expect(this.accountNumber).toBeVisible(user);
+        await expect(this.accountId).toBeVisible(user);
      });
     }
 
     async assertRightFirstRowBalance(){
-      await this.step(`Acount balance '${DEFAULT_DEPOSIT_BALANCE-MIN_DEPOSIT}' is visible`, async()=>{
-        await expect(this.firstRowBalance).toBeVisible(DEFAULT_DEPOSIT_BALANCE-MIN_DEPOSIT);
+      await this.step(`Acount balance 'BALANCE_SUM' is visible`, async()=>{
+        await expect(this.firstRowBalance).toHaveText(String(BALANCE_SUM));
      });
     }
 
     async assertRightSecondAccBalance(){
-      await this.step(`Acount min deposit:'${MIN_DEPOSIT}' is visible`, async()=>{
-        await expect(this.secondRowBalance).toBeVisible(MIN_DEPOSIT);
+      await this.step(`Acount min deposit:'MIN_DEPOSIT' is visible`, async()=>{
+        await expect(this.secondRowBalance).toHaveText(String(MIN_DEPOSIT));
      });
     }
 

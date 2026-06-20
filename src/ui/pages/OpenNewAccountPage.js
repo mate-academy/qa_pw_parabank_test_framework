@@ -4,7 +4,7 @@ import {expect, testStep} from '../../common/helpers/pwHelpers';
 export class OpenNewAccountPage {
   constructor(page, user, userId = 0) {
     this.page = page;
-    this.userId = userId;
+      this.userId = userId;
     this.user = user;
     this.openNewAccountButton = page.getByRole('button', { name: 'Open New Account' });
     this.accountTypeDropdown = page.locator('#type');

@@ -16,6 +16,11 @@ test.describe('Successful `Account Creation` flow test', () => {
     homePage,
     overviewPage,
   }) => {
+     await label('parentSuite', 'Parabank');
+    await label('suite', 'Open New Account');
+    await label('subSuite', 'Account Balance is Decreased When New SAVING Account Open');
+    await severity('critical');
+
 
     await openNewAccountPage.open();
     await openNewAccountPage.selectSavingAccountType();
@@ -35,7 +40,7 @@ test.describe('Successful `Account Creation` flow test', () => {
   }) => {
     await label('parentSuite', 'Parabank');
     await label('suite', 'Open New Account');
-    await label('subSuite', 'Account Balance is Decreased When New Account Open');
+    await label('subSuite', 'Account Balance is Decreased When New CHECKING Account Open');
     await severity('critical');
 
 

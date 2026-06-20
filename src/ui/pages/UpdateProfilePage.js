@@ -1,9 +1,8 @@
 import{expect, testStep} from '../../common/helpers/pwHelpers'
 
 export class UpdateProfilePage{
- constructor (page, userId = 0){
+ constructor (page){
     this.page = page;
-    this.userId = userId;
     this.firstNameField = page.locator('[id="customer.firstName"]');
     this.lastNameField = page.locator('[id="customer.lastName"]');
     this.adressField = page.locator('[id="customer.address.street"]');
@@ -17,7 +16,7 @@ export class UpdateProfilePage{
 
  }
   async step(title, stepToRun) {
-    return await testStep(title, stepToRun, this.userId);
+    return await testStep(title, stepToRun);
   }
 
   async open() {

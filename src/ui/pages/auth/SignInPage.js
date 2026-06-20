@@ -1,9 +1,8 @@
 import{expect, testStep} from '../../../common/helpers/pwHelpers'
 
 export class SignInPage{
- constructor (page, userId = 0){
+ constructor (page){
  this.page = page;
- this.userId = userId;
  this.usernameField = page.locator('input[name="username"]');
  this.passwordField = page.locator('input[name="password"]');
  this.loginButton = page.getByRole('button', { name: 'Log In' });
@@ -13,7 +12,7 @@ export class SignInPage{
  }
 
   async step(title, stepToRun) {
-    return await testStep(title, stepToRun, this.userId);
+    return await testStep(title, stepToRun);
   }
 
   async open() {
