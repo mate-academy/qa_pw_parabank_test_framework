@@ -1,7 +1,7 @@
 import{expect, testStep} from '../../common/helpers/pwHelpers'
 
 export class LookUpPage{
- constructor (page, userId = 0){
+ constructor (page){
     this.page = page;
     this.succsessOperationText = page.getByText('Your login information was located successfully. You are now logged in');
     this.findMyLoginInfoButton = page.getByRole('button').filter({ hasText: 'Find My Login Info' });
@@ -16,7 +16,7 @@ export class LookUpPage{
 
  }
   async step(title, stepToRun) {
-    return await testStep(title, stepToRun, this.userId);
+    return await testStep(title, stepToRun);
   }
 
   async open() {

@@ -2,16 +2,15 @@ import{expect, testStep} from '../../../common/helpers/pwHelpers';
 import {MIN_DEPOSIT} from '../../../ui/constants/constDeposit';
 
 export class AccountDetailsPage{
- constructor (page, userId = 0){
+ constructor (page){
  this.page = page;
- this.userId = userId;
  this.accountDetails = page.getByRole('heading', { name: 'Account Details' });
  this.accountType = page.getByRole('cell', { name: 'Account Type:' });
- this.accountBalance = page.getByRole('cell', { name: 'Balance:' });
+ this.accountBalance = page.locator('#balance');
  }
 
   async step(title, stepToRun) {
-    return await testStep(title, stepToRun, this.userId);
+    return await testStep(title, stepToRun);
   }
 
   async open() {
@@ -26,12 +25,12 @@ export class AccountDetailsPage{
     });
   }
 
-  async assertAccountBalancelsIsVisible(){
+  async assertAccountBalanceIsVisible(){
     await this.step(`Acount balance: '${MIN_DEPOSIT}' is visible`, async () =>{
-    await expect(this.accountBalance).toBeVisible(MIN_DEPOSIT);
+    await expect(this.accountBalance).toHaveText(`$${MIN_DEPOSIT}`);
     });
   }
-  async assertAccountTypelsIsVisible(){
+  async assertAccountTypeIsVisible(){
     await this.step(`Acount type is visible`, async () =>{
     await expect(this.accountType).toBeVisible();
     });

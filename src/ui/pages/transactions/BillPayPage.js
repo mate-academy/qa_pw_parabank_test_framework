@@ -2,7 +2,7 @@ import{expect, testStep} from '../../../common/helpers/pwHelpers';
 
 
 export class BillPayPage{
- constructor (page, userId = 0){
+ constructor (page){
     this.page = page;
     this.payeeNameField = page.locator('input[name="payee.name"]');
     this.payeeAdressField = page.locator('input[name="payee.address.street"]');
@@ -19,7 +19,7 @@ export class BillPayPage{
  }
 
 async step(title, stepToRun) {
-    return await testStep(title, stepToRun, this.userId);
+    return await testStep(title, stepToRun);
   }
 
   async open() {
@@ -80,8 +80,8 @@ async inputPayeeCityField(city){
     }
 
     async assertBillPaymetCompleateTextIsVisible(){
-        await await this.step(`Assert the 'Bill Payment Complete' is shown`, async()=>{
-        await expect(this.sendPaymentButton).toBeVisible();
+      await this.step(`Assert the 'Bill Payment Complete' is shown`, async()=>{
+        await expect(this.billPaymetCompleateText).toBeVisible();
      });
     }
     }

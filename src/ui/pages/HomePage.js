@@ -3,9 +3,8 @@ import { expect, testStep } from '../../common/helpers/pwHelpers';
 
 
 export class HomePage{
-    constructor(page, user, userId = 0){
+    constructor(page, user){
     this.page = page;
-    // this.userID = userId;
     this.user = user;
     this.logOutButton = page.getByRole('link', { name: 'Log Out' });
     this.homePageTab = page.locator('.title');
@@ -23,7 +22,7 @@ export class HomePage{
 }
 
     async step(title, stepToRun) {
-    return await testStep(title, stepToRun, this.userId);
+    return await testStep(title, stepToRun);
   }
 
     async assertHomePageIsVisible(){

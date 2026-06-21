@@ -25,11 +25,25 @@ npx playwright install
 ```bash
 npm install -g allure-commandline
 ```
-
-## How to run the tests
-
-// TODO - It's part of your task to add the appropriate instructions here. 
-
+# How to run tests
+1. Run all tests across all configured browsers:
+```bash
+npx playwright test
+```
+2. Run all tests in appropriate browser:
+```bash
+npx playwright test --project=firefox
+```
+3. Run specific tests file:
+```bash
+npx playwright test tests/auth/signIn/signInPositive.spec.js
+```
 ## How to generate report
-
-// TODO - It's part of your task to add the appropriate instructions here. 
+1. To generate an Allure report, you first need to run tests using the following command:
+```bash
+ npx playwright test
+```
+2. To create an HTML report, you need to use the command:
+```bash
+ allure serve allure-results
+```

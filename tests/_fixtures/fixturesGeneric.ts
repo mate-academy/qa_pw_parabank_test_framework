@@ -3,6 +3,10 @@ import { Logger } from '../../src/common/logger/Logger';
 import * as allure from 'allure-js-commons';
 import { parseTestTreeHierarchy } from '../../src/common/helpers/allureHelpers';
 import { generateNewUserData } from '../../src/common/testData/generateNewUserData';
+import fs from 'fs-extra';
+import path from 'path';
+
+const allureResultsPath = path.join(__dirname, '..', 'allure-results');
 
 export const test = base.extend<
   {
@@ -18,7 +22,9 @@ export const test = base.extend<
 
   },
   {
+    
     logger;
+    autoClean: void;
   }
 >({
   usersNumber: [1, { option: true }],
@@ -88,4 +94,14 @@ export const test = base.extend<
     },
     { scope: 'test', auto: true },
   ],
+
+  autoClean: [
+  async ({}, use) => {
+    await fs.remove('allure-results');   
+    await fs.ensureDir('allure-results');
+
+    await use();
+  },
+  { scope: 'worker', auto: true },
+],
 });

@@ -16,7 +16,11 @@ test.describe('Successful `Account Creation` flow test', (
     page,
     accountDetailsPage,
   }) => {
-    const userType = 
+    await label('parentSuite', 'Parabank');
+    await label('suite', 'Open New Account');
+    await label('subSuite', 'Account Details Visible When New SAVING Account Open');
+    await severity('normal');
+
 
     await openNewAccountPage.open();
     await openNewAccountPage.selectSavingAccountType();   
@@ -24,8 +28,8 @@ test.describe('Successful `Account Creation` flow test', (
     await openNewAccountPage.assertAccountOpened();
     await openNewAccountPage.clickNewAccountIdButton();
     await accountDetailsPage.assertAccountDetailsIsVisible();
-    await accountDetailsPage.assertAccountBalancelsIsVisible();
-    await accountDetailsPage.assertAccountTypelsIsVisible('SAVING');
+    await accountDetailsPage.assertAccountBalanceIsVisible();
+    await accountDetailsPage.assertAccountTypeIsVisible('SAVING');
 
     
     
@@ -38,11 +42,15 @@ test.describe('Successful `Account Creation` flow test', (
     accountDetailsPage,
 
   }) => {
+    await label('parentSuite', 'Parabank');
+    await label('suite', 'Open New Account');
+    await label('subSuite', 'Account Details Visible When New CHECKING Account Open');
+    await severity('normal');
     await openNewAccountPage.open();
     await openNewAccountPage.clickOpenNewAccountButton();
     await openNewAccountPage.assertAccountOpened();
     await openNewAccountPage.clickNewAccountIdButton();
-    await accountDetailsPage.assertAccountBalancelsIsVisible();
-    await accountDetailsPage.assertAccountTypelsIsVisible('CHECKING');
+    await accountDetailsPage.assertAccountBalanceIsVisible();
+    await accountDetailsPage.assertAccountTypeIsVisible('CHECKING');
   });
 });
