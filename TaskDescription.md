@@ -8,15 +8,15 @@
 
 ## Main task:
 
-1. Analize the [Parabank](https://parabank.parasoft.com/parabank/index.htm) bank application for the required test coverage.
-2. Create an the test covergage for the Parabank functionality.
-3. Organize your test folders in the Suite hierarhy: `parentSuite`, `suite` and `subSuite`.
-4. Add severity allure metadata to each test.
-5. Rememebr to wrap all the actions and assertions into a step method.
-6. Remember to not duplicate the code, use helper methods, actions and fixtures.
-7. Organize fixtures for the certain functionality into separate files.
-8. Think about parametrized tests you need to create, for example when checking the different numeric inputs.
-9. Add the README.md "How to run the tests" & "How to generate report" sections.
+1. Analize the [Parabank](https://parabank.parasoft.com/parabank/index.htm) bank application for the required test coverage. - Done
+2. Create an the test covergage for the Parabank functionality. - Done
+3. Organize your test folders in the Suite hierarhy: `parentSuite`, `suite` and `subSuite`. - Done
+4. Add severity allure metadata to each test. - Done
+5. Rememebr to wrap all the actions and assertions into a step method. - Done
+6. Remember to not duplicate the code, use helper methods, actions and fixtures. - Done
+7. Organize fixtures for the certain functionality into separate files. - Done
+8. Think about parametrized tests you need to create, for example when checking the different numeric inputs. - Done
+9. Add the README.md "How to run the tests" & "How to generate report" sections. - Done
 
 The functionality that should be automated:
 

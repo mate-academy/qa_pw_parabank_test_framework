@@ -20,7 +20,8 @@
     "prettier": "^3.4.2"
   },
   "scripts": {
-    "prepare": "husky"
+    "prepare": "husky",
+    "open-debug": "npx playwright test --ui --debug"
   },
   "husky": {
     "hooks": {

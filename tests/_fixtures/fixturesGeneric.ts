@@ -2,14 +2,18 @@ import { test as base } from '@playwright/test';
 import { Logger } from '../../src/common/logger/Logger';
 import * as allure from 'allure-js-commons';
 import { parseTestTreeHierarchy } from '../../src/common/helpers/allureHelpers';
+import { generateNewAccountData } from '../../src/common/testData/generateNewAccountData';
+import { AccountNavigationMenu } from '../../src/components/AccountNavigationMenu';
 
 export const test = base.extend<
   {
-    infoTestLog;
-    addAllureTestHierarchy;
+    infoTestLog: Logger;
+    addAllureTestHierarchy: Logger;
+    account: any;
+    accountNavigationMenu: AccountNavigationMenu;
   },
   {
-    logger;
+    logger: Logger;
   }
 >({
   logger: [
@@ -33,6 +37,11 @@ export const test = base.extend<
     },
     { scope: 'test', auto: true },
   ],
+  account: async ({ logger }, use) => {
+    const account = generateNewAccountData(logger);
+
+    await use(account);
+  },
   addAllureTestHierarchy: [
     async ({ logger }, use, testInfo) => {
       const fileName = testInfo.file;
@@ -52,4 +61,9 @@ export const test = base.extend<
     },
     { scope: 'test', auto: true },
   ],
+  accountNavigationMenu: async ({ page }, use) => {
+    const accountNavigationMenu = new AccountNavigationMenu(page);
+
+    await use(accountNavigationMenu);
+  },
 });
