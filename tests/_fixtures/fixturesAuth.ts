@@ -2,8 +2,7 @@ import { test as base } from '@playwright/test';
 import { RegisterPage } from '../../src/ui/pages/auth/RegisterPage';
 import { HomePage } from '../../src/ui/pages/HomePage';
 import { CustomerLookupPage } from '../../src/ui/pages/auth/CustomerLookupPage';
-import { AccountsOverviewPage } from '../../src/ui/pages/accountsOverview/AccountsOverviewPage';
-import { generateRegistrationData } from '../../src/common/testData/registrationData';
+import { generateRegistrationData } from '../../src/common/testData/auth/registrationData';
 
 type RegistrationData = ReturnType<typeof generateRegistrationData>;
 
@@ -11,7 +10,6 @@ export const test = base.extend<{
   registerPage: RegisterPage;
   homePage: HomePage;
   customerLookupPage: CustomerLookupPage;
-  accountsOverviewPage: AccountsOverviewPage;
   registrationData: RegistrationData;
 }>({
   registerPage: async ({ page, registrationData }, use) => {
@@ -24,10 +22,6 @@ export const test = base.extend<{
 
   customerLookupPage: async ({ page }, use) => {
     await use(new CustomerLookupPage(page));
-  },
-
-  accountsOverviewPage: async ({ page }, use) => {
-    await use(new AccountsOverviewPage(page));
   },
 
   registrationData: async ({}, use) => {

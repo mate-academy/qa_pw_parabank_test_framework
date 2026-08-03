@@ -1,7 +1,7 @@
 import { test } from '../../_fixtures/fixtures';
 import * as allure from 'allure-js-commons';
 import { fillLoginForm } from '../../../src/ui/actions/auth/login';
-import { LOGIN_MISSING_FIELDS_ERROR } from '../../../src/common/constants/authMessages';
+import { LOGIN_MISSING_FIELDS_ERROR } from '../../../src/common/constants/auth/authMessages';
 
 const negativeLoginCases = [
   {

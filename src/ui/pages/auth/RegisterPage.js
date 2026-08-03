@@ -1,6 +1,6 @@
 import { expect } from '../../../common/helpers/pwHelpers';
 import { BasePage } from '../BasePage';
-import { REGISTRATION_SUCCESS_MESSAGE } from '../../../common/constants/authMessages';
+import { REGISTRATION_SUCCESS_MESSAGE } from '../../../common/constants/auth/authMessages';
 
 export class RegisterPage extends BasePage {
   constructor(page, userLabel = '') {

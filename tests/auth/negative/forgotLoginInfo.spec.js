@@ -1,7 +1,7 @@
 import { test } from '../../_fixtures/fixtures';
 import * as allure from 'allure-js-commons';
 import { fillCustomerLookupForm } from '../../../src/ui/actions/auth/lookup';
-import { REGISTRATION_REQUIRED_FIELD_ERRORS } from '../../../src/common/constants/authMessages';
+import { REGISTRATION_REQUIRED_FIELD_ERRORS } from '../../../src/common/constants/auth/authMessages';
 
 const { username, password, confirmPassword, ...lookupFieldErrors } =
   REGISTRATION_REQUIRED_FIELD_ERRORS;

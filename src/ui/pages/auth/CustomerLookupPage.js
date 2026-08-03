@@ -3,7 +3,7 @@ import { BasePage } from '../BasePage';
 import {
   CUSTOMER_LOOKUP_SUCCESS_MESSAGE,
   CUSTOMER_NOT_FOUND_ERROR,
-} from '../../../common/constants/authMessages';
+} from '../../../common/constants/auth/authMessages';
 
 export class CustomerLookupPage extends BasePage {
   constructor(page, userLabel = '') {

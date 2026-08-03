@@ -1,7 +1,7 @@
 import { test } from '../../_fixtures/fixtures';
 import * as allure from 'allure-js-commons';
 import { fillRegistrationForm } from '../../../src/ui/actions/auth/register';
-import { REGISTRATION_REQUIRED_FIELD_ERRORS } from '../../../src/common/constants/authMessages';
+import { REGISTRATION_REQUIRED_FIELD_ERRORS } from '../../../src/common/constants/auth/authMessages';
 
 for (const [field, expectedError] of Object.entries(
   REGISTRATION_REQUIRED_FIELD_ERRORS,
