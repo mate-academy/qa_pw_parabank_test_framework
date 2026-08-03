@@ -1,4 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
+import { ALLURE_RESULTS_DIR } from './src/common/constants/allurePaths';
 
 /**
  * Read environment variables from file.
@@ -19,11 +20,14 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : 1,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: [['allure-playwright'], ['list', { printSteps: false }]],
+  reporter: [
+    ['allure-playwright', { resultsDir: ALLURE_RESULTS_DIR }],
+    ['list', { printSteps: false }],
+  ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    // baseURL: https://example.com
+    baseURL: 'https://parabank.parasoft.com',
   },
 
   /* Configure projects for major browsers */

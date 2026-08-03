@@ -20,7 +20,10 @@
     "prettier": "^3.4.2"
   },
   "scripts": {
-    "prepare": "husky"
+    "prepare": "husky",
+    "test": "playwright test",
+    "allure:generate": "set \"TEMP=E:\\PROGRAMER\\QA\\systems\\allure\\tmp\" && set \"TMP=E:\\PROGRAMER\\QA\\systems\\allure\\tmp\" && allure generate E:/PROGRAMER/QA/systems/allure/allure-results --output E:/PROGRAMER/QA/systems/allure/allure-report",
+    "allure:open": "set \"TEMP=E:\\PROGRAMER\\QA\\systems\\allure\\tmp\" && set \"TMP=E:\\PROGRAMER\\QA\\systems\\allure\\tmp\" && allure open E:/PROGRAMER/QA/systems/allure/allure-report"
   },
   "husky": {
     "hooks": {
