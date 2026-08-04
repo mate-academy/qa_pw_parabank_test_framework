@@ -41,6 +41,22 @@ export class AccountsOverviewPage extends BasePage {
     return this.totalRow.locator('td').nth(1);
   }
 
+  accountRowByNumber(accountNumber) {
+    return this.accountRows.filter({ hasText: accountNumber });
+  }
+
+  accountLinkByNumber(accountNumber) {
+    return this.accountRowByNumber(accountNumber).locator('a');
+  }
+
+  balanceCellByNumber(accountNumber) {
+    return this.accountRowByNumber(accountNumber).locator('td').nth(1);
+  }
+
+  availableCellByNumber(accountNumber) {
+    return this.accountRowByNumber(accountNumber).locator('td').nth(2);
+  }
+
   async open() {
     await this.step('Open Accounts Overview page', async () => {
       await this.page.goto('/parabank/overview.htm');
@@ -109,6 +125,23 @@ export class AccountsOverviewPage extends BasePage {
 
       expect(totalText).toBe(balanceText);
     });
+  }
+
+  async assertAccountBalance(accountNumber, expectedBalance) {
+    const formattedBalance = `$${Number(expectedBalance).toFixed(2)}`;
+
+    await this.step(
+      `Assert account #${accountNumber} balance is "${formattedBalance}"`,
+      async () => {
+        await expect(this.accountLinkByNumber(accountNumber)).toBeVisible();
+        await expect(this.balanceCellByNumber(accountNumber)).toHaveText(
+          formattedBalance,
+        );
+        await expect(this.availableCellByNumber(accountNumber)).toHaveText(
+          formattedBalance,
+        );
+      },
+    );
   }
 
   async assertAccessDenied() {

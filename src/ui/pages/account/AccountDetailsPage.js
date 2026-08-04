@@ -21,16 +21,14 @@ export class AccountDetailsPage extends BasePage {
     this.transactionRows = page.locator('#transactionTable tbody tr');
   }
 
-  transactionRow(description) {
-    return this.transactionRows.filter({ hasText: description });
-  }
+  transactionRow(description, amount) {
+    const row = this.transactionRows.filter({ hasText: description });
 
-  transactionDebitCell(description) {
-    return this.transactionRow(description).locator('td').nth(2);
-  }
+    if (amount === undefined) {
+      return row;
+    }
 
-  transactionCreditCell(description) {
-    return this.transactionRow(description).locator('td').nth(3);
+    return row.filter({ hasText: `$${Number(amount).toFixed(2)}` });
   }
 
   async open(accountNumber) {
@@ -105,20 +103,29 @@ export class AccountDetailsPage extends BasePage {
     });
   }
 
-  async assertTransactionVisible(description) {
+  async assertTransactionVisible(description, amount) {
     await this.step(
-      `Assert transaction "${description}" is visible`,
+      `Assert transaction "${description}" (${amount}) is visible`,
       async () => {
-        await expect(this.transactionRow(description)).toBeVisible();
+        await expect(this.transactionRow(description, amount)).toBeVisible();
       },
     );
   }
 
-  async assertTransactionNotVisible(description) {
+  async assertTransactionNotVisible(description, amount) {
     await this.step(
-      `Assert transaction "${description}" is not visible`,
+      `Assert transaction "${description}" (${amount}) is not visible`,
       async () => {
-        await expect(this.transactionRow(description)).toHaveCount(0);
+        await expect(this.transactionRow(description, amount)).toHaveCount(0);
+      },
+    );
+  }
+
+  async assertTransactionCount(description, amount, count) {
+    await this.step(
+      `Assert ${count} "${description}" (${amount}) transaction(s) are visible`,
+      async () => {
+        await expect(this.transactionRow(description, amount)).toHaveCount(count);
       },
     );
   }

@@ -1,15 +1,21 @@
 import { test } from '../../_fixtures/fixtures';
 import * as allure from 'allure-js-commons';
 import { registerNewUser } from '../../../src/ui/actions/auth/register';
-import { openNewAccounts } from '../../../src/ui/actions/account/openNewAccount';
-import { transferFunds } from '../../../src/ui/actions/account/transferFunds';
-import { ACCOUNT_TYPE } from '../../../src/ui/pages/account/OpenNewAccountPage';
+import {
+  getDefaultAccountNumber,
+  openTrackedAccounts,
+  makeTrackedTransfers,
+  assertAccountBalances,
+  assertAccountActivity,
+} from '../../../src/ui/interfaces/account';
 
-test.beforeEach(async ({ registerPage, registrationData }) => {
-  await registerNewUser(registerPage, registrationData);
-});
+const ACCOUNTS_TO_OPEN = 3;
+const TRANSFERS_TO_MAKE = 3;
+const TRANSFER_AMOUNT = 500;
 
-test('should show account details and filter activity by transaction type', async ({
+test('should show correct account balances and activity after opening accounts and transferring funds', async ({
+  registerPage,
+  registrationData,
   accountsOverviewPage,
   openNewAccountPage,
   transferFundsPage,
@@ -17,42 +23,20 @@ test('should show account details and filter activity by transaction type', asyn
 }) => {
   await allure.severity('critical');
 
-  await accountsOverviewPage.open();
-  const defaultAccountNumber = await accountsOverviewPage
-    .accountLink()
-    .textContent();
+  await registerNewUser(registerPage, registrationData);
 
-  const [savingsAccountNumber] = await openNewAccounts(openNewAccountPage, [
-    { accountType: ACCOUNT_TYPE.SAVINGS, fromAccount: defaultAccountNumber },
-  ]);
+  const defaultAccountNumber = await getDefaultAccountNumber(accountsOverviewPage);
 
-  await transferFunds(transferFundsPage, [
-    {
-      amount: 50,
-      fromAccount: savingsAccountNumber,
-      toAccount: defaultAccountNumber,
-    },
-  ]);
+  const accounts = await openTrackedAccounts(openNewAccountPage, {
+    count: ACCOUNTS_TO_OPEN,
+    fromAccount: defaultAccountNumber,
+  });
 
-  await accountDetailsPage.open(savingsAccountNumber);
+  await makeTrackedTransfers(transferFundsPage, accounts, {
+    count: TRANSFERS_TO_MAKE,
+    amount: TRANSFER_AMOUNT,
+  });
 
-  await accountDetailsPage.assertOpened();
-  await accountDetailsPage.assertAccountNumber(savingsAccountNumber);
-  await accountDetailsPage.assertAccountType('SAVINGS');
-
-  await accountDetailsPage.assertActivityOpened();
-  await accountDetailsPage.assertTransactionVisible('Funds Transfer Received');
-  await accountDetailsPage.assertTransactionVisible('Funds Transfer Sent');
-
-  await accountDetailsPage.selectTransactionType('Credit');
-  await accountDetailsPage.clickGoButton();
-
-  await accountDetailsPage.assertTransactionVisible('Funds Transfer Received');
-  await accountDetailsPage.assertTransactionNotVisible('Funds Transfer Sent');
-
-  await accountDetailsPage.selectTransactionType('Debit');
-  await accountDetailsPage.clickGoButton();
-
-  await accountDetailsPage.assertTransactionVisible('Funds Transfer Sent');
-  await accountDetailsPage.assertTransactionNotVisible('Funds Transfer Received');
+  await assertAccountBalances(accountsOverviewPage, accounts);
+  await assertAccountActivity(accountsOverviewPage, accountDetailsPage, accounts);
 });

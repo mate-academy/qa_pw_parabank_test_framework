@@ -7,6 +7,8 @@ export const ACCOUNT_TYPE = {
   SAVINGS: '1',
 };
 
+export const OPEN_ACCOUNT_DEPOSIT = 100;
+
 export class OpenNewAccountPage extends BasePage {
   constructor(page, userLabel = '') {
     super(page, userLabel);
