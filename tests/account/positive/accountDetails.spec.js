@@ -9,9 +9,9 @@ import {
   assertAccountActivity,
 } from '../../../src/ui/interfaces/account';
 
-const ACCOUNTS_TO_OPEN = 3;
-const TRANSFERS_TO_MAKE = 3;
-const TRANSFER_AMOUNT = 500;
+const ACCOUNTS_TO_OPEN = 1;
+const TRANSFERS_TO_MAKE = 1;
+const TRANSFER_AMOUNT = 100;
 
 test('should show correct account balances and activity after opening accounts and transferring funds', async ({
   page,

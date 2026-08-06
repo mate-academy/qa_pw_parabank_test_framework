@@ -1,11 +1,11 @@
 import { faker } from '@faker-js/faker';
 
-export function generateRegistrationData() {
+export function generateRegistrationData(logger) {
   const firstName = faker.person.firstName();
   const lastName = faker.person.lastName();
   const password = faker.internet.password({ length: 10 });
 
-  return {
+  const user = {
     firstName,
     lastName,
     street: faker.location.streetAddress(),
@@ -18,4 +18,8 @@ export function generateRegistrationData() {
     password,
     confirmPassword: password,
   };
+
+  logger?.debug(`Generated registration data for username "${user.username}"`);
+
+  return user;
 }

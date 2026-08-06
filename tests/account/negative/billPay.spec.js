@@ -71,6 +71,7 @@ test.describe('Bill Pay - negative', () => {
   for (const { dataField, errorKey } of requiredFieldCases) {
     test(`should not send a bill payment with empty ${dataField}`, async ({
       billPayPage,
+      logger,
     }) => {
       await allure.severity('normal');
 
@@ -79,7 +80,7 @@ test.describe('Bill Pay - negative', () => {
       await billPayPage.assertOpened();
 
       await fillBillPayForm(billPayPage, {
-        ...generateBillPayData(),
+        ...generateBillPayData(logger),
         [dataField]: '',
       });
       await billPayPage.clickSendPaymentButton();
@@ -94,6 +95,7 @@ test.describe('Bill Pay - negative', () => {
   for (const { title, override, errorKey, message } of numberFieldCases) {
     test(`should not send a bill payment with ${title}`, async ({
       billPayPage,
+      logger,
     }) => {
       await allure.severity('normal');
 
@@ -101,7 +103,7 @@ test.describe('Bill Pay - negative', () => {
 
       await billPayPage.assertOpened();
 
-      const billPayData = generateBillPayData();
+      const billPayData = generateBillPayData(logger);
 
       await fillBillPayForm(billPayPage, {
         ...billPayData,

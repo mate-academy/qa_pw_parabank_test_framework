@@ -10,6 +10,7 @@ test('should send a bill payment with valid payee data', async ({
   user,
   accountsOverviewPage,
   billPayPage,
+  logger,
 }) => {
   await allure.severity('critical');
 
@@ -17,7 +18,7 @@ test('should send a bill payment with valid payee data', async ({
 
   const defaultAccountNumber = await getDefaultAccountNumber(accountsOverviewPage);
 
-  const billPayData = generateBillPayData();
+  const billPayData = generateBillPayData(logger);
 
   await billPayPage.open();
 

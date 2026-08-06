@@ -16,12 +16,12 @@ export const test = base.extend<{
     await use(new RegisterPage(page, user.username));
   },
 
-  homePage: async ({ page }, use) => {
-    await use(new HomePage(page));
+  homePage: async ({ page, user }, use) => {
+    await use(new HomePage(page, user.username));
   },
 
-  customerLookupPage: async ({ page }, use) => {
-    await use(new CustomerLookupPage(page));
+  customerLookupPage: async ({ page, user }, use) => {
+    await use(new CustomerLookupPage(page, user.username));
   },
 
   user: async ({}, use) => {

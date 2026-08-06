@@ -11,11 +11,11 @@ export const test = base.extend<
   { workerStorageState: WorkerStorageState }
 >({
   workerStorageState: [
-    async ({ browser }, use) => {
+    async ({ browser, logger }, use) => {
       const context = await browser.newContext({ baseURL: BASE_URL });
       const page = await context.newPage();
 
-      const user = generateRegistrationData();
+      const user = generateRegistrationData(logger);
 
       await registerNewUser(page, user);
 
