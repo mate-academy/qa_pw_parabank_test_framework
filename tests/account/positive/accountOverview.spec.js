@@ -2,13 +2,13 @@ import { test } from '../../_fixtures/fixtures';
 import * as allure from 'allure-js-commons';
 import { registerNewUser } from '../../../src/ui/actions/auth/register';
 
-test.beforeEach(async ({ registerPage, registrationData }) => {
-  await registerNewUser(registerPage, registrationData);
+test.beforeEach(async ({ page, user }) => {
+  await registerNewUser(page, user);
 });
 
 test('should show the default account after registration', async ({
   accountsOverviewPage,
-  registrationData,
+  user,
 }) => {
   await allure.severity('critical');
 
@@ -16,8 +16,8 @@ test('should show the default account after registration', async ({
 
   await accountsOverviewPage.assertOpened();
   await accountsOverviewPage.assertWelcomeMessage(
-    registrationData.firstName,
-    registrationData.lastName,
+    user.firstName,
+    user.lastName,
   );
 
   await accountsOverviewPage.assertSingleAccountRow();

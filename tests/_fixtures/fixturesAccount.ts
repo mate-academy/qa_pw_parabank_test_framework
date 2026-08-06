@@ -3,12 +3,14 @@ import { AccountsOverviewPage } from '../../src/ui/pages/account/AccountsOvervie
 import { OpenNewAccountPage } from '../../src/ui/pages/account/OpenNewAccountPage';
 import { TransferFundsPage } from '../../src/ui/pages/account/TransferFundsPage';
 import { AccountDetailsPage } from '../../src/ui/pages/account/AccountDetailsPage';
+import { BillPayPage } from '../../src/ui/pages/account/BillPayPage';
 
 export const test = base.extend<{
   accountsOverviewPage: AccountsOverviewPage;
   openNewAccountPage: OpenNewAccountPage;
   transferFundsPage: TransferFundsPage;
   accountDetailsPage: AccountDetailsPage;
+  billPayPage: BillPayPage;
 }>({
   accountsOverviewPage: async ({ page }, use) => {
     await use(new AccountsOverviewPage(page));
@@ -24,5 +26,9 @@ export const test = base.extend<{
 
   accountDetailsPage: async ({ page }, use) => {
     await use(new AccountDetailsPage(page));
+  },
+
+  billPayPage: async ({ page }, use) => {
+    await use(new BillPayPage(page));
   },
 });

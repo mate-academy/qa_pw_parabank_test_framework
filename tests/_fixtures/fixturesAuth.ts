@@ -4,16 +4,16 @@ import { HomePage } from '../../src/ui/pages/HomePage';
 import { CustomerLookupPage } from '../../src/ui/pages/auth/CustomerLookupPage';
 import { generateRegistrationData } from '../../src/common/testData/auth/registrationData';
 
-type RegistrationData = ReturnType<typeof generateRegistrationData>;
+type User = ReturnType<typeof generateRegistrationData>;
 
 export const test = base.extend<{
   registerPage: RegisterPage;
   homePage: HomePage;
   customerLookupPage: CustomerLookupPage;
-  registrationData: RegistrationData;
+  user: User;
 }>({
-  registerPage: async ({ page, registrationData }, use) => {
-    await use(new RegisterPage(page, registrationData.username));
+  registerPage: async ({ page, user}, use) => {
+    await use(new RegisterPage(page, user.username));
   },
 
   homePage: async ({ page }, use) => {
@@ -24,7 +24,7 @@ export const test = base.extend<{
     await use(new CustomerLookupPage(page));
   },
 
-  registrationData: async ({}, use) => {
+  user: async ({}, use) => {
     await use(generateRegistrationData());
   },
 });

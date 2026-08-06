@@ -1,22 +1,26 @@
-export async function fillRegistrationForm(registerPage, data) {
+import { RegisterPage } from "../../pages/auth/RegisterPage";
+
+export async function fillRegistrationForm(registerPage, user) {
   await registerPage.step('Fill registration form', async () => {
-    await registerPage.fillFirstName(data.firstName);
-    await registerPage.fillLastName(data.lastName);
-    await registerPage.fillStreet(data.street);
-    await registerPage.fillCity(data.city);
-    await registerPage.fillState(data.state);
-    await registerPage.fillZipCode(data.zipCode);
-    await registerPage.fillPhoneNumber(data.phoneNumber);
-    await registerPage.fillSsn(data.ssn);
-    await registerPage.fillUsername(data.username);
-    await registerPage.fillPassword(data.password);
-    await registerPage.fillConfirmPassword(data.confirmPassword);
+    await registerPage.fillFirstName(user.firstName);
+    await registerPage.fillLastName(user.lastName);
+    await registerPage.fillStreet(user.street);
+    await registerPage.fillCity(user.city);
+    await registerPage.fillState(user.state);
+    await registerPage.fillZipCode(user.zipCode);
+    await registerPage.fillPhoneNumber(user.phoneNumber);
+    await registerPage.fillSsn(user.ssn);
+    await registerPage.fillUsername(user.username);
+    await registerPage.fillPassword(user.password);
+    await registerPage.fillConfirmPassword(user.confirmPassword);
   });
 }
 
-export async function registerNewUser(registerPage, data) {
+export async function registerNewUser(page, user) {
+  const registerPage = new RegisterPage(page);
+
   await registerPage.open();
-  await fillRegistrationForm(registerPage, data);
+  await fillRegistrationForm(registerPage, user);
   await registerPage.clickRegisterButton();
-  await registerPage.assertRegistrationSuccessful(data.username);
+  await registerPage.assertRegistrationSuccessful(user.username);
 }

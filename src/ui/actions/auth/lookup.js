@@ -1,11 +1,11 @@
-export async function fillCustomerLookupForm(customerLookupPage, data) {
+export async function fillCustomerLookupForm(customerLookupPage, user) {
   await customerLookupPage.step('Fill customer lookup form', async () => {
-    await customerLookupPage.fillFirstName(data.firstName);
-    await customerLookupPage.fillLastName(data.lastName);
-    await customerLookupPage.fillStreet(data.street);
-    await customerLookupPage.fillCity(data.city);
-    await customerLookupPage.fillState(data.state);
-    await customerLookupPage.fillZipCode(data.zipCode);
-    await customerLookupPage.fillSsn(data.ssn);
+    await customerLookupPage.fillFirstName(user.firstName);
+    await customerLookupPage.fillLastName(user.lastName);
+    await customerLookupPage.fillStreet(user.street);
+    await customerLookupPage.fillCity(user.city);
+    await customerLookupPage.fillState(user.state);
+    await customerLookupPage.fillZipCode(user.zipCode);
+    await customerLookupPage.fillSsn(user.ssn);
   });
 }

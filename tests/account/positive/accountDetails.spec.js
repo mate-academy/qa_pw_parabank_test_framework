@@ -14,8 +14,8 @@ const TRANSFERS_TO_MAKE = 3;
 const TRANSFER_AMOUNT = 500;
 
 test('should show correct account balances and activity after opening accounts and transferring funds', async ({
-  registerPage,
-  registrationData,
+  page,
+  user,
   accountsOverviewPage,
   openNewAccountPage,
   transferFundsPage,
@@ -23,7 +23,7 @@ test('should show correct account balances and activity after opening accounts a
 }) => {
   await allure.severity('critical');
 
-  await registerNewUser(registerPage, registrationData);
+  await registerNewUser(page, user);
 
   const defaultAccountNumber = await getDefaultAccountNumber(accountsOverviewPage);
 

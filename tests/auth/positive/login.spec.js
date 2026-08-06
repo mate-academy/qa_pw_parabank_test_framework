@@ -4,26 +4,26 @@ import { registerNewUser } from '../../../src/ui/actions/auth/register';
 import { fillLoginForm } from '../../../src/ui/actions/auth/login';
 import { logout } from '../../../src/ui/actions/auth/logout';
 
-test.beforeEach(async ({ page, registerPage, registrationData }) => {
-  await registerNewUser(registerPage, registrationData);
+test.beforeEach(async ({ page, user }) => {
+  await registerNewUser(page, user);
   await logout(page);
 });
 
 test('should log in successfully with valid credentials', async ({
   homePage,
   accountsOverviewPage,
-  registrationData,
+  user,
 }) => {
   await allure.severity('critical');
 
   await homePage.assertOpened();
 
-  await fillLoginForm(homePage, registrationData);
+  await fillLoginForm(homePage, user);
   await homePage.clickLoginButton();
 
   await accountsOverviewPage.assertOpened();
   await accountsOverviewPage.assertWelcomeMessage(
-    registrationData.firstName,
-    registrationData.lastName,
+    user.firstName,
+    user.lastName,
   );
 });

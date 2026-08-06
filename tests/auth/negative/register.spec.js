@@ -8,7 +8,7 @@ for (const [field, expectedError] of Object.entries(
 )) {
   test(`should not register with empty ${field}`, async ({
     registerPage,
-    registrationData,
+    user,
   }) => {
     await allure.severity('normal');
 
@@ -17,7 +17,7 @@ for (const [field, expectedError] of Object.entries(
     await registerPage.assertOpened();
 
     await fillRegistrationForm(registerPage, {
-      ...registrationData,
+      ...user,
       [field]: '',
     });
     await registerPage.clickRegisterButton();

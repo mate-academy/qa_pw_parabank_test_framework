@@ -9,7 +9,7 @@ const { username, password, confirmPassword, ...lookupFieldErrors } =
 for (const [field, expectedError] of Object.entries(lookupFieldErrors)) {
   test(`should not find login info with empty ${field}`, async ({
     customerLookupPage,
-    registrationData,
+    user,
   }) => {
     await allure.severity('normal');
 
@@ -18,7 +18,7 @@ for (const [field, expectedError] of Object.entries(lookupFieldErrors)) {
     await customerLookupPage.assertOpened();
 
     await fillCustomerLookupForm(customerLookupPage, {
-      ...registrationData,
+      ...user,
       [field]: '',
     });
     await customerLookupPage.clickFindMyLoginInfoButton();
@@ -29,7 +29,7 @@ for (const [field, expectedError] of Object.entries(lookupFieldErrors)) {
 
 test('should not find login info for a non-existent customer', async ({
   customerLookupPage,
-  registrationData,
+  user,
 }) => {
   await allure.severity('normal');
 
@@ -37,7 +37,7 @@ test('should not find login info for a non-existent customer', async ({
 
   await customerLookupPage.assertOpened();
 
-  await fillCustomerLookupForm(customerLookupPage, registrationData);
+  await fillCustomerLookupForm(customerLookupPage, user);
   await customerLookupPage.clickFindMyLoginInfoButton();
 
   await customerLookupPage.assertNotFound();

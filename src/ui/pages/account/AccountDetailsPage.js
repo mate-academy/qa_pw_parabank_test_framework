@@ -46,6 +46,21 @@ export class AccountDetailsPage extends BasePage {
     });
   }
 
+  async selectMonthByOffset(monthsFromNow) {
+    await this.step(
+      `Select month at offset ${monthsFromNow} from current month`,
+      async () => {
+        const targetIndex = (new Date().getMonth() + monthsFromNow + 12) % 12;
+        const optionValue = await this.monthSelect
+          .locator('option')
+          .nth(targetIndex + 1)
+          .getAttribute('value');
+
+        await this.monthSelect.selectOption(optionValue);
+      },
+    );
+  }
+
   async selectTransactionType(transactionType) {
     await this.step(
       `Select transaction type "${transactionType}"`,
@@ -126,6 +141,15 @@ export class AccountDetailsPage extends BasePage {
       `Assert ${count} "${description}" (${amount}) transaction(s) are visible`,
       async () => {
         await expect(this.transactionRow(description, amount)).toHaveCount(count);
+      },
+    );
+  }
+
+  async assertTransactionCountByDescription(description, count) {
+    await this.step(
+      `Assert ${count} "${description}" transaction(s) are visible`,
+      async () => {
+        await expect(this.transactionRow(description)).toHaveCount(count);
       },
     );
   }

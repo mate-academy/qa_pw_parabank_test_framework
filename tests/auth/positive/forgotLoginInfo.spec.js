@@ -3,12 +3,12 @@ import * as allure from 'allure-js-commons';
 import { registerNewUser } from '../../../src/ui/actions/auth/register';
 import { fillCustomerLookupForm } from '../../../src/ui/actions/auth/lookup';
 
-test.beforeEach(async ({ registerPage, registrationData }) => {
-  await registerNewUser(registerPage, registrationData);
+test.beforeEach(async ({ page, user }) => {
+  await registerNewUser(page, user);
 });
 
 test('should find login info with valid registered customer data', async ({
-  registrationData,
+  user,
   customerLookupPage,
 }) => {
   await allure.severity('critical');
@@ -17,11 +17,11 @@ test('should find login info with valid registered customer data', async ({
 
   await customerLookupPage.assertOpened();
 
-  await fillCustomerLookupForm(customerLookupPage, registrationData);
+  await fillCustomerLookupForm(customerLookupPage, user);
   await customerLookupPage.clickFindMyLoginInfoButton();
 
   await customerLookupPage.assertLoginInfoFound(
-    registrationData.username,
-    registrationData.password,
+    user.username,
+    user.password,
   );
 });
