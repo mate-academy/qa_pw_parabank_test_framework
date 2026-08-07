@@ -11,7 +11,6 @@ export class BillPayPage extends BasePage {
     super(page, userLabel);
 
     this.heading = page.getByRole('heading', { name: 'Bill Payment Service' });
-
     this.payeeNameInput = page.locator('input[name="payee.name"]');
     this.streetInput = page.locator('input[name="payee.address.street"]');
     this.cityInput = page.locator('input[name="payee.address.city"]');
@@ -23,7 +22,6 @@ export class BillPayPage extends BasePage {
     this.amountInput = page.locator('input[name="amount"]');
     this.fromAccountSelect = page.locator('select[name="fromAccountId"]');
     this.sendPaymentButton = page.getByRole('button', { name: 'Send Payment' });
-
     this.successHeading = page.getByRole('heading', {
       name: 'Bill Payment Complete',
     });
@@ -31,7 +29,6 @@ export class BillPayPage extends BasePage {
     this.amountResult = page.locator('#amount');
     this.fromAccountResult = page.locator('#fromAccountId');
     this.helpText = page.getByText(TRANSFER_COMPLETE_HELP_TEXT);
-
     this.errorHeading = page.getByRole('heading', { name: 'Error!' });
     this.errorText = page.getByText(ACCOUNT_ACCESS_DENIED_ERROR);
   }

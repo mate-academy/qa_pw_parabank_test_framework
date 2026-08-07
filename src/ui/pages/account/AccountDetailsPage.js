@@ -10,7 +10,6 @@ export class AccountDetailsPage extends BasePage {
     this.accountTypeCell = page.locator('#accountType');
     this.balanceCell = page.locator('#balance');
     this.availableCell = page.locator('#availableBalance');
-
     this.activityHeading = page.getByRole('heading', {
       name: 'Account Activity',
     });

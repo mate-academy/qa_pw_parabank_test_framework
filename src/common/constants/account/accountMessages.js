@@ -36,3 +36,15 @@ export const BILL_PAY_AMOUNT_INVALID_ERROR = 'Please enter a valid amount.';
 export function billPaymentCompleteMessage(payeeName, amount, fromAccount) {
   return `Bill Payment to ${payeeName} in the amount of $${Number(amount).toFixed(2)} from account ${fromAccount} was successful.`;
 }
+
+export const UPDATE_PROFILE_SUCCESS_MESSAGE =
+  'Your updated address and phone number have been added to the system.';
+
+export const UPDATE_PROFILE_REQUIRED_FIELD_ERRORS = {
+  firstName: 'First name is required.',
+  lastName: 'Last name is required.',
+  street: 'Address is required.',
+  city: 'City is required.',
+  state: 'State is required.',
+  zipCode: 'Zip Code is required.',
+};

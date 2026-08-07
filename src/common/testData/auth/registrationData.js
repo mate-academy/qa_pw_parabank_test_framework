@@ -1,4 +1,5 @@
 import { faker } from '@faker-js/faker';
+import { generateAddressData } from '../addressData';
 
 export function generateRegistrationData(logger) {
   const firstName = faker.person.firstName();
@@ -8,11 +9,7 @@ export function generateRegistrationData(logger) {
   const user = {
     firstName,
     lastName,
-    street: faker.location.streetAddress(),
-    city: faker.location.city(),
-    state: faker.location.state({ abbreviated: true }),
-    zipCode: faker.location.zipCode('#####'),
-    phoneNumber: faker.string.numeric(10),
+    ...generateAddressData(),
     ssn: faker.string.numeric(9),
     username: `${firstName.toLowerCase()}${lastName}`,
     password,

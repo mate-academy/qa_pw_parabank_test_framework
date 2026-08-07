@@ -38,34 +38,34 @@ test('should filter account activity by transaction type and month', async ({
     amount: TRANSFER_AMOUNT,
   });
 
-  const [account] = accounts;
+  for (const account of accounts) {
+    await accountDetailsPage.openAndAssert(account.accountNumber);
 
-  await accountDetailsPage.openAndAssert(account.accountNumber);
+    await filterAccountActivityByType(accountDetailsPage, 'Credit');
 
-  await filterAccountActivityByType(accountDetailsPage, 'Credit');
+    await assertTransactionTypeCounts(accountDetailsPage, {
+      received: account.received.length,
+      sent: 0,
+    });
 
-  await assertTransactionTypeCounts(accountDetailsPage, {
-    received: account.received.length,
-    sent: 0,
-  });
+    await filterAccountActivityByType(accountDetailsPage, 'Debit');
 
-  await filterAccountActivityByType(accountDetailsPage, 'Debit');
+    await assertTransactionTypeCounts(accountDetailsPage, {
+      received: 0,
+      sent: account.sent.length,
+    });
 
-  await assertTransactionTypeCounts(accountDetailsPage, {
-    received: 0,
-    sent: account.sent.length,
-  });
+    await filterAccountActivityByType(accountDetailsPage, 'All');
 
-  await filterAccountActivityByType(accountDetailsPage, 'All');
+    await filterAccountActivityByMonthOffset(accountDetailsPage, 0);
 
-  await filterAccountActivityByMonthOffset(accountDetailsPage, 0);
+    await assertTransactionTypeCounts(accountDetailsPage, {
+      received: account.received.length,
+      sent: account.sent.length,
+    });
 
-  await assertTransactionTypeCounts(accountDetailsPage, {
-    received: account.received.length,
-    sent: account.sent.length,
-  });
+    await filterAccountActivityByMonthOffset(accountDetailsPage, 1);
 
-  await filterAccountActivityByMonthOffset(accountDetailsPage, 1);
-
-  await accountDetailsPage.assertNoTransactionsFound();
+    await accountDetailsPage.assertNoTransactionsFound();
+  }
 });
