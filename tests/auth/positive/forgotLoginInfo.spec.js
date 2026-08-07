@@ -13,9 +13,7 @@ test('should find login info with valid registered customer data', async ({
 }) => {
   await allure.severity('critical');
 
-  await customerLookupPage.open();
-
-  await customerLookupPage.assertOpened();
+  await customerLookupPage.openAndAssert();
 
   await fillCustomerLookupForm(customerLookupPage, user);
   await customerLookupPage.clickFindMyLoginInfoButton();

@@ -6,7 +6,7 @@ import {
 } from '../pages/account/OpenNewAccountPage';
 
 export async function getDefaultAccountNumber(accountsOverviewPage) {
-  await accountsOverviewPage.open();
+  await accountsOverviewPage.openAndAssert();
 
   return accountsOverviewPage.accountLink().textContent();
 }
@@ -62,7 +62,7 @@ export async function makeTrackedTransfers(
 }
 
 export async function assertAccountBalances(accountsOverviewPage, accounts) {
-  await accountsOverviewPage.open();
+  await accountsOverviewPage.openAndAssert();
 
   for (const account of accounts) {
     await accountsOverviewPage.assertAccountBalance(
@@ -82,13 +82,43 @@ function countByAmount(amounts) {
   return counts;
 }
 
+export async function filterAccountActivityByType(
+  accountDetailsPage,
+  transactionType,
+) {
+  await accountDetailsPage.selectTransactionType(transactionType);
+  await accountDetailsPage.clickGoButton();
+}
+
+export async function filterAccountActivityByMonthOffset(
+  accountDetailsPage,
+  monthOffset,
+) {
+  await accountDetailsPage.selectMonthByOffset(monthOffset);
+  await accountDetailsPage.clickGoButton();
+}
+
+export async function assertTransactionTypeCounts(
+  accountDetailsPage,
+  { received, sent },
+) {
+  await accountDetailsPage.assertTransactionCountByDescription(
+    'Funds Transfer Received',
+    received,
+  );
+  await accountDetailsPage.assertTransactionCountByDescription(
+    'Funds Transfer Sent',
+    sent,
+  );
+}
+
 export async function assertAccountActivity(
   accountsOverviewPage,
   accountDetailsPage,
   accounts,
 ) {
   for (const account of accounts) {
-    await accountsOverviewPage.open();
+    await accountsOverviewPage.openAndAssert();
     await accountsOverviewPage.accountLinkByNumber(account.accountNumber).click();
 
     await accountDetailsPage.assertOpened();

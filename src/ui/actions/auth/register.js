@@ -19,7 +19,7 @@ export async function fillRegistrationForm(registerPage, user) {
 export async function registerNewUser(page, user) {
   const registerPage = new RegisterPage(page);
 
-  await registerPage.open();
+  await registerPage.openAndAssert();
   await fillRegistrationForm(registerPage, user);
   await registerPage.clickRegisterButton();
   await registerPage.assertRegistrationSuccessful(user.username);

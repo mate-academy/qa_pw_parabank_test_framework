@@ -1,15 +1,19 @@
 import { test } from '../../_fixtures/fixturesFindTransactionsSession';
 import * as allure from 'allure-js-commons';
-import { OPEN_ACCOUNT_DEPOSIT } from '../../../src/ui/pages/account/OpenNewAccountPage';
-
-function todayFormatted() {
-  const today = new Date();
-  const mm = String(today.getMonth() + 1).padStart(2, '0');
-  const dd = String(today.getDate()).padStart(2, '0');
-  const yyyy = today.getFullYear();
-
-  return `${mm}-${dd}-${yyyy}`;
-}
+import { todayFormatted } from '../../../src/common/helpers/dateHelpers';
+import {
+  DEPOSIT_TRANSACTION,
+  SENT_TRANSACTION,
+  RECEIVED_TRANSACTION,
+} from '../../../src/common/testData/account/findTransactionsCases';
+import {
+  searchByAmount,
+  searchByDate,
+  searchByDateRange,
+  searchByTransactionId,
+  assertTransactionsFound,
+  assertSingleTransactionFound,
+} from '../../../src/ui/interfaces/findTransactions';
 
 test('should find transactions by amount', async ({
   accountNumber,
@@ -17,68 +21,29 @@ test('should find transactions by amount', async ({
 }) => {
   await allure.severity('critical');
 
-  await findTransactionsPage.open();
+  await searchByAmount(findTransactionsPage, accountNumber, DEPOSIT_TRANSACTION.amount);
 
-  await findTransactionsPage.assertOpened();
-
-  await findTransactionsPage.selectAccount(accountNumber);
-  await findTransactionsPage.fillAmount(OPEN_ACCOUNT_DEPOSIT);
-  await findTransactionsPage.clickFindByAmountButton();
-
-  await findTransactionsPage.assertResultsShown();
-  await findTransactionsPage.assertTransactionCount(1);
-  await findTransactionsPage.assertTransactionVisible(
-    'Funds Transfer Received',
-    OPEN_ACCOUNT_DEPOSIT,
-    'Credit',
-    todayFormatted(),
+  await assertSingleTransactionFound(
+    findTransactionsPage,
+    { ...DEPOSIT_TRANSACTION, date: todayFormatted() },
+    [SENT_TRANSACTION, RECEIVED_TRANSACTION],
   );
-  await findTransactionsPage.assertTransactionNotVisible('Funds Transfer Sent', 30);
-  await findTransactionsPage.assertTransactionNotVisible('Funds Transfer Received', 50);
 
-  await findTransactionsPage.open();
+  await searchByAmount(findTransactionsPage, accountNumber, SENT_TRANSACTION.amount);
 
-  await findTransactionsPage.assertOpened();
-
-  await findTransactionsPage.selectAccount(accountNumber);
-  await findTransactionsPage.fillAmount(30);
-  await findTransactionsPage.clickFindByAmountButton();
-
-  await findTransactionsPage.assertResultsShown();
-  await findTransactionsPage.assertTransactionCount(1);
-  await findTransactionsPage.assertTransactionVisible(
-    'Funds Transfer Sent',
-    30,
-    'Debit',
-    todayFormatted(),
+  await assertSingleTransactionFound(
+    findTransactionsPage,
+    { ...SENT_TRANSACTION, date: todayFormatted() },
+    [DEPOSIT_TRANSACTION, RECEIVED_TRANSACTION],
   );
-  await findTransactionsPage.assertTransactionNotVisible(
-    'Funds Transfer Received',
-    OPEN_ACCOUNT_DEPOSIT,
+
+  await searchByAmount(findTransactionsPage, accountNumber, RECEIVED_TRANSACTION.amount);
+
+  await assertSingleTransactionFound(
+    findTransactionsPage,
+    { ...RECEIVED_TRANSACTION, date: todayFormatted() },
+    [DEPOSIT_TRANSACTION, SENT_TRANSACTION],
   );
-  await findTransactionsPage.assertTransactionNotVisible('Funds Transfer Received', 50);
-
-  await findTransactionsPage.open();
-
-  await findTransactionsPage.assertOpened();
-
-  await findTransactionsPage.selectAccount(accountNumber);
-  await findTransactionsPage.fillAmount(50);
-  await findTransactionsPage.clickFindByAmountButton();
-
-  await findTransactionsPage.assertResultsShown();
-  await findTransactionsPage.assertTransactionCount(1);
-  await findTransactionsPage.assertTransactionVisible(
-    'Funds Transfer Received',
-    50,
-    'Credit',
-    todayFormatted(),
-  );
-  await findTransactionsPage.assertTransactionNotVisible(
-    'Funds Transfer Received',
-    OPEN_ACCOUNT_DEPOSIT,
-  );
-  await findTransactionsPage.assertTransactionNotVisible('Funds Transfer Sent', 30);
 });
 
 test('should find transactions by date', async ({
@@ -87,16 +52,9 @@ test('should find transactions by date', async ({
 }) => {
   await allure.severity('critical');
 
-  await findTransactionsPage.open();
+  await searchByDate(findTransactionsPage, accountNumber, todayFormatted());
 
-  await findTransactionsPage.assertOpened();
-
-  await findTransactionsPage.selectAccount(accountNumber);
-  await findTransactionsPage.fillTransactionDate(todayFormatted());
-  await findTransactionsPage.clickFindByDateButton();
-
-  await findTransactionsPage.assertResultsShown();
-  await findTransactionsPage.assertTransactionCount(3);
+  await assertTransactionsFound(findTransactionsPage, 3);
 });
 
 test('should return no transactions for a date with no matches', async ({
@@ -109,16 +67,9 @@ test('should return no transactions for a date with no matches', async ({
 
   await allure.severity('normal');
 
-  await findTransactionsPage.open();
+  await searchByDate(findTransactionsPage, accountNumber, '01-01-2020');
 
-  await findTransactionsPage.assertOpened();
-
-  await findTransactionsPage.selectAccount(accountNumber);
-  await findTransactionsPage.fillTransactionDate('01-01-2020');
-  await findTransactionsPage.clickFindByDateButton();
-
-  await findTransactionsPage.assertResultsShown();
-  await findTransactionsPage.assertTransactionCount(0);
+  await assertTransactionsFound(findTransactionsPage, 0);
 });
 
 test('should find transactions by date range', async ({
@@ -127,17 +78,14 @@ test('should find transactions by date range', async ({
 }) => {
   await allure.severity('critical');
 
-  await findTransactionsPage.open();
+  await searchByDateRange(
+    findTransactionsPage,
+    accountNumber,
+    todayFormatted(),
+    todayFormatted(),
+  );
 
-  await findTransactionsPage.assertOpened();
-
-  await findTransactionsPage.selectAccount(accountNumber);
-  await findTransactionsPage.fillFromDate(todayFormatted());
-  await findTransactionsPage.fillToDate(todayFormatted());
-  await findTransactionsPage.clickFindByDateRangeButton();
-
-  await findTransactionsPage.assertResultsShown();
-  await findTransactionsPage.assertTransactionCount(3);
+  await assertTransactionsFound(findTransactionsPage, 3);
 });
 
 test('should return no transactions for a date range with no matches', async ({
@@ -150,17 +98,14 @@ test('should return no transactions for a date range with no matches', async ({
 
   await allure.severity('normal');
 
-  await findTransactionsPage.open();
+  await searchByDateRange(
+    findTransactionsPage,
+    accountNumber,
+    '01-01-2020',
+    '01-02-2020',
+  );
 
-  await findTransactionsPage.assertOpened();
-
-  await findTransactionsPage.selectAccount(accountNumber);
-  await findTransactionsPage.fillFromDate('01-01-2020');
-  await findTransactionsPage.fillToDate('01-02-2020');
-  await findTransactionsPage.clickFindByDateRangeButton();
-
-  await findTransactionsPage.assertResultsShown();
-  await findTransactionsPage.assertTransactionCount(0);
+  await assertTransactionsFound(findTransactionsPage, 0);
 });
 
 test('should find a transaction by ID', async ({
@@ -169,33 +114,19 @@ test('should find a transaction by ID', async ({
 }) => {
   await allure.severity('critical');
 
-  await findTransactionsPage.open();
-
-  await findTransactionsPage.assertOpened();
-
-  await findTransactionsPage.selectAccount(accountNumber);
-  await findTransactionsPage.fillAmount(OPEN_ACCOUNT_DEPOSIT);
-  await findTransactionsPage.clickFindByAmountButton();
+  await searchByAmount(findTransactionsPage, accountNumber, DEPOSIT_TRANSACTION.amount);
 
   await findTransactionsPage.assertResultsShown();
+
   const transactionId = await findTransactionsPage.getTransactionId(
-    'Funds Transfer Received',
-    OPEN_ACCOUNT_DEPOSIT,
+    DEPOSIT_TRANSACTION.description,
+    DEPOSIT_TRANSACTION.amount,
   );
 
-  await findTransactionsPage.open();
+  await searchByTransactionId(findTransactionsPage, transactionId);
 
-  await findTransactionsPage.assertOpened();
-
-  await findTransactionsPage.fillTransactionId(transactionId);
-  await findTransactionsPage.clickFindByIdButton();
-
-  await findTransactionsPage.assertResultsShown();
-  await findTransactionsPage.assertTransactionCount(1);
-  await findTransactionsPage.assertTransactionVisible(
-    'Funds Transfer Received',
-    OPEN_ACCOUNT_DEPOSIT,
-    'Credit',
-    todayFormatted(),
-  );
+  await assertSingleTransactionFound(findTransactionsPage, {
+    ...DEPOSIT_TRANSACTION,
+    date: todayFormatted(),
+  });
 });

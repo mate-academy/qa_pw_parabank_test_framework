@@ -8,9 +8,7 @@ test('should register a new user with valid data', async ({
 }) => {
   await allure.severity('critical');
 
-  await registerPage.open();
-
-  await registerPage.assertOpened();
+  await registerPage.openAndAssert();
 
   await fillRegistrationForm(registerPage, user);
   await registerPage.clickRegisterButton();

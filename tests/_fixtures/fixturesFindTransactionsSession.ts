@@ -11,6 +11,10 @@ import {
   openTrackedAccounts,
 } from '../../src/ui/interfaces/account';
 import { transferFunds } from '../../src/ui/actions/account/transferFunds';
+import {
+  SENT_TRANSACTION,
+  RECEIVED_TRANSACTION,
+} from '../../src/common/testData/account/findTransactionsCases';
 
 type WorkerSession = {
   storageState: Awaited<ReturnType<BrowserContext['storageState']>>;
@@ -43,8 +47,16 @@ export const test = base.extend<
       );
 
       await transferFunds(transferFundsPage, [
-        { amount: 30, fromAccount: accountNumber, toAccount: defaultAccountNumber },
-        { amount: 50, fromAccount: defaultAccountNumber, toAccount: accountNumber },
+        {
+          amount: SENT_TRANSACTION.amount,
+          fromAccount: accountNumber,
+          toAccount: defaultAccountNumber,
+        },
+        {
+          amount: RECEIVED_TRANSACTION.amount,
+          fromAccount: defaultAccountNumber,
+          toAccount: accountNumber,
+        },
       ]);
 
       const storageState = await context.storageState();

@@ -13,9 +13,7 @@ for (const [field, expectedError] of Object.entries(lookupFieldErrors)) {
   }) => {
     await allure.severity('normal');
 
-    await customerLookupPage.open();
-
-    await customerLookupPage.assertOpened();
+    await customerLookupPage.openAndAssert();
 
     await fillCustomerLookupForm(customerLookupPage, {
       ...user,
@@ -33,9 +31,7 @@ test('should not find login info for a non-existent customer', async ({
 }) => {
   await allure.severity('normal');
 
-  await customerLookupPage.open();
-
-  await customerLookupPage.assertOpened();
+  await customerLookupPage.openAndAssert();
 
   await fillCustomerLookupForm(customerLookupPage, user);
   await customerLookupPage.clickFindMyLoginInfoButton();

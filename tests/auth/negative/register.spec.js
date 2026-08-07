@@ -12,9 +12,7 @@ for (const [field, expectedError] of Object.entries(
   }) => {
     await allure.severity('normal');
 
-    await registerPage.open();
-
-    await registerPage.assertOpened();
+    await registerPage.openAndAssert();
 
     await fillRegistrationForm(registerPage, {
       ...user,

@@ -12,9 +12,8 @@ test('should show the default account after registration', async ({
 }) => {
   await allure.severity('critical');
 
-  await accountsOverviewPage.open();
+  await accountsOverviewPage.openAndAssert();
 
-  await accountsOverviewPage.assertOpened();
   await accountsOverviewPage.assertWelcomeMessage(
     user.firstName,
     user.lastName,

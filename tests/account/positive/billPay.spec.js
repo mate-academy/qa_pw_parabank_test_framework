@@ -20,9 +20,7 @@ test('should send a bill payment with valid payee data', async ({
 
   const billPayData = generateBillPayData(logger);
 
-  await billPayPage.open();
-
-  await billPayPage.assertOpened();
+  await billPayPage.openAndAssert();
 
   await fillBillPayForm(billPayPage, billPayData);
   await billPayPage.selectFromAccount(defaultAccountNumber);

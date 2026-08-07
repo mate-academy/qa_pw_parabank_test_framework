@@ -9,4 +9,9 @@ export class BasePage {
   async step(title, stepToRun) {
     return await testStep(title, stepToRun, this.userLabel);
   }
+
+  async openAndAssert(...args) {
+    await this.open(...args);
+    await this.assertOpened();
+  }
 }

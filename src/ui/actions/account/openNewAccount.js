@@ -2,7 +2,7 @@ export async function openNewAccounts(openNewAccountPage, accountsToOpen) {
   const newAccountNumbers = [];
 
   for (const { accountType, fromAccount } of accountsToOpen) {
-    await openNewAccountPage.open();
+    await openNewAccountPage.openAndAssert();
     await openNewAccountPage.selectAccountType(accountType);
     await openNewAccountPage.selectFromAccount(fromAccount);
     await openNewAccountPage.clickOpenNewAccountButton();

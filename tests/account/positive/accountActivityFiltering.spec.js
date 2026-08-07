@@ -5,6 +5,9 @@ import {
   getDefaultAccountNumber,
   openTrackedAccounts,
   makeTrackedTransfers,
+  filterAccountActivityByType,
+  filterAccountActivityByMonthOffset,
+  assertTransactionTypeCounts,
 } from '../../../src/ui/interfaces/account';
 
 const ACCOUNTS_TO_OPEN = 2;
@@ -37,49 +40,32 @@ test('should filter account activity by transaction type and month', async ({
 
   const [account] = accounts;
 
-  await accountDetailsPage.open(account.accountNumber);
+  await accountDetailsPage.openAndAssert(account.accountNumber);
 
-  await accountDetailsPage.selectTransactionType('Credit');
-  await accountDetailsPage.clickGoButton();
+  await filterAccountActivityByType(accountDetailsPage, 'Credit');
 
-  await accountDetailsPage.assertTransactionCountByDescription(
-    'Funds Transfer Received',
-    account.received.length,
-  );
-  await accountDetailsPage.assertTransactionCountByDescription(
-    'Funds Transfer Sent',
-    0,
-  );
+  await assertTransactionTypeCounts(accountDetailsPage, {
+    received: account.received.length,
+    sent: 0,
+  });
 
-  await accountDetailsPage.selectTransactionType('Debit');
-  await accountDetailsPage.clickGoButton();
+  await filterAccountActivityByType(accountDetailsPage, 'Debit');
 
-  await accountDetailsPage.assertTransactionCountByDescription(
-    'Funds Transfer Sent',
-    account.sent.length,
-  );
-  await accountDetailsPage.assertTransactionCountByDescription(
-    'Funds Transfer Received',
-    0,
-  );
+  await assertTransactionTypeCounts(accountDetailsPage, {
+    received: 0,
+    sent: account.sent.length,
+  });
 
-  await accountDetailsPage.selectTransactionType('All');
-  await accountDetailsPage.clickGoButton();
+  await filterAccountActivityByType(accountDetailsPage, 'All');
 
-  await accountDetailsPage.selectMonthByOffset(0);
-  await accountDetailsPage.clickGoButton();
+  await filterAccountActivityByMonthOffset(accountDetailsPage, 0);
 
-  await accountDetailsPage.assertTransactionCountByDescription(
-    'Funds Transfer Received',
-    account.received.length,
-  );
-  await accountDetailsPage.assertTransactionCountByDescription(
-    'Funds Transfer Sent',
-    account.sent.length,
-  );
+  await assertTransactionTypeCounts(accountDetailsPage, {
+    received: account.received.length,
+    sent: account.sent.length,
+  });
 
-  await accountDetailsPage.selectMonthByOffset(1);
-  await accountDetailsPage.clickGoButton();
+  await filterAccountActivityByMonthOffset(accountDetailsPage, 1);
 
   await accountDetailsPage.assertNoTransactionsFound();
 });
