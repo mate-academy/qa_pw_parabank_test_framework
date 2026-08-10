@@ -1,7 +1,3 @@
-# Task Description
-
-To see the description of the task assignment [follow the link](https://github.com/mate-academy/qa_pw_parabank_test_framework/blob/main/TaskDescription.md). 
-
 # Repository Overview
 
 This repository contains a test automation framework for the [Parabank](https://parabank.parasoft.com/parabank/index.htm) bank application testing. 
@@ -28,8 +24,33 @@ npm install -g allure-commandline
 
 ## How to run the tests
 
-// TODO - It's part of your task to add the appropriate instructions here. 
+Run the entire suite (do this if you want the Allure report to include every test — see note below):
+```bash
+npx playwright test
+```
+
+Run tests in interactive UI mode:
+```bash
+npx playwright test --ui
+```
+
+Run a single spec file:
+```bash
+npx playwright test tests/account/positive/billPay.spec.js
+```
+
+> Note: the results directory is cleared at the start of every run. Running a single file
+> or a single test will produce a report containing only that run — run the full suite in
+> one go if you want a complete report.
 
 ## How to generate report
 
-// TODO - It's part of your task to add the appropriate instructions here. 
+After running the tests, generate the HTML report from the collected results:
+```bash
+npm run allure:generate
+```
+
+Then open it in your browser:
+```bash
+npm run allure:open
+```

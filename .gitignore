@@ -5,3 +5,5 @@ node_modules/
 /playwright/.cache/
 ./vscode
 /CHEAT_SHEET.md
+/allure-results/
+/allure-report/

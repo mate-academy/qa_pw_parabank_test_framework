@@ -22,8 +22,8 @@
   "scripts": {
     "prepare": "husky",
     "test": "playwright test",
-    "allure:generate": "set \"TEMP=E:\\PROGRAMER\\QA\\systems\\allure\\tmp\" && set \"TMP=E:\\PROGRAMER\\QA\\systems\\allure\\tmp\" && allure generate E:/PROGRAMER/QA/systems/allure/allure-results --output E:/PROGRAMER/QA/systems/allure/allure-report",
-    "allure:open": "set \"TEMP=E:\\PROGRAMER\\QA\\systems\\allure\\tmp\" && set \"TMP=E:\\PROGRAMER\\QA\\systems\\allure\\tmp\" && allure open E:/PROGRAMER/QA/systems/allure/allure-report"
+    "allure:generate": "allure generate ./allure-results --output ./allure-report",
+    "allure:open": "allure open ./allure-report"
   },
   "husky": {
     "hooks": {
