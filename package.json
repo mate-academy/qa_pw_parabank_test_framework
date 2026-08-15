@@ -20,7 +20,10 @@
     "prettier": "^3.4.2"
   },
   "scripts": {
-    "prepare": "husky"
+    "prepare": "husky",
+    "test": "playwright test",
+    "allure:generate": "node -e \"require('fs').rmSync('./allure-report', { recursive: true, force: true })\" && allure generate ./allure-results --output ./allure-report",
+    "allure:open": "allure open ./allure-report"
   },
   "husky": {
     "hooks": {

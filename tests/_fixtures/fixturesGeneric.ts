@@ -1,15 +1,15 @@
-import { test as base } from '@playwright/test';
-import { Logger } from '../../src/common/logger/Logger';
+import { test as base, TestInfo } from '@playwright/test';
 import * as allure from 'allure-js-commons';
+import { Logger } from '../../src/common/logger/Logger';
 import { parseTestTreeHierarchy } from '../../src/common/helpers/allureHelpers';
 
 export const test = base.extend<
   {
-    infoTestLog;
-    addAllureTestHierarchy;
+    infoTestLog: void;
+    addAllureTestHierarchy: void;
   },
   {
-    logger;
+    logger: Logger;
   }
 >({
   logger: [
@@ -20,35 +20,38 @@ export const test = base.extend<
     },
     { scope: 'worker' },
   ],
+
   infoTestLog: [
-    async ({ logger }, use, testInfo) => {
-      const indexOfTestSubfolderStart = testInfo.file.indexOf('/tests') + 7;
-      const fileName = testInfo.file.substring(indexOfTestSubfolderStart);
+    async ({ logger }, use, testInfo: TestInfo) => {
+      const normalizedFile = testInfo.file.replace(/\\/g, '/');
+      const indexOfTestSubfolderStart = normalizedFile.indexOf('/tests') + 7;
+      const fileName = normalizedFile.substring(indexOfTestSubfolderStart);
 
       logger.info(`Test started: ${fileName}`);
 
-      await use('infoTestLog');
+      await use();
 
       logger.info(`Test completed: ${fileName}`);
     },
     { scope: 'test', auto: true },
   ],
-  addAllureTestHierarchy: [
-    async ({ logger }, use, testInfo) => {
-      const fileName = testInfo.file;
 
+  addAllureTestHierarchy: [
+    async ({ logger }, use, testInfo: TestInfo) => {
       const [parentSuite, suite, subSuite] = parseTestTreeHierarchy(
-        fileName,
+        testInfo.file,
         logger,
       );
 
       await allure.parentSuite(parentSuite);
-      await allure.suite(suite);
+      if (suite) {
+        await allure.suite(suite);
+      }
       if (subSuite) {
         await allure.subSuite(subSuite);
       }
 
-      await use('addAllureTestHierarhy');
+      await use();
     },
     { scope: 'test', auto: true },
   ],
