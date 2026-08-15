@@ -62,11 +62,16 @@ After running the tests, generate the HTML report from the collected results:
 ```bash
 npm run allure:generate
 ```
+> Under the hood this clears any stale `allure-report` directory, then runs
+> `allure generate ./allure-results --output ./allure-report` (see
+> [KNOWN_ISSUES.md](KNOWN_ISSUES.md) for why the clearing step isn't done via
+> Allure's own `--clean` flag).
 
 Then open it in your browser:
 ```bash
 npm run allure:open
 ```
+> Under the hood this runs `allure open ./allure-report`.
 
 ## Known Issues
 
