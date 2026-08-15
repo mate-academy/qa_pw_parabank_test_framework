@@ -49,6 +49,10 @@ npx playwright test tests/account/positive/billPay.spec.js
 
 ## How to generate report
 
+> Note: run the tests at least once first — `allure-results`/`allure-report` are
+> gitignored, so a fresh checkout won't have them yet, and generating a report
+> from a missing/empty results folder will fail.
+
 After running the tests, generate the HTML report from the collected results:
 ```bash
 npm run allure:generate
@@ -58,3 +62,10 @@ Then open it in your browser:
 ```bash
 npm run allure:open
 ```
+
+## Known Issues
+
+The application under test is a live, third-party demo with no dev/QA feedback
+loop on our side. Bugs found in it, and the difficulties/workarounds that came
+up while stabilizing this suite against it, are tracked in
+[KNOWN_ISSUES.md](KNOWN_ISSUES.md).

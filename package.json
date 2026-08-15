@@ -22,7 +22,7 @@
   "scripts": {
     "prepare": "husky",
     "test": "playwright test",
-    "allure:generate": "allure generate ./allure-results --output ./allure-report",
+    "allure:generate": "node -e \"require('fs').rmSync('./allure-report', { recursive: true, force: true })\" && allure generate ./allure-results --output ./allure-report",
     "allure:open": "allure open ./allure-report"
   },
   "husky": {

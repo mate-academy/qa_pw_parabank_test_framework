@@ -1,9 +1,6 @@
 import { openNewAccounts } from '../actions/account/openNewAccount';
 import { transferFunds } from '../actions/account/transferFunds';
-import {
-  ACCOUNT_TYPE,
-  OPEN_ACCOUNT_DEPOSIT,
-} from '../pages/account/OpenNewAccountPage';
+import { ACCOUNT_TYPE } from '../pages/account/OpenNewAccountPage';
 
 export async function getDefaultAccountNumber(accountsOverviewPage) {
   await accountsOverviewPage.openAndAssert();
@@ -11,8 +8,25 @@ export async function getDefaultAccountNumber(accountsOverviewPage) {
   return accountsOverviewPage.accountLink().textContent();
 }
 
+/**
+ * Opens `count` new accounts funded from `fromAccount`, alternating
+ * CHECKING/SAVINGS, and returns them with locally tracked balance/activity
+ * so callers can assert against real UI state later.
+ *
+ * `count` has no enforced upper bound, but each account adds a full
+ * "Open New Account" UI flow to the caller's runtime — keep it small.
+ *
+ * The starting balance a new account opens with turned out NOT to be a
+ * reliable constant in practice (observed both $90 and $100 across runs
+ * with no code change) — so instead of assuming a fixed deposit amount,
+ * this reads each account's real starting balance off the Accounts
+ * Overview page right after opening it, and tracks that real value from
+ * then on. See makeTrackedTransfers below for how that value caps the
+ * transfer amount you can safely move out of an account.
+ */
 export async function openTrackedAccounts(
   openNewAccountPage,
+  accountsOverviewPage,
   { count, fromAccount },
 ) {
   const accountTypeCycle = [ACCOUNT_TYPE.CHECKING, ACCOUNT_TYPE.SAVINGS];
@@ -23,21 +37,53 @@ export async function openTrackedAccounts(
 
   const accountNumbers = await openNewAccounts(openNewAccountPage, specs);
 
-  return specs.map((spec, i) => ({
-    accountNumber: accountNumbers[i],
-    accountType:
-      spec.accountType === ACCOUNT_TYPE.CHECKING ? 'CHECKING' : 'SAVINGS',
-    balance: OPEN_ACCOUNT_DEPOSIT,
-    sent: [],
-    received: [OPEN_ACCOUNT_DEPOSIT],
-  }));
+  await accountsOverviewPage.openAndAssert();
+
+  const accounts = [];
+  for (const [i, spec] of specs.entries()) {
+    const accountNumber = accountNumbers[i];
+    const balance = await accountsOverviewPage.getAccountBalance(accountNumber);
+
+    accounts.push({
+      accountNumber,
+      accountType:
+        spec.accountType === ACCOUNT_TYPE.CHECKING ? 'CHECKING' : 'SAVINGS',
+      balance,
+      sent: [],
+      received: [balance],
+    });
+  }
+
+  return accounts;
 }
 
+/**
+ * Round-robins `count` transfers of `amount` through `accounts`: transfer i
+ * moves money from accounts[i % n] to accounts[(i + 1) % n], and updates
+ * each account's tracked balance/sent/received to match.
+ *
+ * Requires accounts.length >= 2 — with n = 1 both indices collapse to the
+ * same account, turning every "transfer" into a same-account transfer,
+ * which the real server does not settle the way this bookkeeping expects
+ * (throws below instead of silently producing a wrong tracked balance).
+ *
+ * `amount` must be > 0 and should not exceed the smallest starting balance
+ * among `accounts` (see openTrackedAccounts above — that starting balance
+ * is read from the real UI, not a fixed constant) — a larger amount risks
+ * an "insufficient funds" failure the first time an account is used as the
+ * transfer source.
+ */
 export async function makeTrackedTransfers(
   transferFundsPage,
   accounts,
   { count, amount },
 ) {
+  if (accounts.length < 2) {
+    throw new Error(
+      'makeTrackedTransfers requires at least 2 accounts to transfer between',
+    );
+  }
+
   const specs = Array.from({ length: count }, (_, i) => ({
     amount,
     fromAccount: accounts[i % accounts.length].accountNumber,

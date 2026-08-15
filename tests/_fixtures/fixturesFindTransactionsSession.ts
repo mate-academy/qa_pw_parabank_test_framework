@@ -6,12 +6,15 @@ import { BASE_URL } from '../../src/common/constants/baseUrl';
 import { AccountsOverviewPage } from '../../src/ui/pages/account/AccountsOverviewPage';
 import { OpenNewAccountPage } from '../../src/ui/pages/account/OpenNewAccountPage';
 import { TransferFundsPage } from '../../src/ui/pages/account/TransferFundsPage';
+import { FindTransactionsPage } from '../../src/ui/pages/account/FindTransactionsPage';
 import {
   getDefaultAccountNumber,
   openTrackedAccounts,
 } from '../../src/ui/interfaces/account';
 import { transferFunds } from '../../src/ui/actions/account/transferFunds';
+import { searchByAmount } from '../../src/ui/interfaces/findTransactions';
 import {
+  DEPOSIT_TRANSACTION,
   SENT_TRANSACTION,
   RECEIVED_TRANSACTION,
 } from '../../src/common/testData/account/findTransactionsCases';
@@ -19,10 +22,12 @@ import {
 type WorkerSession = {
   storageState: Awaited<ReturnType<BrowserContext['storageState']>>;
   accountNumber: string;
+  transactionDate: string;
+  depositAmount: number;
 };
 
 export const test = base.extend<
-  { accountNumber: string },
+  { accountNumber: string; transactionDate: string; depositAmount: number },
   { workerSession: WorkerSession }
 >({
   workerSession: [
@@ -41,8 +46,9 @@ export const test = base.extend<
         accountsOverviewPage,
       );
 
-      const [{ accountNumber }] = await openTrackedAccounts(
+      const [{ accountNumber, balance: depositAmount }] = await openTrackedAccounts(
         openNewAccountPage,
+        accountsOverviewPage,
         { count: 1, fromAccount: defaultAccountNumber },
       );
 
@@ -59,10 +65,22 @@ export const test = base.extend<
         },
       ]);
 
+      // Read back the date the server actually recorded for the deposit
+      // transaction, instead of computing "today" locally — the test
+      // machine and the ParaBank server can be in different time zones,
+      // so a locally computed date isn't guaranteed to match what the
+      // server stamped on the transaction.
+      const findTransactionsPage = new FindTransactionsPage(page);
+      await searchByAmount(findTransactionsPage, accountNumber, depositAmount);
+      const transactionDate = await findTransactionsPage.getTransactionDate(
+        DEPOSIT_TRANSACTION.description,
+        depositAmount,
+      );
+
       const storageState = await context.storageState();
       await context.close();
 
-      await use({ storageState, accountNumber });
+      await use({ storageState, accountNumber, transactionDate, depositAmount });
     },
     { scope: 'worker' },
   ],
@@ -73,5 +91,13 @@ export const test = base.extend<
 
   accountNumber: async ({ workerSession }, use) => {
     await use(workerSession.accountNumber);
+  },
+
+  transactionDate: async ({ workerSession }, use) => {
+    await use(workerSession.transactionDate);
+  },
+
+  depositAmount: async ({ workerSession }, use) => {
+    await use(workerSession.depositAmount);
   },
 });

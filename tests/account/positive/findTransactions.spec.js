@@ -1,6 +1,5 @@
 import { test } from '../../_fixtures/fixturesFindTransactionsSession';
 import * as allure from 'allure-js-commons';
-import { todayFormatted } from '../../../src/common/helpers/dateHelpers';
 import {
   DEPOSIT_TRANSACTION,
   SENT_TRANSACTION,
@@ -17,15 +16,17 @@ import {
 
 test('should find transactions by amount', async ({
   accountNumber,
+  transactionDate,
+  depositAmount,
   findTransactionsPage,
 }) => {
   await allure.severity('critical');
 
-  await searchByAmount(findTransactionsPage, accountNumber, DEPOSIT_TRANSACTION.amount);
+  await searchByAmount(findTransactionsPage, accountNumber, depositAmount);
 
   await assertSingleTransactionFound(
     findTransactionsPage,
-    { ...DEPOSIT_TRANSACTION, date: todayFormatted() },
+    { ...DEPOSIT_TRANSACTION, amount: depositAmount, date: transactionDate },
     [SENT_TRANSACTION, RECEIVED_TRANSACTION],
   );
 
@@ -33,26 +34,27 @@ test('should find transactions by amount', async ({
 
   await assertSingleTransactionFound(
     findTransactionsPage,
-    { ...SENT_TRANSACTION, date: todayFormatted() },
-    [DEPOSIT_TRANSACTION, RECEIVED_TRANSACTION],
+    { ...SENT_TRANSACTION, date: transactionDate },
+    [{ ...DEPOSIT_TRANSACTION, amount: depositAmount }, RECEIVED_TRANSACTION],
   );
 
   await searchByAmount(findTransactionsPage, accountNumber, RECEIVED_TRANSACTION.amount);
 
   await assertSingleTransactionFound(
     findTransactionsPage,
-    { ...RECEIVED_TRANSACTION, date: todayFormatted() },
-    [DEPOSIT_TRANSACTION, SENT_TRANSACTION],
+    { ...RECEIVED_TRANSACTION, date: transactionDate },
+    [{ ...DEPOSIT_TRANSACTION, amount: depositAmount }, SENT_TRANSACTION],
   );
 });
 
 test('should find transactions by date', async ({
   accountNumber,
+  transactionDate,
   findTransactionsPage,
 }) => {
   await allure.severity('critical');
 
-  await searchByDate(findTransactionsPage, accountNumber, todayFormatted());
+  await searchByDate(findTransactionsPage, accountNumber, transactionDate);
 
   await assertTransactionsFound(findTransactionsPage, 3);
 });
@@ -61,10 +63,6 @@ test('should return no transactions for a date with no matches', async ({
   accountNumber,
   findTransactionsPage,
 }) => {
-  // Known server bug: a search with no matches returns one malformed row
-  // ("NaN-NaN-NaN" / "undefined") instead of an empty result table.
-  test.fail();
-
   await allure.severity('normal');
 
   await searchByDate(findTransactionsPage, accountNumber, '01-01-2020');
@@ -74,6 +72,7 @@ test('should return no transactions for a date with no matches', async ({
 
 test('should find transactions by date range', async ({
   accountNumber,
+  transactionDate,
   findTransactionsPage,
 }) => {
   await allure.severity('critical');
@@ -81,8 +80,8 @@ test('should find transactions by date range', async ({
   await searchByDateRange(
     findTransactionsPage,
     accountNumber,
-    todayFormatted(),
-    todayFormatted(),
+    transactionDate,
+    transactionDate,
   );
 
   await assertTransactionsFound(findTransactionsPage, 3);
@@ -92,10 +91,6 @@ test('should return no transactions for a date range with no matches', async ({
   accountNumber,
   findTransactionsPage,
 }) => {
-  // Known server bug: a search with no matches returns one malformed row
-  // ("NaN-NaN-NaN" / "undefined") instead of an empty result table.
-  test.fail();
-
   await allure.severity('normal');
 
   await searchByDateRange(
@@ -110,23 +105,26 @@ test('should return no transactions for a date range with no matches', async ({
 
 test('should find a transaction by ID', async ({
   accountNumber,
+  transactionDate,
+  depositAmount,
   findTransactionsPage,
 }) => {
   await allure.severity('critical');
 
-  await searchByAmount(findTransactionsPage, accountNumber, DEPOSIT_TRANSACTION.amount);
+  await searchByAmount(findTransactionsPage, accountNumber, depositAmount);
 
   await findTransactionsPage.assertResultsShown();
 
   const transactionId = await findTransactionsPage.getTransactionId(
     DEPOSIT_TRANSACTION.description,
-    DEPOSIT_TRANSACTION.amount,
+    depositAmount,
   );
 
   await searchByTransactionId(findTransactionsPage, transactionId);
 
   await assertSingleTransactionFound(findTransactionsPage, {
     ...DEPOSIT_TRANSACTION,
-    date: todayFormatted(),
+    amount: depositAmount,
+    date: transactionDate,
   });
 });

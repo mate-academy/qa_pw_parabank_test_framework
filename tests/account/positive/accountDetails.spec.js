@@ -9,9 +9,11 @@ import {
   assertAccountActivity,
 } from '../../../src/ui/interfaces/account';
 
-const ACCOUNTS_TO_OPEN = 1;
+// See JSDoc on openTrackedAccounts/makeTrackedTransfers (interfaces/account.js)
+// for the valid ranges of these three and why.
+const ACCOUNTS_TO_OPEN = 2;
 const TRANSFERS_TO_MAKE = 1;
-const TRANSFER_AMOUNT = 100;
+const TRANSFER_AMOUNT = 50;
 
 test('should show correct account balances and activity after opening accounts and transferring funds', async ({
   page,
@@ -27,7 +29,7 @@ test('should show correct account balances and activity after opening accounts a
 
   const defaultAccountNumber = await getDefaultAccountNumber(accountsOverviewPage);
 
-  const accounts = await openTrackedAccounts(openNewAccountPage, {
+  const accounts = await openTrackedAccounts(openNewAccountPage, accountsOverviewPage, {
     count: ACCOUNTS_TO_OPEN,
     fromAccount: defaultAccountNumber,
   });

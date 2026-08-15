@@ -9,11 +9,10 @@ export function parseTestTreeHierarchy(fileName, logger) {
     .split('/');
 
   const lastSegment = segments[segments.length - 1];
-  const folderSegments = lastSegment.includes('.spec.')
-    ? segments.slice(0, -1)
-    : segments;
+  const fileNameWithoutExtension = lastSegment.replace(/\.spec\.\w+$/, '');
+  const pathSegments = [...segments.slice(0, -1), fileNameWithoutExtension];
 
-  const attributes = folderSegments.map(segment =>
+  const attributes = pathSegments.map(segment =>
     capitalize(camelCaseToPhrase(segment)),
   );
 

@@ -50,6 +50,22 @@ export class TransferFundsPage extends BasePage {
     });
   }
 
+  async clickTransferButtonAndCaptureResponse() {
+    return this.step(
+      'Click Transfer button and capture the transfer response',
+      async () => {
+        const [response] = await Promise.all([
+          this.page.waitForResponse((res) =>
+            res.url().includes('/services_proxy/bank/transfer'),
+          ),
+          this.transferButton.click(),
+        ]);
+
+        return response;
+      },
+    );
+  }
+
   async assertOpened() {
     await this.step('Assert Transfer Funds page is opened', async () => {
       await expect(this.heading).toBeVisible();
@@ -69,6 +85,17 @@ export class TransferFundsPage extends BasePage {
           ),
         ).toBeVisible();
         await expect(this.helpText).toBeVisible();
+      },
+    );
+  }
+
+  async assertTransferResponseRejected(response) {
+    await this.step(
+      'Assert the transfer response indicates the transfer was rejected',
+      async () => {
+        const body = await response.text();
+
+        expect(body).not.toContain('Successfully transferred');
       },
     );
   }

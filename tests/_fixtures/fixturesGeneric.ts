@@ -1,9 +1,7 @@
-import { rmSync } from 'fs';
 import { test as base, TestInfo } from '@playwright/test';
 import * as allure from 'allure-js-commons';
 import { Logger } from '../../src/common/logger/Logger';
 import { parseTestTreeHierarchy } from '../../src/common/helpers/allureHelpers';
-import { ALLURE_RESULTS_DIR } from '../../src/common/constants/allurePaths';
 
 export const test = base.extend<
   {
@@ -12,7 +10,6 @@ export const test = base.extend<
   },
   {
     logger: Logger;
-    cleanAllureResults: void;
   }
 >({
   logger: [
@@ -22,15 +19,6 @@ export const test = base.extend<
       await use(logger);
     },
     { scope: 'worker' },
-  ],
-
-  cleanAllureResults: [
-    async ({}, use) => {
-      rmSync(ALLURE_RESULTS_DIR, { recursive: true, force: true });
-
-      await use();
-    },
-    { scope: 'worker', auto: true },
   ],
 
   infoTestLog: [

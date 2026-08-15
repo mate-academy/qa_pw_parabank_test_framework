@@ -28,7 +28,7 @@ test('should filter account activity by transaction type and month', async ({
 
   const defaultAccountNumber = await getDefaultAccountNumber(accountsOverviewPage);
 
-  const accounts = await openTrackedAccounts(openNewAccountPage, {
+  const accounts = await openTrackedAccounts(openNewAccountPage, accountsOverviewPage, {
     count: ACCOUNTS_TO_OPEN,
     fromAccount: defaultAccountNumber,
   });

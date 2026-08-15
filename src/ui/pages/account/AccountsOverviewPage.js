@@ -144,6 +144,14 @@ export class AccountsOverviewPage extends BasePage {
     );
   }
 
+  async getAccountBalance(accountNumber) {
+    return this.step(`Read account #${accountNumber} balance`, async () => {
+      const text = await this.balanceCellByNumber(accountNumber).textContent();
+
+      return Number(text.replace(/[^0-9.-]/g, ''));
+    });
+  }
+
   async assertAccessDenied() {
     await this.step(
       'Assert account data is not accessible without login',

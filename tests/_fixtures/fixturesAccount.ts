@@ -6,6 +6,7 @@ import { AccountDetailsPage } from '../../src/ui/pages/account/AccountDetailsPag
 import { BillPayPage } from '../../src/ui/pages/account/BillPayPage';
 import { FindTransactionsPage } from '../../src/ui/pages/account/FindTransactionsPage';
 import { UpdateContactInfoPage } from '../../src/ui/pages/account/UpdateContactInfoPage';
+import { RequestLoanPage } from '../../src/ui/pages/account/RequestLoanPage';
 import { generateBillPayData } from '../../src/common/testData/account/billPayData';
 import { generateUpdateContactInfoData } from '../../src/common/testData/account/updateContactInfoData';
 
@@ -17,6 +18,7 @@ export const test = base.extend<{
   billPayPage: BillPayPage;
   findTransactionsPage: FindTransactionsPage;
   updateContactInfoPage: UpdateContactInfoPage;
+  requestLoanPage: RequestLoanPage;
   billPayData: ReturnType<typeof generateBillPayData>;
   updateContactInfoData: ReturnType<typeof generateUpdateContactInfoData>;
 }>({
@@ -46,6 +48,10 @@ export const test = base.extend<{
 
   updateContactInfoPage: async ({ page }, use) => {
     await use(new UpdateContactInfoPage(page));
+  },
+
+  requestLoanPage: async ({ page }, use) => {
+    await use(new RequestLoanPage(page));
   },
 
   billPayData: async ({}, use) => {

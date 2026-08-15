@@ -168,6 +168,18 @@ export class FindTransactionsPage extends BasePage {
     );
   }
 
+  async getTransactionDate(description, amount) {
+    return this.step(
+      `Read transaction date for "${description}" (${amount})`,
+      async () => {
+        return this.transactionRow(description, amount)
+          .locator('td')
+          .nth(0)
+          .textContent();
+      },
+    );
+  }
+
   async assertTransactionNotVisible(description, amount) {
     const formattedAmount = `$${Number(amount).toFixed(2)}`;
 

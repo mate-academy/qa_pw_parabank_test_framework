@@ -1,4 +1,5 @@
 import { test } from '../../_fixtures/fixturesSharedSession';
+import { test as freshSessionTest } from '../../_fixtures/fixtures';
 import * as allure from 'allure-js-commons';
 import { fillBillPayForm } from '../../../src/ui/actions/account/billPay';
 import {
@@ -45,3 +46,17 @@ test.describe('Bill Pay - negative', () => {
     });
   }
 });
+
+// Deliberately outside the describe block above: that one runs on
+// fixturesSharedSession, which logs a user in once per worker and reuses
+// that session for every test — the opposite of what "not logged in" needs.
+freshSessionTest(
+  'should not show Bill Pay page without being logged in',
+  async ({ billPayPage }) => {
+    await allure.severity('normal');
+
+    await billPayPage.open();
+
+    await billPayPage.assertInternalError();
+  },
+);

@@ -48,3 +48,6 @@ export const UPDATE_PROFILE_REQUIRED_FIELD_ERRORS = {
   state: 'State is required.',
   zipCode: 'Zip Code is required.',
 };
+
+export const LOAN_APPROVED_MESSAGE =
+  'Congratulations, your loan has been approved.';

@@ -124,4 +124,14 @@ export class UpdateContactInfoPage extends BasePage {
       await expect(fieldError).toHaveText(message);
     });
   }
+
+  async assertAccessDenied() {
+    await this.step(
+      'Assert Update Profile page is not accessible without login',
+      async () => {
+        await expect(this.errorHeading).toBeVisible();
+        await expect(this.errorText).toBeVisible();
+      },
+    );
+  }
 }
