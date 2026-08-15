@@ -6,9 +6,9 @@ To see the description of the task assignment [follow the link](https://github.c
 
 This repository contains a test automation framework for the [Parabank](https://parabank.parasoft.com/parabank/index.htm) bank application testing. 
 
-# How to use this project
+# Usage
 
-## Installation steps
+## Installation
 
 To install the project follow the next steps:
 
@@ -25,8 +25,13 @@ npx playwright install
 ```bash
 npm install -g allure-commandline
 ```
+> Note: this installs the `allure` CLI globally. If `allure generate`/`allure open`
+> (invoked below via `npm run allure:generate` / `npm run allure:open`) fail with
+> a "command not found" error, your npm global bin directory isn't on PATH — check
+> it with `npm config get prefix` (on Windows the CLI lives directly in that
+> folder; on macOS/Linux it's `<prefix>/bin`) and add it to your PATH.
 
-## How to run the tests
+## Running Tests
 
 Run the entire suite (do this if you want the Allure report to include every test — see note below):
 ```bash
@@ -47,7 +52,7 @@ npx playwright test tests/account/positive/billPay.spec.js
 > or a single test will produce a report containing only that run — run the full suite in
 > one go if you want a complete report.
 
-## How to generate report
+## Generating the Allure Report
 
 > Note: run the tests at least once first — `allure-results`/`allure-report` are
 > gitignored, so a fresh checkout won't have them yet, and generating a report

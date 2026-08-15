@@ -1,7 +1,8 @@
 export const REGISTRATION_SUCCESS_MESSAGE =
   'Your account was created successfully. You are now logged in.';
 
-export const LOGIN_MISSING_FIELDS_ERROR = 'Please enter a username and password.';
+export const LOGIN_MISSING_FIELDS_ERROR =
+  'Please enter a username and password.';
 
 export const REGISTRATION_REQUIRED_FIELD_ERRORS = {
   firstName: 'First name is required.',
