@@ -7,6 +7,7 @@ export const test = base.extend<
   {
     infoTestLog;
     addAllureTestHierarchy;
+    throttleRequests;
   },
   {
     logger;
@@ -19,6 +20,13 @@ export const test = base.extend<
       await use(logger);
     },
     { scope: 'worker' },
+  ],
+  throttleRequests: [
+    async ({}, use) => {
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      await use();
+    },
+    { scope: 'test', auto: true },
   ],
   infoTestLog: [
     async ({ logger }, use, testInfo) => {
@@ -48,7 +56,7 @@ export const test = base.extend<
         await allure.subSuite(subSuite);
       }
 
-      await use('addAllureTestHierarhy');
+      await use('addAllureTestHierarchy');
     },
     { scope: 'test', auto: true },
   ],
