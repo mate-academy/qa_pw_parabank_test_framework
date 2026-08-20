@@ -2,7 +2,7 @@ import * as allure from 'allure-js-commons';
 import { Severity } from 'allure-js-commons';
 import { test } from '../../_fixtures/fixtures';
 
-test('Accounts Overviev displays the newly created account', async ({
+test('Accounts Overview displays the newly created account', async ({
   registeredCustomer,
   accountServicesNavPage,
   accountOverviewPage,
