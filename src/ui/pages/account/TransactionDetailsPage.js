@@ -99,7 +99,7 @@ export class TransactionDetailsPage {
 
   async assertTransactionDate(expectedDate) {
     await this.step(
-      `Assert transaction ID is '${expectedDate}'`,
+      `Assert transaction Date is '${expectedDate}'`,
 
       async () => {
         await expect(this.date).toHaveText(expectedDate);

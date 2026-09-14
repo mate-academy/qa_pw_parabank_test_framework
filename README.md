@@ -32,9 +32,9 @@ npm install -g allure-commandline
 ```
 
 ## How to run the tests
-
-// TODO - It's part of your task to add the appropriate instructions here.
+You can run the Playwright commands directly in the terminal:
+npm test
 
 ## How to generate report
-
-// TODO - It's part of your task to add the appropriate instructions here.
+You can run the Playwright commands directly in the terminal:
+allure serve allure-results

@@ -5,7 +5,7 @@ export class AccountDetailsPage {
     this.page = page;
     this.userId = userId;
 
-    //Acount Details
+    //Account Details
     this.accountDetailsSection = page.getByText('Account Details');
 
     this.accountNumber = page.getByText('Account Number:');

@@ -7,7 +7,7 @@ export class RequestLoanPage {
     this.amount = page.locator('#amount');
     this.downPayment = page.locator('#downPayment');
     this.fromAccountId = page.locator('#fromAccountId');
-    this.sumbitButton = page.getByRole('button', { name: 'Apply Now' });
+    this.submitButton = page.getByRole('button', { name: 'Apply Now' });
   }
 
   async step(title, stepToRun) {
@@ -27,7 +27,7 @@ export class RequestLoanPage {
   }
 
   async clickSubmitButton() {
-    await this.sumbitButton.click();
+    await this.submitButton.click();
   }
 
   async assertApprovedLoanMessage() {

@@ -88,7 +88,7 @@ export class AccountOverviewPage {
       await expect(this.total).not.toBeEmpty();
     });
   }
-  async assertBalanceIsNotVisible() {
+  async assertBalanceIsNotEmpty() {
     await this.step(`Assert the 'Total' is shown`, async () => {
       await expect(this.balanceTable).not.toBeEmpty();
     });
@@ -103,7 +103,7 @@ export class AccountOverviewPage {
         await this.assertBalanceColumnHeaderIsVisible();
         await this.assertAvailableAmountColumnHeaderIsVisible();
         await this.assertTotalNotEmpty();
-        await this.assertBalanceIsNotVisible();
+        await this.assertBalanceIsNotEmpty();
       },
     );
   }

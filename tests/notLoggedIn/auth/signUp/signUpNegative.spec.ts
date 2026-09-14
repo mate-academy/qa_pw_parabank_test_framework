@@ -14,13 +14,13 @@ for (const [key, fieldName] of Object.entries(REQUIRED_SIGN_UP_FIELDS)) {
 }
 
 test.describe('Sign up negative tests', () => {
-  testParameters.forEach(({ nameOfTheField, value, errorMessage }) => {
+  testParameters.forEach(({ nameOfTheField, errorMessage }) => {
     test(`Error is displayed for empty ${nameOfTheField}`, async ({
       user,
       signUpPage,
     }) => {
       await signUpPage.open();
-      await signUpPage.fillEmptyNegativeSignUpForm(user, nameOfTheField, value);
+      await signUpPage.fillEmptyNegativeSignUpForm(user, nameOfTheField);
       await signUpPage.clickSignUpButton();
       await signUpPage.assertErrorMessageContainsText(
         nameOfTheField,
