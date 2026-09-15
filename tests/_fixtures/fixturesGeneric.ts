@@ -1,3 +1,5 @@
+import 'allure-playwright/autoconfig';
+
 import { test as base } from '@playwright/test';
 import { Logger } from '../../src/common/logger/Logger';
 import * as allure from 'allure-js-commons';
