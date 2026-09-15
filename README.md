@@ -8,6 +8,12 @@ This repository contains a test automation framework for the [Parabank](https://
 
 # How to use this project
 
+## Prerequisites
+
+- Node.js
+- Docker (running locally)
+- Java 8 or higher (required by the Allure command line tool)
+
 ## Installation steps
 
 To install the project follow the next steps:
@@ -37,6 +43,12 @@ npm install -g allure-commandline
 The tests are configured to run against a local ParaBank instance in Docker instead of the public ParaBank website.
 
 This is used to avoid access and rate-limit issues and to provide a controlled application environment with a reproducible database state.
+
+### Starting the local ParaBank instance
+
+```bash
+docker run -d -p 8080:8080 parasoft/parabank
+```
 
 The application is available at:
 
@@ -78,7 +90,7 @@ npx playwright test --headed
 npm run test:headed
 ```
 
-Notes:
+### Notes
 
 - `npm test` clears `allure-results/` first. Allure merges every file it finds in that folder, so results left over from earlier runs show up in the report as extra tests and mismatched retries. Always start from a clean folder.
 - Do not pass `--reporter=list` (or any other `--reporter`) on the command line. It replaces the reporters configured in `playwright.config.js`, which drops `allure-playwright` and no results are written at all.
