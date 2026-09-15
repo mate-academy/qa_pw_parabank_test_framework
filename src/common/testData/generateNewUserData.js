@@ -20,6 +20,20 @@ export const PARABANK_FIELD_LIMITS = {
   password: 20,
 };
 
+/**
+ * Truncates every generated field to its column width. Applied to the whole
+ * user object so a new field cannot silently skip its limit.
+ */
+function applyFieldLimits(user) {
+  return Object.fromEntries(
+    Object.entries(user).map(([field, value]) => {
+      const limit = PARABANK_FIELD_LIMITS[field];
+
+      return [field, limit ? value.slice(0, limit) : value];
+    }),
+  );
+}
+
 function generateUsername(firstName) {
   const prefix = firstName
     .toLowerCase()
@@ -41,16 +55,16 @@ export function generateNewUserData() {
   const firstName = faker.person.firstName();
   const lastName = faker.person.lastName();
 
-  return {
+  return applyFieldLimits({
     firstName,
     lastName,
     address: faker.location.streetAddress(),
-    city: faker.location.city().slice(0, PARABANK_FIELD_LIMITS.city),
+    city: faker.location.city(),
     state: faker.location.state(),
     zipCode: faker.location.zipCode(),
     phone: faker.phone.number({ style: 'national' }),
     ssn: faker.string.numeric(9),
     username: generateUsername(firstName),
     password: faker.internet.password({ length: 12 }),
-  };
+  });
 }

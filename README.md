@@ -51,13 +51,19 @@ Make sure the local ParaBank Docker container is running before executing the te
 Run the whole suite:
 
 ```bash
+npx playwright test
+```
+
+Or, to clear stale Allure results first (recommended — see the notes below):
+
+```bash
 npm test
 ```
 
 Run a single spec, a folder, or a test by title:
 
 ```bash
-npx playwright test tests/accounts/transferFunds/successfulFundsTransfer.spec.js
+npx playwright test tests/transactions/transferFunds/successfulFundsTransfer.spec.js
 
 npx playwright test tests/auth
 
@@ -67,6 +73,8 @@ npx playwright test -g "User can transfer funds within own accounts"
 Run with a visible browser:
 
 ```bash
+npx playwright test --headed
+# or
 npm run test:headed
 ```
 
@@ -77,9 +85,17 @@ Notes:
 
 ## How to generate report
 
+Quickest — build and open the report in one step:
+
 ```bash
-npm run report
-npm run report:open
+allure serve allure-results
 ```
 
-`npm run report` builds `allure-report/` from `allure-results/`, and `npm run report:open` serves it in the browser. Both require the Allure command line tool from the installation steps above.
+Or produce a persistent report in `allure-report/` and open it:
+
+```bash
+npm run report        # allure generate allure-results --clean -o allure-report
+npm run report:open   # allure open allure-report
+```
+
+Both require the Allure command line tool from the installation steps above.

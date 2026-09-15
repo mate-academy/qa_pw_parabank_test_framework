@@ -44,7 +44,7 @@ export const test = base.extend<{
   },
 
   billPayPage: async ({ page }, use) => {
-    await use(new BillPayPage(page));
+    await use(new BillPayPage(page, 1));
   },
 
   findTransactionsPage: async ({ page }, use) => {

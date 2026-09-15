@@ -8,12 +8,11 @@ test.beforeEach(async ({ createdAccount, page2, user2 }) => {
 });
 
 test('User can successfully make a bill payment', async ({
-  page1,
   billPayPage,
   user2,
   createdAccount,
 }) => {
-  await billPayPage.goToBillPay(page1, 1);
+  await billPayPage.goToBillPay();
   const fromAccount = await billPayPage.getFromAccountId();
   await billPayPage.fillPayeeInformation(user2, createdAccount);
   await billPayPage.fillAmount(TRANSFER_AMOUNT);

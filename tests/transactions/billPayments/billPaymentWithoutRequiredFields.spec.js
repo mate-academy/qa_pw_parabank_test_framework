@@ -50,12 +50,11 @@ test.beforeEach(async ({ createdAccount, page2, user2 }) => {
 test.describe('Bill Payment with required fields not filled in', () => {
   for (const { field, message } of requiredFields) {
     test(`Bill Payment with empty ${field}`, async ({
-      page1,
       billPayPage,
       user2,
       createdAccount,
     }) => {
-      await billPayPage.goToBillPay(page1, 1);
+      await billPayPage.goToBillPay();
       await billPayPage.fillPayeeInformation(user2, createdAccount);
       await billPayPage.fillAmount(TRANSFER_AMOUNT);
       await billPayPage.clearField(field);

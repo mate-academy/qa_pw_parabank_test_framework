@@ -18,7 +18,7 @@ export class LookupPage {
   }
 
   async verifyErrorMessage(message) {
-    await this.step('Verify validayion error message', async () => {
+    await this.step('Verify validation error message', async () => {
       await expect(this.page.getByText(message)).toBeVisible();
     });
   }

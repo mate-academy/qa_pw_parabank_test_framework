@@ -12,12 +12,11 @@ test.beforeEach(async ({ createdAccount, page2, user2 }) => {
 });
 
 test('Payment fails when account numbers do not match', async ({
-  page1,
   billPayPage,
   user2,
   createdAccount,
 }) => {
-  await billPayPage.goToBillPay(page1, 1);
+  await billPayPage.goToBillPay();
   await billPayPage.fillPayeeInformation(user2, createdAccount);
   await billPayPage.fillAmount(TRANSFER_AMOUNT);
   await billPayPage.fillVerifyAccountNumber(INVALID_ACCOUNT_NUMBER);
