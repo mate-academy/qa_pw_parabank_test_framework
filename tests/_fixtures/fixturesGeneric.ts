@@ -1,19 +1,23 @@
-import { test as base } from '@playwright/test';
+import { test as base, TestInfo } from '@playwright/test';
 import { Logger } from '../../src/common/logger/Logger';
 import * as allure from 'allure-js-commons';
 import { parseTestTreeHierarchy } from '../../src/common/helpers/allureHelpers';
+import { generateNewUserData } from '../../src/common/testData/generateNewUserData';
+
+type UserDataType = ReturnType<typeof generateNewUserData>;
 
 export const test = base.extend<
   {
-    infoTestLog;
-    addAllureTestHierarchy;
+    infoTestLog: string;
+    addAllureTestHierarchy: string;
+    user: UserDataType;
   },
   {
-    logger;
+    logger: Logger;
   }
 >({
   logger: [
-    async ({}, use) => {
+    async ({}, use: (r: Logger) => Promise<void>) => {
       const logger = new Logger('error');
 
       await use(logger);
@@ -21,7 +25,11 @@ export const test = base.extend<
     { scope: 'worker' },
   ],
   infoTestLog: [
-    async ({ logger }, use, testInfo) => {
+    async (
+      { logger }: { logger: Logger },
+      use: (r: string) => Promise<void>,
+      testInfo: TestInfo,
+    ) => {
       const indexOfTestSubfolderStart = testInfo.file.indexOf('/tests') + 7;
       const fileName = testInfo.file.substring(indexOfTestSubfolderStart);
 
@@ -34,7 +42,11 @@ export const test = base.extend<
     { scope: 'test', auto: true },
   ],
   addAllureTestHierarchy: [
-    async ({ logger }, use, testInfo) => {
+    async (
+      { logger }: { logger: Logger },
+      use: (r: string) => Promise<void>,
+      testInfo: TestInfo,
+    ) => {
       const fileName = testInfo.file;
 
       const [parentSuite, suite, subSuite] = parseTestTreeHierarchy(
@@ -48,8 +60,17 @@ export const test = base.extend<
         await allure.subSuite(subSuite);
       }
 
-      await use('addAllureTestHierarhy');
+      await use('addAllureTestHierarchy');
     },
     { scope: 'test', auto: true },
   ],
+
+  user: async (
+    { logger }: { logger: Logger },
+    use: (r: UserDataType) => Promise<void>,
+  ) => {
+    const user = generateNewUserData(logger);
+
+    await use(user);
+  },
 });

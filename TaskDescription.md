@@ -22,20 +22,20 @@ The functionality that should be automated:
 
 **Not logged in user:**
 
-- _Positive and negative auth - register & sign-in._
-- _Forgot login info?_
+- _Positive and negative auth - register & sign-in._ --- DONE
+- \_Forgot login info? --- DONE
 
 **Logged in user:**
 
-- _Account Overview_
+- _Account Overview_ --- DONE
 - _Account Overivew -> Account Details & Account Activity filtering_
-- _Open New Account_
-- _Transfer Funds_
-- _Bill Pay_
+- _Open New Account_ --- DONE
+- _Transfer Funds_ --- DONE
+- _Bill Pay_ --- DONE
 - _Find Transactions_
-- _Update Contact Info_
+- _Update Contact Info_ --- DONE
 - _Request Loan_
-- _Log out_
+- _Log out_ --- DONE
 
 ## Task Reporting:
 
