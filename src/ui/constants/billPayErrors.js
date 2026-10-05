@@ -1,0 +1,13 @@
+export const EMPTY_PAYEE_NAME_MESSAGE = `Payee name is required.`;
+export const EMPTY_PAYEE_ADDRESS_MESSAGE = `Address is required.`;
+export const EMPTY_PAYEE_CITY_MESSAGE = `City is required.`;
+export const EMPTY_PAYEE_STATE_MESSAGE = `State is required.`;
+export const EMPTY_PAYEE_ZIPCODE_MESSAGE = `Zip code is required.`;
+export const EMPTY_PAYEE_PHONE_NUMBER_MESSAGE = `Phone number is required.`;
+export const EMPTY_PAYEE_ACCOUNT_NUMBER_MESSAGE = `Account number is required.`;
+export const EMPTY_VERIFY_ACCOUNT_NUMBER_MESSAGE = `Account number is required.`;  
+export const MISSMATCHED_ACCOUNT_NUMBERS_MESSAGE = `The account numbers do not match.`;
+export const EMPTY_AMOUNT_MESSAGE = `The amount cannot be empty.`;
+export const INVALID_ACCOUNT_NUMBER_MESSAGE = `Please enter a valid number.`;
+export const INVALID_VERIFY_ACCOUNT_NUMBER_MESSAGE = `Please enter a valid number.`;
+export const INVALID_AMOUNT_MESSAGE = `Please enter a valid amount.`;

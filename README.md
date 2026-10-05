@@ -28,8 +28,42 @@ npm install -g allure-commandline
 
 ## How to run the tests
 
-// TODO - It's part of your task to add the appropriate instructions here. 
+Install dependencies and browsers (first time only):
+```bash
+npm ci
+npx playwright install
+```
+
+Run all tests:
+```bash
+npx playwright test
+```
+
+Run a specific file or folder by name:
+```bash
+npx playwright test registration
+npx playwright test billPayment
+```
+
+Run a single test by name:
+```bash
+npx playwright test -g "Successful Registration flow"
+```
+
+Run in headed mode (watch the browser):
+```bash
+npx playwright test --headed
+```
 
 ## How to generate report
 
-// TODO - It's part of your task to add the appropriate instructions here. 
+This project uses Allure. After a test run:
+```bash
+npx allure generate --clean
+npx allure open
+```
+
+If `allure-commandline` isn't installed yet:
+```bash
+npm install --save-dev allure-commandline
+```
