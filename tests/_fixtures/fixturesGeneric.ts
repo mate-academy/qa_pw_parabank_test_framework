@@ -1,3 +1,4 @@
+
 import { test as base } from '@playwright/test';
 import { Logger } from '../../src/common/logger/Logger';
 import * as allure from 'allure-js-commons';
@@ -20,10 +21,16 @@ export const test = base.extend<
     },
     { scope: 'worker' },
   ],
+
   infoTestLog: [
     async ({ logger }, use, testInfo) => {
-      const indexOfTestSubfolderStart = testInfo.file.indexOf('/tests') + 7;
-      const fileName = testInfo.file.substring(indexOfTestSubfolderStart);
+      const normalizedFileName = testInfo.file.replace(/\\/g, '/');
+      const indexOfTestSubfolderStart =
+        normalizedFileName.indexOf('/tests/') + 7;
+
+      const fileName = normalizedFileName.substring(
+        indexOfTestSubfolderStart,
+      );
 
       logger.info(`Test started: ${fileName}`);
 
@@ -33,23 +40,29 @@ export const test = base.extend<
     },
     { scope: 'test', auto: true },
   ],
+
   addAllureTestHierarchy: [
     async ({ logger }, use, testInfo) => {
-      const fileName = testInfo.file;
-
       const [parentSuite, suite, subSuite] = parseTestTreeHierarchy(
-        fileName,
+        testInfo.file,
         logger,
       );
 
-      await allure.parentSuite(parentSuite);
-      await allure.suite(suite);
+      if (parentSuite) {
+        await allure.parentSuite(parentSuite);
+      }
+
+      if (suite) {
+        await allure.suite(suite);
+      }
+
       if (subSuite) {
         await allure.subSuite(subSuite);
       }
 
-      await use('addAllureTestHierarhy');
+      await use('addAllureTestHierarchy');
     },
     { scope: 'test', auto: true },
   ],
 });
+
