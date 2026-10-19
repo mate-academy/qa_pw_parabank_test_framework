@@ -24,7 +24,7 @@ export default [
         'error',
         {
           code: 80,
-          comments: 80,
+          comments: 100,
           ignorePattern: 'import *',
         },
       ],

@@ -1,5 +1,5 @@
 {
-  "name": "qa_pw_intro",
+  "name": "qa_pw_parabank_test_framework",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -17,15 +17,19 @@
     "globals": "^15.14.0",
     "husky": "^9.1.7",
     "lint-staged": "^15.4.3",
-    "prettier": "^3.4.2"
+    "prettier": "^3.4.2",
+    "rimraf": "^6.1.3"
   },
   "scripts": {
-    "prepare": "husky"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+    "prepare": "husky",
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "allure:clean": "rimraf allure-results allure-report",
+    "allure:open": "allure open allure-report",
+    "allure:serve": "allure serve allure-results",
+    "allure:generate": "allure generate allure-results --clean -o allure-report",
+    "lint": "eslint"
   },
   "lint-staged": {
     "*.{js,md}": [
