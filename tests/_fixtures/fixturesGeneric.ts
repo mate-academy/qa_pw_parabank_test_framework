@@ -1,38 +1,39 @@
-import { test as base } from '@playwright/test';
+import { test as base, Page, BrowserContext } from '@playwright/test';
 import { Logger } from '../../src/common/logger/Logger';
 import * as allure from 'allure-js-commons';
 import { parseTestTreeHierarchy } from '../../src/common/helpers/allureHelpers';
 
 export const test = base.extend<
   {
-    infoTestLog;
-    addAllureTestHierarchy;
+    infoTestLog: string;
+    addAllureTestHierarchy: string;
+    pages: Page[]; // Array of Page objects
+    contextsNumber: number; // Must be a number, not a string
   },
   {
-    logger;
+    logger: Logger;
   }
 >({
   logger: [
     async ({}, use) => {
       const logger = new Logger('error');
-
       await use(logger);
     },
     { scope: 'worker' },
   ],
+
   infoTestLog: [
     async ({ logger }, use, testInfo) => {
       const indexOfTestSubfolderStart = testInfo.file.indexOf('/tests') + 7;
       const fileName = testInfo.file.substring(indexOfTestSubfolderStart);
 
       logger.info(`Test started: ${fileName}`);
-
       await use('infoTestLog');
-
       logger.info(`Test completed: ${fileName}`);
     },
     { scope: 'test', auto: true },
   ],
+
   addAllureTestHierarchy: [
     async ({ logger }, use, testInfo) => {
       const fileName = testInfo.file;
@@ -48,8 +49,32 @@ export const test = base.extend<
         await allure.subSuite(subSuite);
       }
 
-      await use('addAllureTestHierarhy');
+      await use('addAllureTestHierarchy');
     },
     { scope: 'test', auto: true },
   ],
+
+  // Option to control the number of parallel contexts
+  contextsNumber: [1, { option: true }],
+
+  pages: async ({ browser, contextsNumber }, use) => {
+    const contexts: BrowserContext[] = [];
+    const pages: Page[] = [];
+
+    // Create contexts and pages in parallel
+    for (let i = 0; i < contextsNumber; i++) {
+      const context = await browser.newContext();
+      const page = await context.newPage();
+      contexts.push(context);
+      pages.push(page);
+    }
+
+    // Hand the array of pages to the test
+    await use(pages);
+
+    // CLEANUP: automatically close the contexts after the test finishes
+    await Promise.all(contexts.map((context) => context.close()));
+  },
 });
+
+export { expect } from '@playwright/test';
