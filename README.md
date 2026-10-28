@@ -28,8 +28,45 @@ npm install -g allure-commandline
 
 ## How to run the tests
 
-// TODO - It's part of your task to add the appropriate instructions here. 
+```
+npx playwright test
+```
+
+Run tests in Playwright UI mode:
+
+```
+npx playwright test --ui
+```
+
+Run a specific test file:
+
+```
+npx playwright test path/to/test.spec.js
+```
+
+For example:
+```
+npx playwright test tests/account/billPay/billPay.spec.js
+```
 
 ## How to generate report
 
-// TODO - It's part of your task to add the appropriate instructions here. 
+After the tests are executed, Allure results are generated in the `allure-results` folder.
+
+To generate and open the Allure report:
+
+```bash
+allure serve allure-results
+```
+
+To generate the report into the `allure-report` folder:
+
+```bash
+allure generate allure-results --clean -o allure-report
+```
+
+To open the generated report:
+
+```bash
+allure open allure-report
+```

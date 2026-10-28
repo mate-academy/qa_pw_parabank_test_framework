@@ -1,10 +1,14 @@
 import { test as base } from '@playwright/test';
 import { Logger } from '../../src/common/logger/Logger';
 import * as allure from 'allure-js-commons';
+import { Severity } from 'allure-js-commons';
 import { parseTestTreeHierarchy } from '../../src/common/helpers/allureHelpers';
 
 export const test = base.extend<
   {
+    contextsNumber;
+    pages;
+    severity;
     infoTestLog;
     addAllureTestHierarchy;
   },
@@ -12,6 +16,29 @@ export const test = base.extend<
     logger;
   }
 >({
+  contextsNumber: [1, { option: true }],
+
+  severity: [Severity.NORMAL, { option: true }],
+
+  pages: async ({ browser, contextsNumber }, use) => {
+    const contexts = [];
+    const pages = [];
+
+    for (let i = 0; i < contextsNumber; i++) {
+      const context = await browser.newContext();
+      const page = await context.newPage();
+
+      contexts.push(context);
+      pages.push(page);
+    }
+
+    await use(pages);
+
+    for (const context of contexts) {
+      await context.close();
+    }
+  },
+
   logger: [
     async ({}, use) => {
       const logger = new Logger('error');
@@ -20,6 +47,7 @@ export const test = base.extend<
     },
     { scope: 'worker' },
   ],
+
   infoTestLog: [
     async ({ logger }, use, testInfo) => {
       const indexOfTestSubfolderStart = testInfo.file.indexOf('/tests') + 7;
@@ -33,9 +61,10 @@ export const test = base.extend<
     },
     { scope: 'test', auto: true },
   ],
+
   addAllureTestHierarchy: [
-    async ({ logger }, use, testInfo) => {
-      const fileName = testInfo.file;
+    async ({ logger, severity }, use, testInfo) => {
+      const fileName = testInfo.file.replaceAll('/', '\\');
 
       const [parentSuite, suite, subSuite] = parseTestTreeHierarchy(
         fileName,
@@ -44,9 +73,12 @@ export const test = base.extend<
 
       await allure.parentSuite(parentSuite);
       await allure.suite(suite);
+
       if (subSuite) {
         await allure.subSuite(subSuite);
       }
+
+      await allure.severity(severity);
 
       await use('addAllureTestHierarhy');
     },
