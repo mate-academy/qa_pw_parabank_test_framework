@@ -1,12 +1,16 @@
 import { test as base } from '@playwright/test';
 import { Logger } from '../../src/common/logger/Logger';
 import * as allure from 'allure-js-commons';
-import { parseTestTreeHierarchy } from '../../src/common/helpers/allureHelpers';
+import {
+  parseTestTreeHierarchy,
+  severityForTest,
+} from '../../src/common/helpers/allureHelpers';
 
 export const test = base.extend<
   {
     infoTestLog;
     addAllureTestHierarchy;
+    testGap;
   },
   {
     logger;
@@ -14,7 +18,7 @@ export const test = base.extend<
 >({
   logger: [
     async ({}, use) => {
-      const logger = new Logger('error');
+      const logger = new Logger('info');
 
       await use(logger);
     },
@@ -47,8 +51,20 @@ export const test = base.extend<
       if (subSuite) {
         await allure.subSuite(subSuite);
       }
+      await allure.severity(severityForTest(testInfo.title));
 
       await use('addAllureTestHierarhy');
+    },
+    { scope: 'test', auto: true },
+  ],
+  testGap: [
+    async ({}, use) => {
+      await use();
+
+      const gap = Number(process.env.TEST_GAP_MS);
+      if (gap > 0) {
+        await new Promise(resolve => setTimeout(resolve, gap));
+      }
     },
     { scope: 'test', auto: true },
   ],

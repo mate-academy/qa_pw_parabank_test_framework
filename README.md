@@ -28,8 +28,40 @@ npm install -g allure-commandline
 
 ## How to run the tests
 
-// TODO - It's part of your task to add the appropriate instructions here. 
+Run every test from the project root:
+
+```bash
+npx playwright test
+```
+
+Run one file, or only the tests whose title matches a pattern:
+
+```bash
+npx playwright test tests/auth/signUp/positive/signUpPositive.spec.js
+npx playwright test -g "Transfer Funds"
+```
+
+Open the Playwright UI, or watch the browser while the tests run:
+
+```bash
+npx playwright test --ui
+npx playwright test --headed
+```
+
+If the site starts rejecting requests, run one test at a time and wait between them. `TEST_GAP_MS` is the pause in milliseconds after each test. Restart the command so the variable is picked up:
+
+```bash
+TEST_GAP_MS=5000 npx playwright test --workers=1
+TEST_GAP_MS=5000 npx playwright test --ui --workers=1
+```
 
 ## How to generate report
 
-// TODO - It's part of your task to add the appropriate instructions here. 
+The `allure-playwright` reporter writes results to `allure-results` after a test run. Generate the HTML report and open it:
+
+```bash
+allure generate ./allure-results --clean -o ./allure-report
+allure open ./allure-report
+```
+
+`allure serve ./allure-results` generates a temporary report and opens it in the browser. Allure needs Java 8 or higher.
