@@ -12,7 +12,7 @@
 2. Create an the test covergage for the Parabank functionality.
 3. Organize your test folders in the Suite hierarhy: `parentSuite`, `suite` and `subSuite`.
 4. Add severity allure metadata to each test.
-5. Rememebr to wrap all the actions and assertions into a step method.
+5. Remember to wrap all the actions and assertions into a step method.
 6. Remember to not duplicate the code, use helper methods, actions and fixtures.
 7. Organize fixtures for the certain functionality into separate files.
 8. Think about parametrized tests you need to create, for example when checking the different numeric inputs.
