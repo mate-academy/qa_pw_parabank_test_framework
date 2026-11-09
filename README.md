@@ -28,8 +28,52 @@ npm install -g allure-commandline
 
 ## How to run the tests
 
-// TODO - It's part of your task to add the appropriate instructions here. 
+Run all tests:
+```bash
+npx playwright test
+```
+
+Run a single test file:
+```bash
+npx playwright test tests/accountServices/Bill/createBillPayPositive.spec.js
+```
+
+Run tests by title:
+```bash
+npx playwright test -g "Successful `Sign up` flow test"
+```
+
+Run in a specific browser:
+```bash
+npx playwright test --project=chromium
+```
+
+Run with a visible browser or in debug mode:
+```bash
+npx playwright test --headed
+npx playwright test --debug
+```
 
 ## How to generate report
 
-// TODO - It's part of your task to add the appropriate instructions here. 
+The tests use the `allure-playwright` reporter, so after every run the raw results are saved to the `allure-results` folder.
+
+1. Run the tests:
+```bash
+npx playwright test
+```
+2. Generate the report:
+```bash
+allure generate allure-results --clean -o allure-report
+```
+3. Open the report in the browser:
+```bash
+allure open allure-report
+```
+
+To generate and open the report in one step:
+```bash
+allure serve allure-results
+```
+
+Make sure Java 8 or higher and `allure-commandline` are installed (see the installation steps above).

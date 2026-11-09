@@ -1,0 +1,11 @@
+export const EMPTY_FIRST_NAME_MESSAGE = `First name is required.`;
+export const EMPTY_LAST_NAME_MESSAGE = `Last name is required.`;
+export const EMPTY_CITY_MESSAGE = `City is required.`;
+export const EMPTY_STATE_MESSAGE = `State is required.`;
+export const EMPTY_ZIP_CODE_MESSAGE = `Zip Code is required.`;
+export const EMPTY_SSN_MESSAGE = `Social Security Number is required.`;
+export const EMPTY_USERNAME_MESSAGE = `Username is required.`;
+export const EMPTY_PASSWORD_MESSAGE = `Password is required.`;
+export const EMPTY_PASSWORD_REQUIRED_MESSAGE = `Password confirmation is required.`;
+export const EMPTY_USERNAME_OR_PASSWORD = `Please enter a username and password.`;
+export const USER_NOT_BE_VERIFIED = `The username and password could not be verified.`;
